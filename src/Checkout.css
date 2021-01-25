@@ -1,0 +1,34 @@
+.checkout
+{
+    display: flex;
+    background-color: white;
+
+    padding: 15px;
+    /* align-items: center; */
+    /* justify-content: space-evenly; */
+}
+
+.shopping_title
+{
+    padding-left: 30%;
+    padding-right: 300px;
+}
+
+/* .subtotalcompo
+{
+    float:right;
+} */
+
+
+/* .shopping
+{ */
+    /* background-color: lightsalmon; */
+    /* padding-left: 100px; */
+/* } */
+
+
+/* 
+.shopping_title
+{
+    border-bottom: 1px solid lightgray;
+} */
