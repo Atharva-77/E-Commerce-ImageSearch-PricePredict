@@ -25,11 +25,12 @@ function Header() {
             </div>
             
             <div className="header_rightnav"> 
-                <div className="header_rightSubpart" >
-                    <span className="lineOne">Hello Guests</span>
-                    <span className="lineTwo">Sign In</span>
-                </div>
-
+                <Link to="/register">
+                    <div className="header_rightSubpart" >
+                      <span className="lineOne">Hello Guests</span>
+                       <span className="lineTwo">Sign In</span>
+                    </div>
+                </Link>
                 <div className="header_rightSubpart" >
                     <span className="lineOne">Returns &</span>
                     <span className="lineTwo">Orders</span>           
