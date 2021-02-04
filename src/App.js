@@ -4,6 +4,8 @@ import Home from'./Home';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Checkout from './Checkout';
 import Register from './Register';
+import Login from './Login';
+import Seller from './Seller'
 
 function App() {
   return (
@@ -12,9 +14,17 @@ function App() {
          
           {/*Common part to both router*/}
           <Switch >
-            <Router path="/register">
-              <Register />
-            </Router>
+              <Route path="/register">
+                 <Register />
+              </Route>
+
+              <Route path="/login">
+                  <Login />
+              </Route>
+
+              <Route path="/seller">
+                  <Seller />
+               </Route>
 
               <Route path="/checkout"> 
                  <Header />        

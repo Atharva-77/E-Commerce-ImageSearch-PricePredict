@@ -1,4 +1,4 @@
-.register
+.seller
 {
     display: flex;
     flex-direction: column;
@@ -7,20 +7,21 @@
 
 }
 
-.register .logo
+.seller .logo
 {
     object-fit: contain;
     width: 125px;
-    padding-top: 100px;
+    padding-top: 35px;
     padding-bottom: 19px;
 }
 
-.register .heading
+.seller .heading
 {
+    font-size: 26px;
     padding-bottom: 10px;
 }
 
-.register .registration_details
+.seller .seller_details
 {
 
     width: 300px;
@@ -52,44 +53,32 @@
 
 
 
-.registration_details > h1
+.seller_details > h1
 {
+    font-size: 26px;
     font-weight: 500;
     margin-bottom: 10px;
 }
 
-.registration_details > h2
+.seller_details > h2
 {
+    font-size: 20px;
+
     font-weight: 450;
     /* font-size: 15px; */
     margin-bottom: 5px;
 }
 
-.registration_details > input
+.seller_details > input
 {
     width: 95%;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     height: 25px;
 }
 
-.registration_details .create_acc
-{
-    height: 25px;
-    width: 98%;
-    
-    /* width: fit-content; */
-}
 
-.registration_details >h3
-{
-    padding-top: 5px;
-    display: flex;
-    flex-direction:column ;
-    align-items: center;
-    /* padding-left: 15px; */
-}
 
-.registration_details .login
+.seller_details .seller_button
 {
     height: 25px;
     width: 98%;
@@ -98,6 +87,6 @@
     margin-top: 8px;
     border-color: #a88734 #9c7e31 #846a29;
     color: black;
-    text-decoration: none;
+    /* outline: none; */
 
 }

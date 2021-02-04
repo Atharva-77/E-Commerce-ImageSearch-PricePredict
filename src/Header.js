@@ -25,7 +25,7 @@ function Header() {
             </div>
             
             <div className="header_rightnav"> 
-                <Link to="/register">
+                <Link to="/register" >
                     <div className="header_rightSubpart" >
                       <span className="lineOne">Hello Guests</span>
                        <span className="lineTwo">Sign In</span>
