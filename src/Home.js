@@ -6,17 +6,17 @@ function Home() {
     return (
         <div className="home">
             <div className="home_container">
-                <img className="home_img" src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB28684220_.jpg"/>
+                {/* 1.<img className="home_img" src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB28684220_.jpg"/> */}
 
                 <div className="home__row">
                 <Product 
                     title="The Lean Startup"
-                    price={20.65}
+                    price={20.00}
                     rating={3}
                     image="https://images-na.ssl-images-amazon.com/images/I/81-QB7nDh4L.jpg"/>
                     
                     <Product 
-                    title="mixer"
+                    title="Mixer | Vidiem MG 541 A VSTAR Evo Plus 750 Watts Mixer Grinder"
                     price={100}
                     rating={5}
                     image="https://images-na.ssl-images-amazon.com/images/I/81O%2BGNdkzKL._AC_SX450_.jpg"/>
@@ -25,7 +25,7 @@ function Home() {
                 <div className="home__row">
                    <Product 
                     title="Amazon Echo (3rd generation) | Smart speaker with Alexa, Charcoal Fabric"
-                    price={75.25}
+                    price={50}
                     rating={1}
                     image="https://media.very.co.uk/i/very/P6LTG_SQ1_0000000071_CHARCOAL_SLf?$300x400_retinamobilex2$"/>
                     

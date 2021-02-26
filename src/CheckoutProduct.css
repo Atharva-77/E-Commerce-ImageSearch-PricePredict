@@ -1,4 +1,4 @@
- .product
+.checkout_product
 {
     display: flex;
     flex-direction: column; /*If removed, title, price, img, button side-by-side is displayed*/
@@ -6,24 +6,24 @@
     /*All items aligned to center.Thus button size also reduced.*/
     justify-content: flex-end; 
     /*explore this*/
-    background-color: #E5E7EB;
-    /* background-color: white; */
+    /* background-color: #E5E7EB; */
+    background-color: red;
     margin: 10px;
     padding: 20px;
     width: 100%;
     max-height: 350px;
-    min-width: 100px; 
-    /*Due to this, product is shifted to left frm center.Container is taking whole segment i.e. like yt search channel.Uncomment border to see*/
+    max-width: 100px; 
+    /*Due to this, checkout_product is shifted to left frm center.Container is taking whole segment i.e. like yt search channel.Uncomment border to see*/
     /* border: 5px solid; */
     z-index: 1; 
 }
-.product_info
+.checkout_product_info
 {
-    width: 100%; /*To align text of product like title,price ,rating to left*/
+    width: 100%; /*To align text of checkout_product like title,price ,rating to left*/
     height: 100px;
     margin-bottom: 15px;
 }
-.product > img
+.checkout_product > img
 {
     max-height: 200px;
     width: 100%;
@@ -31,7 +31,7 @@
     margin-bottom: 15px;
 }
 
-.product > button
+.checkout_product > button
 {
     /*2. background : #f0c14b; */background :rgb(106, 195, 247);
     border: 1px solid;
@@ -40,12 +40,12 @@
     color: #111;
 }
 
-.product_price
+.checkout_product_price
 {
     margin-top: 5px;
 }
  
-.product_rating
+.checkout_product_rating
 {
     display: flex;
 }

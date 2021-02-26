@@ -16,7 +16,11 @@ function Header() {
         <div className="header">
             {/* <h1> HI all in j=header</h1> */}
                 <Link to="/" >
-                    <img src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"/>
+                    {/* <h2 >LOGO</h2> */}
+                    
+                    {/* <img src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"/> */}
+                    <img src="https://www.logodesign.net/logo/peace-bird-in-water-drop-3572ld.png"/>
+
                 </Link>    
             
             <div className="header_search" >

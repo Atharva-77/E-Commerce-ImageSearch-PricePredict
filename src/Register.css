@@ -11,7 +11,7 @@
 {
     object-fit: contain;
     width: 125px;
-    padding-top: 100px;
+    padding-top: 40px;
     padding-bottom: 19px;
 }
 
@@ -93,10 +93,10 @@
 {
     height: 25px;
     width: 98%;
-    background : #f0c14b;
+    /*2. background : #f0c14b; */background :rgb(106, 195, 247);
     border: 1px solid;
     margin-top: 8px;
-    border-color: #a88734 #9c7e31 #846a29;
+    /*1. border-color: #a88734 #9c7e31 #846a29; */
     color: black;
     text-decoration: none;
 

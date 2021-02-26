@@ -2,11 +2,12 @@
 {
     --dark-yellow: #fbbd69;
     --white: white;
+    --dark-blue: rgb(106, 195, 247);
 }
 .header
 {
     height: 55px; /*Fix the ht. of header. Now when padding applied to img,header dosen't grow*/
-    background-color: black;
+    /*1. background-color: black; */ background-color: #374151;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,13 +20,20 @@
 
 
 .header img {
-    object-fit: contain;/*acpect ratio not comprimised*/
-    width: 100px;
+    /* 1object-fit: contain;acpect ratio not comprimised */
+    /*2. width: 100px; */
+
     /* margin: 0 20px;
     margin-top: 15px; */
     /* height: 50px; */
-    padding-top: 18px;
-    padding-left: 20px; 
+
+    /*3,4 padding-top: 18px;
+    padding-left: 20px;  */
+ 
+    object-fit: contain;
+    width: 72px;
+    padding-top: 4px;
+    padding-left: 39px
 }
 
 .header .header_search
@@ -45,7 +53,7 @@
 }
 .header_search .header_searchIcon
 {
-    background-color: var(--dark-yellow);
+    background-color: var(--dark-blue);
     height: 18px !important;
     padding: 3px;
 }

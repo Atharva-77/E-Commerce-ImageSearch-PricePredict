@@ -3,7 +3,7 @@ export const initialState={
 
 };
 
-//Selector
+//Selector...used in production env
 export const getBasketTotal=(basket) =>
     basket?.reduce((amount,item) => item.price+ amount, 0); //initialised to zero
     //? mark , incase of error, no error is shown

@@ -20,6 +20,7 @@ connectDatabase()
 
 //routes
 app.use('/registered',require('./routes/registerHere'))
+app.use('/login_be',require('./routes/login'))
 
 
 
