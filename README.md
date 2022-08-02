@@ -1,6 +1,6 @@
 # [E-Commerce Website With ImageSearch & PricePredict](https://buytes.herokuapp.com/)
-This is website in **MERN(MongoDB Express, Reactjs, Nodejs)**:- https://buytes.herokuapp.com/
-Flask framework used for image search, price prediction.
+This is website in **MERN(MongoDB Express, Reactjs, Nodejs)**:- https://buytes.herokuapp.com/ .   
+**Flask framework** used for image search, price prediction.
 
 You can **Add/Remove items from Basket**, **Write Product review**.   
 **Unique Feature** (which isn't on most e-commerce sites):- User(buyer) can **Upload an image of product** and the website shows similar products to the user. 
