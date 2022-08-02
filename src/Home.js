@@ -18,17 +18,21 @@ import './Home.css'
 import Product from './Product'
 import {listProduct} from './Reducers/actions/productActions'
 import { useSelector,useDispatch } from 'react-redux'
+import { useParams } from 'react-router';
 
 function Home() {
+    const {keyword}=useParams()
+    console.log("Keyword",keyword);
     const dispatch=useDispatch()
 
     useEffect(() => {
-        dispatch(listProduct())
-    }, [dispatch])
+        dispatch(listProduct(keyword))
+    }, [dispatch,keyword])
 
     const productList = useSelector(state => state.productList)
     const {loading,products,error}=productList
     // console.log("Home wala prods",products);
+    console.log("PRODUCTS LEN SEARCH",products.length);
 
 
     return (
@@ -39,21 +43,26 @@ function Home() {
             <div className="home_container">
                 {/* 1.<img className="home_img" src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB28684220_.jpg"/> */}
                 {loading?<h2>Loading...</h2>
-                        :error?<h2>{error}</h2>
-                        :  <div className="home__row">
-                        {
-                            products.map((i)=>(
-                                <Product 
-                                    id={i._id}
-                                    title={i.description}
-                                    price={i.price}
-                                    rating={i.Avgrating}
-                                    image={i.image}
-                                />
-                                // console.log("i=",i.description,i.price,i.Avgrating,i.image);
-                                ))
-                        }
-                          </div>}
+                        :error  ?<h2>{error}</h2>
+                                :  <div className="home__row">
+                                    {
+                                        products.map((i)=>(
+                                            <Product 
+                                                id={i._id}
+                                                title={i.description}
+                                                price={i.price}
+                                                rating={i.Avgrating}
+                                                image={i.image}
+                                            />
+                                            // console.log("i=",i.description,i.price,i.Avgrating,i.image);
+                                            ))
+                                    } 
+                                   </div>
+                 }
+
+                 {products.length==0?<h2>No Such Product</h2>:null}
+
+                
 
 
                

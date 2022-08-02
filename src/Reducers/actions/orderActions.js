@@ -13,6 +13,9 @@ import {
     ADMIN_ORDER_LIST_REQUEST,
     ADMIN_ORDER_LIST_SUCCESS,
     ADMIN_ORDER_LIST_FAILURE,
+    SELLER_ORDER_LIST_REQUEST,
+    SELLER_ORDER_LIST_SUCCESS,
+    SELLER_ORDER_LIST_FAILURE,
     
     } from '../constants/orderConstants' 
 
@@ -57,13 +60,13 @@ try
             Authorization:`Bearer ${userInfo.token}`
         }
     }
-    // console.log("Order After config");
+    console.log("Order After config",order);
     //Q.WHy not direct profile in place of id?
     // console.log("waiting for data");
 
     const {data}= await axios.post(`http://localhost:4000/order/add/`,order,config)
 
-    // console.log("order After data",data);
+    console.log("order After data",data);
 
     dispatch(orderListDetailsSuccess(data))
     // console.log("order success");
@@ -126,7 +129,7 @@ export const getorderListAction_details =(id)=> async(dispatch,getState)=> {
     
         const {data}= await axios.get(`http://localhost:4000/order/${id}`,config)
     
-        // console.log("order After data",data);
+        console.log("order After data",data);
     
         dispatch(getorderListDetailsSuccess(data))
         // console.log("order success");
@@ -202,6 +205,82 @@ export const getAdminorderListAction_details =()=> async(dispatch,getState)=> {
         
     }
 }
+
+
+
+
+
+
+
+
+
+
+//SELLER Get order
+const getSellerOrderListDetailsRequest = () =>
+{
+    return {
+        type:SELLER_ORDER_LIST_REQUEST
+    }
+}
+
+const getSellerOrderSuccess = data =>
+{
+    return{
+      type:SELLER_ORDER_LIST_SUCCESS, 
+      payload: data
+    }
+}
+
+const getSellerOrderListDetailsFailure = error =>
+{
+    return{
+       type:SELLER_ORDER_LIST_FAILURE,
+       payload: error
+    }
+}
+
+export const getSellerOrderListAction_details =()=> async(dispatch,getState)=> {
+
+    try 
+    {
+        dispatch(getSellerOrderListDetailsRequest())
+    
+        const {userLogin:{userInfo}} = getState()
+       
+        //Q.use??
+        const config={
+            headers:{
+                // 'Content-Type':"application/json",
+                Authorization:`Bearer ${userInfo.token}`
+            }
+        }
+        // console.log("Order After config");
+        //Q.WHy not direct profile in place of id?
+        // console.log("waiting for data");
+    
+        const {data}= await axios.get(`http://localhost:4000/order/seller/allorder`,config)
+    
+        console.log("orderACTIONADMIN After data",data);
+    
+        dispatch(getSellerOrderSuccess(data))
+        // console.log("order success");
+       
+    
+    } catch (error) {
+        console.log("User GetSellerOrderListDetails actions");
+        dispatch(getSellerOrderListDetailsFailure(error))
+        
+    }
+}
+
+
+
+
+
+
+
+
+
 
 
 

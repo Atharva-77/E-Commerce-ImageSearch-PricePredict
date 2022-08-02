@@ -49,6 +49,7 @@ function PlaceOrder() {
     let orderItems=cartList.basketItems;
     let shippingAddress=cartList.shippingAddr;
     let paymentMethod=cartList.paymentMethod;
+    // let userSeller=cartList.
  //    itemPrice=summ
  
    
@@ -128,22 +129,16 @@ function PlaceOrder() {
                       {basketItems.map((item) => (
                         //   <Link to={``}></Link>
                         <div>
-                          <img src={item.image} className="placeOrder_img_class"/>  
-                          <Link to={`/product/${item.idname}`}>
-                              {item.name}
-                          </Link>  
+                            
+                            <img src={item.image} className="placeOrder_img_class"/>  
+                            
+                            <Link to={`/product/${item.idname}`}>
+                                {item.name}
+                            </Link>  
                             {' '}
                           {item.qty} x {item.price} = ₹ {item.qty * item.price}
 
-                       {/* <CheckoutProduct 
-                           id={item.idname}
-                           title={item.name}
-                           price={item.price}
-                           rating={3} //{item.avgrating}
-                           image={item.image}
-                           qty={item.qty}
-                           countInStock={item.countInStock}
-                        /> */}
+                      
                         
                          {console.log("Sum",summ+=item.price*item.qty) }
                          {/* {console.log("Upar",summ+=item.price*item.qty) } */}

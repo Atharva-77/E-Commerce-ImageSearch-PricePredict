@@ -15,7 +15,7 @@ import axios from 'axios'
 export const cartListDetails = (id,qty) => async(dispatch,getState)=> {
 
     const {data}= await axios.get(`http://localhost:4000/products/${id}`)
-// console.log("CARTACtions.js",{data});
+console.log("CARTACtions.js",{data});
 // console.log("CARTACtions.js id:- ",data._id);
     dispatch({
         type: CART_ADD_BASKET,
@@ -26,6 +26,7 @@ export const cartListDetails = (id,qty) => async(dispatch,getState)=> {
             price:data.price,
             countInStock:data.countInStock,
             avgrating: data.Avgrating,
+            user:data.user,
             qty
 
 

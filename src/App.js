@@ -24,6 +24,10 @@ import Admin_Product from './Admin_Product';
 import Admin_EditProduct from './Admin_EditProduct';
 import Admin_CreateProduct from './Admin_CreateProduct';
 import Admin_Order_List from './Admin_Order_List';
+import ASeller_Product from './ASeller_Product';
+import ASeller_EditProduct from './ASeller_EditProduct';
+import ASeller_CreateProduct from './ASeller_CreateProduct';
+import ASeller_OrderList from './ASeller_OrderList';
 
 
 function App() {
@@ -54,9 +58,9 @@ function App() {
                   <ProfileDetails />
               </Route>
 
-              <Route path="/seller">
+              {/* <Route path="/seller">
                   <Seller />
-               </Route>
+               </Route> */}
 
                <Route path="/shipping">
                  <Shipping />
@@ -65,6 +69,8 @@ function App() {
               <Route path="/payment">
                  <Payment />
               </Route>
+
+
 
              {/* Admin routes */}
               <Route path="/admin/userlist">
@@ -90,7 +96,29 @@ function App() {
               <Route path="/admin/orderlist">
                  <Admin_Order_List />
               </Route>
-              
+              {/* Admin Over */}
+
+
+
+
+              {/* Seller Routes */}
+              <Route path="/seller/product">
+                 <ASeller_Product />
+              </Route> 
+
+              <Route path="/seller/prod/edit/:id">
+                 <ASeller_EditProduct />
+              </Route>
+
+              <Route path="/seller/createProduct">
+                 <ASeller_CreateProduct />
+              </Route>
+
+              <Route path="/seller/orderlist">
+                 <ASeller_OrderList />
+              </Route>
+               {/* Seller Over */}
+
 
               <Route path="/placeorder/:id">
                  <OrderScreen />
@@ -111,6 +139,12 @@ function App() {
               <Route path="/product/:id"> 
                  <Header />        
                  <ProductDetails />
+              </Route>
+
+              <Route path="/search/:keyword">
+                <Header />
+                {/* <h2>YO</h2> */}
+                <Home />
               </Route>
 
               <Route path="/">

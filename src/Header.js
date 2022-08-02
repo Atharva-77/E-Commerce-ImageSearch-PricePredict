@@ -5,6 +5,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { Link } from 'react-router-dom';
 // import {useStateValue} from './StateProvider';
+import {  useHistory } from 'react-router'; 
 
 import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -17,7 +18,10 @@ import { logout_action, profileReset_action,registerReset_action } from './Reduc
 
 
 function Header() {
+    let history = useHistory()
+
     const [open, setopen] = useState(false) //Dropdown toggle
+    const [keyword, setkeyword] = useState('')
 
     const userLogin=useSelector(state => state.userLogin)
     const {userInfo}=userLogin
@@ -47,6 +51,18 @@ function Header() {
         
     }
 
+    const searchHandler=()=>
+    {
+        if(keyword.trim())
+        {
+            console.log(keyword+keyword.trim());
+            history.push(`/search/${keyword.trim()}`)
+        }
+        else
+        history.push(`/`)
+        console.log("SEARCH");
+    }
+
     return (
 
         <div className="header">
@@ -59,11 +75,21 @@ function Header() {
 
                 </Link>    
             
+            
+            
+            {/*  SEARCH HERE*/}
             <div className="header_search" >
-                <input className="header_input" placeholder="Search here"/>
-                <SearchOutlinedIcon className="header_searchIcon"/>
+                <input className="header_input"
+                        onChange={(e)=>setkeyword(e.target.value)}
+
+                         placeholder="Search here"/>
+                {/* <button onClick={searchHandler}>Search Here</button> */}
+                <SearchOutlinedIcon className="header_searchIcon" onClick={searchHandler}/>
             </div>
             
+
+
+
             <div className="header_rightnav"> 
                 {/* <Link to="/register" >
                     <div className="header_rightSubpart" >
@@ -75,16 +101,44 @@ function Header() {
 
 
                 {/* ADMIN */}
-                {!(typeof(userInfo)=='undefined') && userInfo.length!=0 && userInfo.isAdmin?
+                {!(typeof(userInfo)=='undefined') && userInfo.length!=0 && (userInfo.isAdmin||userInfo.isSeller)?
                     <div>
                             <div>
-                            {/* <div className="header_rightSubpart" > */}
+                                 {/* <div className="header_rightSubpart" > */}
                                 <span className="lineOne">{userInfo.name}</span>
-                            <ArrowDropDownIcon className="arrow_icon" onClick={()=>setopen(!open)}/>
+                                <ArrowDropDownIcon className="arrow_icon" onClick={()=>setopen(!open)}/>
 
                             </div>
+                            {userInfo.isAdmin?
+                               <>
+                                    {open? 
+                                        <Dropdown >            
+                                            <Link to="/admin/userlist"><p >Users</p></Link>
+                                            <Link to="/admin/product"><p>Products</p></Link>
+                                            <Link to="/admin/orderlist"><p>Orders</p></Link> 
 
-                            {open? 
+                                            <p onClick={logoutHandler}>Logout</p>
+                                        </Dropdown>
+                                        :
+                                        null
+                                    }
+                               </>    
+                            :
+                               <>
+                                    {open? 
+                                        <Dropdown >           
+                                            <Link to="/seller/product"><p>Products</p></Link>
+                                            <Link to="/seller/orderlist"><p>Orders</p></Link> 
+
+                                            <p onClick={logoutHandler}>Logout</p>
+                                        </Dropdown>
+                                        :
+                                        null
+                                    }
+                               </> 
+
+                            }
+                            {/* {open? 
                                     <Dropdown >            
                                         <Link to="/admin/userlist"><p >Users</p></Link>
                                         <Link to="/admin/product"><p>Products</p></Link>
@@ -94,7 +148,7 @@ function Header() {
                                     </Dropdown>
                                     :
                                     null
-                            } 
+                            }  */}
                         
                     </div>
                 :

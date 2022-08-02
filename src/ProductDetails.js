@@ -5,7 +5,9 @@ import { listProductDetails } from './Reducers/actions/productActions';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import './ProductDetails.css'
-import { Link } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+
+// import { Link } from '@material-ui/core';
 
 const ProductDetails= ()=> {
     let history = useHistory();
@@ -16,9 +18,10 @@ const ProductDetails= ()=> {
 
 
     const [qty, setqty] = useState(1)
-    const [userRating, setuserRating] = useState(1)
+    const [userRating, setuserRating] = useState(0)
     const [userComment, setuserComment] = useState('')
     const [reload, setreload] = useState(0)
+    const [AlreadyReview, setAlreadyReview] = useState(false)
 
     const dispatch=useDispatch()
 
@@ -43,7 +46,7 @@ const ProductDetails= ()=> {
     {
     
         const ReviewData={
-            "rating":userLogin, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+            "rating":userRating, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
             "comment":userComment,
          }
 
@@ -51,24 +54,24 @@ const ProductDetails= ()=> {
              headers:{
                  'Content-Type':"application/json",
                  Authorization:`Bearer ${userInfo.token}`
-             }
-         }
+              }
+           }
 
         axios.post(`http://localhost:4000/products/review/${id}`,ReviewData,config)
         .then(res => 
             {
-                console.log("(PRODUCTDetails) deleted",res.data,reload)
+                console.log("(PRODUCTDETAILS):-",res.data,reload)
                 setreload(!reload)
                 console.log("RELOAD",reload);
+                if(res.data==="Already reviewed product")
+                {
+                   setAlreadyReview(true);
+                }
+                setuserRating('')
+                setuserComment('')
             })
 
-        // console.log("PROD IN SUBMIT",ProductData);
-
-        // history.push(`/admin/product`)
-        // setMessage(true)
-
-
-         
+           
         
     }
 
@@ -113,24 +116,12 @@ const ProductDetails= ()=> {
                 <h2>{qty}</h2>  
                 
 
-                {/* <div>
-                    {product.reviews.length==0?<h2>NO REVIEWS</h2>:
-                    <>
-                        {product.reviews.map((i)=>
-                            <>
-                                <p>{i.name}</p>
-                                <p>{i.IndividualRating}</p>
-                                <p>{i.createdAt}</p>
-                                <p>{i.comment}</p>
-                            
-                            </>
-                        )}
-
-                    </>}
-                </div> */}
+                
             </div>
 
                 <div className="reviewClass">
+                   <strong> Product Rating:- </ strong>{product.Avgrating} <br /> 
+                   <strong>Total User Reviewed The Product:- </strong>{product.reviews.length}
                     {product.reviews.length==0?<h2>NO REVIEWS</h2>:
                         <>
                             <h2>REVIEWS</h2><br />
@@ -150,14 +141,27 @@ const ProductDetails= ()=> {
                         
                         {userInfo.length!=0?
                             <>
-                            <h2>WRITE A REVIEW</h2>
-                                Rating<input onChange={(e)=>setuserRating(e.target.value)}/> <br /><br />
-                                Comment<input onChange={(e)=>setuserComment(e.target.value)}/> <br />
-                                <button className="create_acc" onClick={submit_form} >Submit Review</button>
+                                {AlreadyReview?
+                                    <h4>You Have ALready Reviewed Product</h4>
+                                    :
+                                    <>
+                                        <h2>WRITE A REVIEW</h2>
+                                        Rating<input value={userRating} onChange={(e)=>setuserRating(e.target.value)}/> <br /><br />
+                                        Comment<input value={userComment} onChange={(e)=>setuserComment(e.target.value)}/> <br />
+                                        <button className="create_acc" onClick={submit_form} >Submit Review</button>
+                                    </>
+                                    
+                                }
+                           
 
                             </>
-                        :
-                             <h2>Please <Link to={`/login_brad`}>Login</Link> to write Review</h2>
+                         :
+                            <>
+                            <Link to="/login_brad">
+                                <div > Please Login to write Review</div>   
+                            </Link>
+                            </>
+
                         }
                     </>
                 </div>

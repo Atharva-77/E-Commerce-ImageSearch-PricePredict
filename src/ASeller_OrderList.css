@@ -1,0 +1,88 @@
+.login
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px solid; */
+
+}
+
+.login .logo
+{
+    object-fit: contain;
+    width: 125px;   
+    /*1. padding-top: 100px; */ padding-top: 62px;
+    padding-bottom: 19px;
+}
+
+.login .heading
+{
+    padding-bottom: 10px;
+}
+
+.login .login_details
+{
+
+    width: 300px;
+    /* height: 250px; */
+    height: fit-content; /*Automatically adjusts height according to cotents in it. If px specified, then may overflow out of the border*/
+
+    height: fit-content;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    border: 1px solid ;
+
+
+
+
+
+    /* My try */
+    /* border: 1px solid;
+    width: 256px;
+    height: 280px;
+    padding-left: 48px;
+    display: flex;
+    flex-direction: column;
+    padding-right: 46px; */
+
+}
+
+
+
+.login_details > h1
+{
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.login_details > h2
+{
+    font-weight: 450;
+    /* font-size: 15px; */
+    margin-bottom: 5px;
+}
+
+.login_details > input
+{
+    width: 95%;
+    margin-bottom: 12px;
+    height: 25px;
+}
+
+
+
+.login_details .login_button
+{
+    height: 25px;
+    width: 98%;
+    /*2. background : #f0c14b; */background :rgb(106, 195, 247);
+    border: 1px solid;
+    margin-top: 8px;
+    /*1. border-color: #a88734 #9c7e31 #846a29; */
+    color: black;
+    /* outline: none; */
+
+}

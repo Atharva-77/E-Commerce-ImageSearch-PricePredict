@@ -4,7 +4,11 @@ import {PRODUCT_LIST_REQUEST,
         
         PRODUCT_DETAILS_REQUEST,
         PRODUCT_DETAILS_SUCCESS,
-        PRODUCT_DETAILS_FAILURE, } from './constants/productConstants' 
+        PRODUCT_DETAILS_FAILURE,
+
+        SELLER_PRODUCT_LIST_REQUEST,
+        SELLER_PRODUCT_LIST_SUCCESS,
+        SELLER_PRODUCT_LIST_FAILURE, } from './constants/productConstants' 
 
 const initialState=
 {
@@ -37,6 +41,49 @@ export const productListReducer = ( state=initialState, action)=>
             return state
     }
 }
+
+
+
+
+
+
+//SELLER PRODUCT
+const initialSellerState=
+{
+    loading: true,
+    Sellerproducts:[],
+    error:''
+}
+
+export const SellerproductListReducer = ( state=initialSellerState, action)=>
+{
+    switch(action.type){
+        case SELLER_PRODUCT_LIST_REQUEST: return {
+            ...state,
+            loading:true
+        }
+
+        case SELLER_PRODUCT_LIST_SUCCESS: return {
+            ...state,
+            loading: false,
+            Sellerproducts: action.payload
+        }
+
+        case SELLER_PRODUCT_LIST_FAILURE: return {
+            ...state,
+            loading: false,
+            error: action.payload
+        }
+
+        default:
+            return state
+    }
+}
+
+
+
+
+
 
 //Product Details Reducer
 

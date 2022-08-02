@@ -13,6 +13,9 @@ import {    ORDER_LIST_REQUEST,
             ADMIN_ORDER_LIST_REQUEST,
             ADMIN_ORDER_LIST_SUCCESS,
             ADMIN_ORDER_LIST_FAILURE,
+            SELLER_ORDER_LIST_REQUEST,
+            SELLER_ORDER_LIST_SUCCESS,
+            SELLER_ORDER_LIST_FAILURE,
             
         
         } from './constants/orderConstants' 
@@ -130,6 +133,59 @@ switch(action.type){
         return state
 }
 }
+
+
+
+
+
+
+
+
+//SELLER GET ORDER LIST
+const initialSellerGetState=
+{
+    loading: true,
+    SellergetOrderItems:[],
+    // shippingAddress:{},
+    error:''
+}
+
+
+export const getSellerOrderListReducer = ( state=initialSellerGetState, action)=>
+{
+switch(action.type){
+    case SELLER_ORDER_LIST_REQUEST: return {
+        ...state,  //Q.can u comment this and see
+        loading:true
+    }
+
+    case SELLER_ORDER_LIST_SUCCESS: return {
+        ...state,
+        loading: false,
+        SellergetOrderItems: action.payload
+    }
+
+    case SELLER_ORDER_LIST_FAILURE: return {
+        ...state,
+        loading: false,
+        error: action.payload
+    }
+
+    default:
+        return state
+}
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
