@@ -21,13 +21,23 @@ const RegisterSchema= new mongoose.Schema({
     },
 
 
-    confirmPassword:
+    // confirmPassword:
+    // {
+    //     type: String,
+    //     required: true
+    // },
+
+    isAdmin:
     {
-        type: String,
-        required: true
-    },
+        type: Boolean,
+        default:false
+    }
     
-})
+},
+    {
+        timestamps:true
+    }
+)
 
 module.exports=mongoose.model('Register',RegisterSchema);
 // See how modelname is defined

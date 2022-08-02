@@ -21,6 +21,12 @@ connectDatabase()
 //routes
 app.use('/registered',require('./routes/registerHere'))
 app.use('/login_be',require('./routes/login'))
+//brad
+app.use('/login_brad',require('./routes/login_brad'))
+app.use('/register_brad',require('./routes/register_brad'))
+
+
+app.use('/products',require('./routes/products'))
 
 
 
