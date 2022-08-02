@@ -27,7 +27,7 @@ app.use('/register_brad',require('./routes/register_brad'))
 
 
 app.use('/products',require('./routes/products'))
-
+app.use('/order',require('./routes/order_routes'))
 
 
 app.listen(port, ()=>

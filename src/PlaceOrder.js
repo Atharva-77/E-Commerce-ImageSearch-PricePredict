@@ -5,7 +5,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import CheckoutProduct from './CheckoutProduct';
 
 import {  useHistory } from 'react-router'; 
-import { userAction_details, userRegisterAction_details } from './Reducers/actions/userActions';
+import { orderListAction_details} from './Reducers/actions/orderActions';
 
 import './PlaceOrder.css' ;
 
@@ -14,84 +14,80 @@ function PlaceOrder() {
     let shipping_price=0;
     let tax_price=0;
     let total_price=0;
+    let useEId;
 
     let history = useHistory()
-
-    const [Name, setName] = useState('')
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setconfirmPassword] = useState('');
 
     const dispatch = useDispatch()
 
     const cartList = useSelector(state => state.cartList)
     const {basketItems}=cartList
 
-    const redirect=`/`
-    if(!(typeof(basketItems)=='undefined') && basketItems!=='Invalid details')
-    console.log("info len:-",Object.keys(basketItems).length);
-    else
-    console.log("info lenyo:-",basketItems);
+    const orderList = useSelector(state => state.orderList)
+    const {order,success,error}=orderList
+
+    // console.log("succes value ",success);
+    // const redirect=`/`
+    // if(success)
+    // console.log("SUCCESS VAL:-",success);
+    // else
+    // console.log("SUCCESS VAL:-",success);
 
     
-    // useEffect(() => {
-    //     //when getting request, userinfo becomes true as  userLoginRequest is called.
-    //     //length==0 becomes when 1st time login pg is visited
-    //     //invalid details is received when details don't match
-    //     //if user is logged in  direct to home page
-    //     if( !(typeof(basketItems)=='undefined') && basketItems.length!=0 && basketItems!=='Invalid details')
-    //     {
-    //         history.push(redirect)
-    //     }
-    // }, [history,basketItems,redirect])
-
-    const onName=(e)=> 
-    { 
-        setName(e.target.value)
-    }
-    const onEmail=(e)=> 
-    { 
-        setEmail(e.target.value)
-    }
-    const onPassword=(e)=> 
-    { 
-        setPassword(e.target.value)
-    }
-    const onconfirmPassword=(e)=> 
-    { 
-        setconfirmPassword(e.target.value)
-    }
+    useEffect(() => {
+        //when getting request, userinfo becomes true as  userLoginRequest is called.
+        //length==0 becomes when 1st time login pg is visited
+        //invalid details is received when details don't match
+        //if user is logged in  direct to home page
+        if( success)
+        {
+            console.log("B4 CLICK",order);
+            history.push(`/placeorder/${order.id}`)
+        }
+    }, [history,basketItems,order,success])
+    
+    let orderItems=cartList.basketItems;
+    let shippingAddress=cartList.shippingAddr;
+    let paymentMethod=cartList.paymentMethod;
+ //    itemPrice=summ
+ 
+   
+ console.log( "PlaceOrdDER.JS ",orderItems,
+    shippingAddress,
+    paymentMethod);
+  
     
     const submit_form=()=>
     {
-        if(password!==confirmPassword)
-        {
-            console.log("Pass not matching");
-        }
-        else
-        {
-            console.log("b4 reg actions");
-            dispatch(userRegisterAction_details(Name,email,password))
-            console.log("a4 reg actions");
+        console.log("PRICE IS ",tax_price, shipping_price, total_price);
+        let taxPrice=tax_price;
+        let shippingPrice=shipping_price;
+        let totalPrice=total_price;
 
-        }
+    // if(success)
+    // {
+    //     console.log("B4 CLICK",order);
+    //     // history.push(`/placeorder/${order.id}`)
+    // }
+        dispatch(orderListAction_details(
+            {
+               orderItems,
+               shippingAddress,
+               paymentMethod,
+            //    itemPrice:summ,
+               taxPrice,
+               shippingPrice,
+               totalPrice,
+            }
+        ))
+
+
+    // if(success)
+    //     {
+    //         console.log("A4 CLICK",order);
+    //         history.push(`/placeorder/${order.id}`)
+    //     }
        
-        // const userData={
-        //     "Name":name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
-        //     "email":email,
-        //     "password":password,
-        //     "confirmPassword":confirmPassword
-        // }
-
-        // axios.post(`http://localhost:4000/register_brad/add`,userData)
-        //  .then(res => console.log(res.data))
-
-        //  dispatch(userAction_details(email,password))
-
-         setName('')
-         setEmail('')
-         setPassword('')
-         setconfirmPassword('')
         
     }
 

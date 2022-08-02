@@ -17,6 +17,7 @@ import ProfileDetails from './ProfileDetails';
 import Shipping from './Shipping';
 import Payment from './Payment';
 import PlaceOrder from './PlaceOrder';
+import OrderScreen from './OrderScreen';
 
 
 function App() {
@@ -59,9 +60,14 @@ function App() {
                  <Payment />
               </Route>
 
+              <Route path="/placeorder/:id">
+                 <OrderScreen />
+              </Route>
+
               <Route path="/placeorder">
                  <PlaceOrder />
               </Route>
+
 
               <Route path="/checkout/:id?"> 
               {/* or <Route path="/checkout/">  */}
