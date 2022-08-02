@@ -44,34 +44,34 @@ function Admin_Product() {
     const deleteUser=(id)=>
     {
         console.log("(adminP) id ",id);
-        // if(window.confirm("Are you sure?"))
-        // {
-        //     const config={
-        //         headers:{
-        //             // 'Content-Type':"application/json",
-        //             Authorization:`Bearer ${userInfo.token}`
-        //         }
-        //     }
+        if(window.confirm("Are you sure?"))
+        {
+            const config={
+                headers:{
+                    // 'Content-Type':"application/json",
+                    Authorization:`Bearer ${userInfo.token}`
+                }
+            }
             
-        //     axios.delete(`http://localhost:4000/login_brad/deleteUser/${id}`,config)
-        //      .then(res => 
-        //         {
-        //             console.log("(adminUserList) deleted",res.data)
-        //             setreload(!reload)
-        //         })
-        // }
+            axios.delete(`http://localhost:4000/products/deleteProduct/${id}`,config)
+             .then(res => 
+                {
+                    console.log("(adminP) deleted",res.data)
+                    setreload(!reload)
+                })
+        }
        
     }
     const editUser=(id)=>
     {
         console.log("edit",id);
-        // history.push(`/admin/profile/${id}`)
+        history.push(`/admin/prod/edit/${id}`)
     }
 
     const createProduct=()=>
     {
         console.log("createProd adim");
-        // history.push(`/admin/profile/${id}`)
+        history.push(`/admin/createProduct`)
     }
     
 
@@ -101,7 +101,7 @@ function Admin_Product() {
                                             <th>CATEGORY</th>
 
                                             <th>BRAND</th>
-                                            {/* <th>SELER ID</th> */}   
+                                            <th>SELER ID</th>   
                                              <th>EDIT</th>
                                             <th>DELETE</th>
                                         </tr>
@@ -119,6 +119,7 @@ function Admin_Product() {
                                                     <td>{item.price}</td>
                                                     <td>{item.category}</td>
                                                     <td>{item.brand}</td>
+                                                    <td>{item.user}</td>
 
 
                                                     {/* <td>{item.isAdmin?<h3>✔️</h3>:<h3>❌</h3>}</td> */}

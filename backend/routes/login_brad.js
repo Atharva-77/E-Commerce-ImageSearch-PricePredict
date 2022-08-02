@@ -218,7 +218,7 @@ router.delete('/deleteUser/:id',protect,adminMiddleware,async(req,res)=>
 
 
 //Get profile by admin
-router.get('/admin/profile/:id',async(req,res)=>
+router.get('/admin/profile/:id',protect,adminMiddleware,async(req,res)=>
 {
     // const id=req.user1._id;
     //user1 is in protect i.e. authMIddleware file, when token is decoded

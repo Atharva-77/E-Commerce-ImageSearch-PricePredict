@@ -21,6 +21,8 @@ import OrderScreen from './OrderScreen';
 import Admin_UserList from './Admin_UserList';
 import Admin_EditUser from './Admin_EditUser';
 import Admin_Product from './Admin_Product';
+import Admin_EditProduct from './Admin_EditProduct';
+import Admin_CreateProduct from './Admin_CreateProduct';
 
 
 function App() {
@@ -74,8 +76,16 @@ function App() {
 
               <Route path="/admin/product">
                  <Admin_Product />
+              </Route> 
+
+              <Route path="/admin/prod/edit/:id">
+                 <Admin_EditProduct />
               </Route>
 
+              <Route path="/admin/createProduct">
+                 <Admin_CreateProduct />
+              </Route>
+              
 
               <Route path="/placeorder/:id">
                  <OrderScreen />
