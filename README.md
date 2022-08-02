@@ -34,4 +34,14 @@ For Price prediction, **lasso-regression** model used.
 
 **Unfortunately** you cannot access Machine learning parts(Image search, Price Prediction) as they take a lot of space, hence they couldn't be deployed/ hosted in the free tier of heroku or other such websites. But you can download the file and run on local machine.
 
-At the header, you can an dropdown menu (as shown below)
+----------------------------------------------------------------------------------------------------------------------------
+### <ins>For Image Search</ins>:-
+
+At the header(search bar), click on the downarrow besides the camera logo(as shown below)   
+
+**Step 1**   
+![Downarrow besides Camera icon near top-Search bar](https://user-images.githubusercontent.com/41574777/182393248-0f765ede-ee49-4768-9755-3c7386b5bbbb.jpg)
+
+**Upload the picture as shown below.   
+Step2**   
+![Upload picture](https://user-images.githubusercontent.com/41574777/182393237-17726f35-8d3b-4050-afdc-aa43c2a80e9a.png)
