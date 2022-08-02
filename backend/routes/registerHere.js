@@ -4,10 +4,13 @@
     let RegisterDb=require('../schema_model/register')
 
 
-    // router.get('/hi',(req,res)=>
-    // {
-    //     // res.render(`http://localhost:3000/`)
-    // });
+    router.get('/hi',(req,res)=>
+    {
+        RegisterDb.find()       //find method returns a promise.So result returened in json format
+        .then(users=> res.json(users)) 
+        .catch(err=> res.status(400).json('Error: '+err))
+    });
+    
 
     router.post('/add',async(req,res)=>
     {
@@ -31,7 +34,7 @@
                          Name,
                          email,
                          password,
-                         confirmPassword
+                        //  confirmPassword
                      })
              
              

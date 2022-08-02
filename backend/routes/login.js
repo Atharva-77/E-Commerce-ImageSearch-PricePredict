@@ -14,10 +14,18 @@ router.post("/",async(req,res)=>
         const userDetails=await RegisterDb.findOne({email:email})
         
         console.log("Userdetails",userDetails);
+        console.log("UserDeatils email , pass",userDetails.email,userDetails.password);
         // if you don't use async & await, o/p dosen't come 
         // res.send(userDetails)
         if(userDetails!=null)
-            res.send("Success")
+        {
+            if(email===userDetails.email && password==userDetails.password)
+                res.send("Success")
+            else
+                 res.send("Fail")
+
+
+        }
         else
             res.send("Fail")
     }
