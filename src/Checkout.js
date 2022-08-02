@@ -72,7 +72,7 @@ function Checkout({match,location}) {
                            title={item.name}
                            price={item.price}
                            rating={item.avgrating}
-                           image={item.image}
+                           imageURL={item.imageURL}
                            qty={item.qty}
                            countInStock={item.countInStock}
                         />

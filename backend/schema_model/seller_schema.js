@@ -4,7 +4,7 @@ const SellerSchema= new mongoose.Schema({
 
          pid:{ type: String, required: true },
           name: { type: String, required: true },
-          image: { type: String, required: true },
+          imageURL: { type: String, required: true },
           price: { type: Number, required: true },
           
           sellerId: {

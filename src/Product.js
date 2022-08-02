@@ -3,8 +3,18 @@ import { Link } from 'react-router-dom';
 import './Product.css'
 // import {useStateValue} from './StateProvider';
 
-function Product({id,title,price,rating,image}) {
-    // console.log("Product compo",id,title,price,rating,image);
+function Product({id,title,price,rating,imageURL,imageFile}) {
+    console.log("IMG.FILE",imageFile);
+    // console.log("IMG.datas",id,title,price,rating,imageURL,);
+
+    if((typeof(imageFile)=='undefined') )
+     console.log("IF");
+    else
+         {
+            console.log("ELSE IMG.FILE",imageFile.data.data);
+            console.log("ELSE len",imageURL.length);
+         }  
+
     // const [{basket},dispatch]= useStateValue();
     // console.log("The basket has --->", basket)
 
@@ -36,16 +46,24 @@ function Product({id,title,price,rating,image}) {
                    .fill()
                    .map((_,i) =>
                    (
-                    <p>:star:</p> 
+                    <p>⭐</p> 
                    ))}
                     
                 </div> */}
             </Link>
             </div>    
-            <img className="product_img" src={image} />
+          { imageURL.length>7 ?<img className="product_img" src={imageURL} />
+           :
+           (typeof(imageFile)!='undefined') ?<img className="product_img" src={`${"data:image/png;base64," +new Buffer.from(imageFile.data.data).toString("base64")}`} />:null
+          }
+          
+            {/* {(typeof(imageFile)!='undefined') && imageURL.length>0?<img className="product_img" src={`${"data:image/png;base64," +new Buffer.from(imageFile.data.data).toString("base64")}`} />:null} */}
+          
+             
+           
             <p className="product_price" style = {{textAlign:'center'}}>
-                <p>:star::star::star::star:</p>
-                <small>$</small>
+                <p>⭐⭐⭐⭐</p>
+                <small>₹ </small>
                 <strong>{price}</strong>
             </p>
             {/* https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_ST400_.jpg */}

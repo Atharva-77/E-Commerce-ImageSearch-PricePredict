@@ -41,7 +41,7 @@ function HImgSearch() {
                                                 title={i.description}
                                                 price={i.price}
                                                 rating={i.Avgrating}
-                                                image={i.image}
+                                                imageURL={i.imageURL}
                                             />
                                             ))
                                     } 

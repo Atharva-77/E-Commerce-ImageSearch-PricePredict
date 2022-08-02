@@ -16,6 +16,8 @@ import Dropdown from './Dropdown'
 import { logout_action, profileReset_action,registerReset_action } from './Reducers/actions/userActions';
 import axios from 'axios';
 
+import {ImgProductDetails_action} from './Reducers/actions/productActions'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -47,6 +49,7 @@ function Header() {
    
     const [file, setfile] = useState('')
     const [Imgpath, setImgpath] = useState('')
+    const [ImgSearchData, setImgSearchData] = useState('')
 
     const userLogin=useSelector(state => state.userLogin)
     const {userInfo}=userLogin
@@ -76,7 +79,7 @@ function Header() {
 
                 
                 //  axios.post("https://httpbin.org/anything",Data)
-                axios.post("http://localhost:4000/uploadImg/add",Data)
+                axios.post("http://localhost:4000/uploadImg/add3",Data)
                 .then(
                     res=>
                     {
@@ -100,6 +103,7 @@ function Header() {
                                 console.log("Image_Data Header ",res.data)
                                 console.log(4);
                                 setImgvalue(false)
+                                setImgSearchData(res.data)
                             }
                         )
                 //     setMessage(true)
@@ -149,8 +153,10 @@ function Header() {
 
     const searchImgHandler=()=>
     {
-               
-        console.log("SEARCH3");
+        console.log("SEARCH3",ImgSearchData);
+        dispatch(ImgProductDetails_action(ImgSearchData))
+
+        history.push(`/himg`)
     }
 
     return (

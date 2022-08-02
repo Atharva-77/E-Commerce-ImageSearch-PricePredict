@@ -49,7 +49,7 @@ router.post("/add",protect,async(req,res)=>
             
             
             //SELLER SCHEMA PART
-            sellerObj={pid:0,name:'',image:'',price:0,sellerId:0,qty:0,orderId:0,buyerId:0}
+            sellerObj={pid:0,name:'',imageURL:'',price:0,sellerId:0,qty:0,orderId:0,buyerId:0}
             sellerArray=[]
             let NewSellerOrder;
             let saveSellerOrder;
@@ -60,7 +60,7 @@ router.post("/add",protect,async(req,res)=>
                      NewSellerOrder=new sellerDb({
                         pid:item.idname,
                         name:item.name,
-                        image:item.image,
+                        imageURL:item.imageURL,
                         price:item.price,
 
                         sellerId:item.user,

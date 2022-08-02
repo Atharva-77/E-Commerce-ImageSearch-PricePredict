@@ -3,8 +3,8 @@ import Header from'./Header';
 import Home from'./Home';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Checkout from './Checkout';
-import Register from './Register';
-import Login from './Login';
+// import Register from './Register';
+// import Login from './Login';
 import Seller from './Seller'
 import ProductDetails from './ProductDetails'
 
@@ -39,13 +39,7 @@ function App() {
          
           {/*Common part to both router*/}
           <Switch >
-              <Route path="/register">
-                 <Register />
-              </Route>
-
-              <Route path="/login">
-                  <Login />
-              </Route>
+            
 
               <Route path="/login_brad">
                   <Login_brad />

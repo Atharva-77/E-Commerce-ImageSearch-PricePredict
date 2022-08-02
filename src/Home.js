@@ -49,10 +49,11 @@ function Home() {
                                         products.map((i)=>(
                                             <Product 
                                                 id={i._id}
-                                                title={i.description}
+                                                title={i.name}
                                                 price={i.price}
                                                 rating={i.Avgrating}
-                                                image={i.image}
+                                                imageURL={i.imageURL}
+                                                imageFile={i.imageFile}
                                             />
                                             // console.log("i=",i.description,i.price,i.Avgrating,i.image);
                                             ))

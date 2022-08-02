@@ -17,7 +17,7 @@ function Admin_CreateProduct() {
     const [brand, setBrand] = useState('');
 
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
+    const [imageURL, setImageURL] = useState('');
     const [price, setPrice] = useState(0);
     const [countInStock, setCountInStock] = useState(0);
     const [message, setMessage] = useState(false)
@@ -64,9 +64,9 @@ function Admin_CreateProduct() {
     { 
         setCountInStock(e.target.value)
     }
-    const onImage=(e)=> 
+    const onImageURL=(e)=> 
     { 
-        setImage(e.target.value)
+        setImageURL(e.target.value)
     }
 
 
@@ -97,7 +97,7 @@ function Admin_CreateProduct() {
       
             const { data } = await axios.post('http://localhost:4000/uploadImg', formData,config)
             console.log("DATA IS ADMIN Create",data);
-            setImage(data)
+            setImageURL(data)
             // setUploading(false)
           } 
           catch (error) {
@@ -118,7 +118,7 @@ function Admin_CreateProduct() {
              "description":description,
              "price":price,
              "countInStock":countInStock,
-             "image":image,
+             "imageURL":imageURL,
              
          }
 
@@ -174,10 +174,10 @@ function Admin_CreateProduct() {
                 <h2>CountInStock</h2>
                 <input value={countInStock} onChange={onCountInStock} placeholder="Enter CountInStock"/>
                 
-                <h2>Image</h2>
-                <input value={image} onChange={onImage} placeholder="Enter Image URL"/>
+                <h2>Image URL</h2>
+                <input value={imageURL} onChange={onImageURL} placeholder="Enter Image URL"/>
                 <h4>OR</h4>
-                <strong>Upload image</strong><input type="file" id="myFile" name={image} onChange={uploadFileHandler}/> 
+                <strong>Upload image</strong><input type="file" id="myFile" name={imageURL} onChange={uploadFileHandler}/> 
                  {/* <input type="submit" /> */}
 
                 <button className="create_acc" onClick={submit_form} >Create Product</button>

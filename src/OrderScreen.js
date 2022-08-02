@@ -200,7 +200,7 @@ function OrderScreen() {
                   <div>
                       {getorderList.getOrderItems.orderItems.map((item) => (
                         <div>
-                          <img src={item.image} className="placeOrder_img_class"/>  
+                          <img src={item.imageURL} className="placeOrder_img_class"/>  
                           <Link to={`/product/${item.idname}`}>
                               {item.name}
                           </Link>  

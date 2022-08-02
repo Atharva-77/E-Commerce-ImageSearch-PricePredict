@@ -18,7 +18,7 @@ function ASeller_CreateProduct() {
     const [brand, setBrand] = useState('');
 
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
+    const [imageURL, setImageURL] = useState('');
     const [Predictedprice, setPredictedPrice] = useState(0);
     const [price, setPrice] = useState(0);
     const [Originalprice, setOriginalPrice] = useState();
@@ -166,9 +166,9 @@ function ASeller_CreateProduct() {
     { 
         setCountInStock(e.target.value)
     }
-    const onImage=(e)=> 
+    const onImageURL=(e)=> 
     { 
-        setImage(e.target.value)
+        setImageURL(e.target.value)
     }
 
 
@@ -234,7 +234,7 @@ function ASeller_CreateProduct() {
              "description":description,
              "price":price,
              "countInStock":countInStock,
-             "image":image,
+             "imageURL":imageURL,
              
          }
 
@@ -342,8 +342,8 @@ function ASeller_CreateProduct() {
                 <h2>CountInStock</h2>
                 <input value={countInStock} onChange={onCountInStock} placeholder="Enter CountInStock"/>
                 
-                <h2>Image</h2>
-                <input value={image} onChange={onImage} placeholder="Enter Image URL"/>
+                <h2>Image URL</h2>
+                <input value={imageURL} onChange={onImageURL} placeholder="Enter Image URL"/>
                 <h4>OR</h4>
                 
                 <strong>Upload image</strong>

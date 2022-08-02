@@ -22,7 +22,7 @@ console.log("CARTACtions.js",{data});
         payload:{
             idname:data._id,
             name:data.name,
-            image:data.image,
+            imageURL:data.imageURL,
             price:data.price,
             countInStock:data.countInStock,
             avgrating: data.Avgrating,

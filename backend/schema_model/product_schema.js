@@ -52,10 +52,15 @@ const ProductSchema= new mongoose.Schema({
         type: String,
         required: true,
     },
-    image:
+    imageURL:
     {
         type: String, //Url
-        required: true,
+        // required: true,
+    },
+    imageFile:
+    {
+        data: Buffer,
+        contentType: String
     },
 
     brand:

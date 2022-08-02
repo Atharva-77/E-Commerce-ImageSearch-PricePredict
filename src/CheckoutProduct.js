@@ -8,7 +8,7 @@ import { cartListDetails,removeCartAction } from './Reducers/actions/cartActions
 
 
 
-function CheckoutProduct({id,title,price,rating,image,qty,countInStock}) {
+function CheckoutProduct({id,title,price,rating,imageURL,qty,countInStock}) {
     const dispatch=useDispatch()
 
     const removeFromCart=(id)=>
@@ -18,7 +18,7 @@ function CheckoutProduct({id,title,price,rating,image,qty,countInStock}) {
 
     return (
         <div className="checkout_product">
-          <img className="checkout_product_img" src={image} /> 
+          <img className="checkout_product_img" src={imageURL} /> 
 
             <div className="checkout_product_info"> 
                 <Link to={`/product/${id}`}>

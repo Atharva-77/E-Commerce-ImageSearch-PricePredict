@@ -61,7 +61,7 @@ router.post('/add',async(req,res)=>
         const user=req.body.user
         const category=req.body.category
         const name=req.body.name
-        const image=req.body.image
+        const imageURL=req.body.imageURL
         const brand=req.body.brand
         const description=req.body.description
         const Avgrating=req.body.Avgrating
@@ -78,7 +78,7 @@ router.post('/add',async(req,res)=>
             user,
             category,
             name,
-            image,
+            imageURL,
             brand,
             description,
             Avgrating,
@@ -243,7 +243,7 @@ router.post('/admin/products/add',protect,adminMiddleware,async(req,res)=>
         const category=req.body.category
         const name=req.body.name
         const price=req.body.price
-        const image=req.body.image
+        const imageURL=req.body.imageURL
         const brand=req.body.brand
         const countInStock=req.body.countInStock
         const description=req.body.description
@@ -258,7 +258,7 @@ router.post('/admin/products/add',protect,adminMiddleware,async(req,res)=>
             user,
             category,
             name,
-            image,
+            imageURL,
             brand,
             description,
             // Avgrating,
@@ -314,7 +314,7 @@ router.put('/admin/products/edit/:id',protect,adminMiddleware,async(req,res)=>
             Editproduct.category=req.body.category || Editproduct.category
             // Editproduct.name=req.body.name || Editproduct.n
             Editproduct.price=req.body.price || Editproduct.price
-            Editproduct.image=req.body.image || Editproduct.image
+            Editproduct.imageURL=req.body.imageURL || Editproduct.imageURL
             Editproduct.brand=req.body.brand || Editproduct.brand
             Editproduct.countInStock=req.body.countInStock || Editproduct.countInStock
             Editproduct.description=req.body.description || Editproduct.description
@@ -329,7 +329,7 @@ router.put('/admin/products/edit/:id',protect,adminMiddleware,async(req,res)=>
                     user:updateProduct.user,
                     category:updateProduct.category,
                     name:updateProduct.name,
-                    image:updateProduct.image,
+                    imageURL:updateProduct.imageURL,
                     brand:updateProduct.brand,
                     description:updateProduct.description,
                     // Avgrating:,
@@ -405,7 +405,7 @@ router.post('/seller/products/add',protect,sellerMiddleware,async(req,res)=>
         const category=req.body.category
         const name=req.body.name
         const price=req.body.price
-        const image=req.body.image
+        const imageURL=req.body.imageURL
         const brand=req.body.brand
         const countInStock=req.body.countInStock
         const description=req.body.description
@@ -420,7 +420,7 @@ router.post('/seller/products/add',protect,sellerMiddleware,async(req,res)=>
             user,
             category,
             name,
-            image,
+            imageURL,
             brand,
             description,
             // Avgrating,
@@ -525,7 +525,7 @@ router.put('/seller/products/edit/:id',protect,sellerMiddleware,async(req,res)=>
                         Editproduct.email=req.body.email || Editproduct.email
                         Editproduct.category=req.body.category || Editproduct.category
                         Editproduct.price=req.body.price || Editproduct.price
-                        Editproduct.image=req.body.image || Editproduct.image
+                        Editproduct.imageURL=req.body.imageURL || Editproduct.imageURL
                         Editproduct.brand=req.body.brand || Editproduct.brand
                         Editproduct.countInStock=req.body.countInStock || Editproduct.countInStock
                         Editproduct.description=req.body.description || Editproduct.description
@@ -538,7 +538,7 @@ router.put('/seller/products/edit/:id',protect,sellerMiddleware,async(req,res)=>
                                 user:updateProduct.user,
                                 category:updateProduct.category,
                                 name:updateProduct.name,
-                                image:updateProduct.image,
+                                imageURL:updateProduct.imageURL,
                                 brand:updateProduct.brand,
                                 description:updateProduct.description,
                                 price:updateProduct.price,
