@@ -1,6 +1,7 @@
 # [E-Commerce Website With ImageSearch & PricePredict](https://buytes.herokuapp.com/)
 This is website in **MERN(MongoDB Express, Reactjs, Nodejs)**:- https://buytes.herokuapp.com/ .   
-**Flask framework** used for image search, price prediction.
+**Flask framework** used for image search, price prediction.   
+(See last line for image search, price prediction)
 
 You can **Add/Remove items from Basket**, **Write Product review**.   
 **Unique Feature** (which isn't on most e-commerce sites):- User(buyer) can **Upload an image of product** and the website shows similar products to the user. 
@@ -29,6 +30,8 @@ Backend is made in **Nodejs, express** and **Mongodb** is the database used.
 **Flask framework** used for image search, price prediction.
 
 For Image search, **resnet-50** model used.
-For Price prediction, **lasso-regression** model used.
+For Price prediction, **lasso-regression** model used.   
 
 **Unfortunately** you cannot access Machine learning parts(Image search, Price Prediction) as they take a lot of space, hence they couldn't be deployed/ hosted in the free tier of heroku or other such websites. But you can download the file and run on local machine.
+
+At the header, you can an dropdown menu (as shown below)
