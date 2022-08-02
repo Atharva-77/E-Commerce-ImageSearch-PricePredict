@@ -4,7 +4,7 @@ import {productListReducer, productDetailsReducer} from './Reducers/productReduc
 import {composeWithDevTools } from 'redux-devtools-extension';
 import { cartReducer } from "./Reducers/cartReducer";
 import { userLoginReducer,userRegisterReducer, userProfileDetailsReducer,adminUserListReducer } from "./Reducers/userReducer";
-import { orderListReducer,getorderListReducer,orderPayReducer } from "./Reducers/orderReducer";
+import { orderListReducer,getorderListReducer,orderPayReducer, getAdminorderListReducer } from "./Reducers/orderReducer";
 
 
 // const initialState={}
@@ -23,7 +23,8 @@ const reducer=combineReducers({
     orderList:orderListReducer,
     getorderList:getorderListReducer,
     orderPay:orderPayReducer,
-    
+    getAdminorderList:getAdminorderListReducer,
+    // getAdminorderList:getAdminorderListReducer,
     
 })
 

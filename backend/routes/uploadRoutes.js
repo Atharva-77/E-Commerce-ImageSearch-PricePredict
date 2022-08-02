@@ -19,6 +19,7 @@ function checkFileType(file,cb){
     const extname=filetypes.test(path.extname(file.originalname).toLowerCase())
     const mimetype=filetypes.test(file.mimetype)
 console.log("UPLOADROUTES ",1);
+
     if(extname && mimetype)
     {
         console.log("UploadROUTES.JS",extname,mimetype);

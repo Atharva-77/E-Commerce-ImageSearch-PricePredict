@@ -10,6 +10,9 @@ import {    ORDER_LIST_REQUEST,
             ORDER_PAY_SUCCESS,
             ORDER_PAY_FAILURE,
             ORDER_PAY_RESET,
+            ADMIN_ORDER_LIST_REQUEST,
+            ADMIN_ORDER_LIST_SUCCESS,
+            ADMIN_ORDER_LIST_FAILURE,
             
         
         } from './constants/orderConstants' 
@@ -83,6 +86,53 @@ switch(action.type){
         return state
 }
 }
+
+
+
+
+
+
+
+
+
+
+//ADMIN GET ORDER LIST
+const initialAdminGetState=
+{
+    loading: true,
+    AdmingetOrderItems:[],
+    // shippingAddress:{},
+    error:''
+}
+
+
+export const getAdminorderListReducer = ( state=initialAdminGetState, action)=>
+{
+switch(action.type){
+    case ADMIN_ORDER_LIST_REQUEST: return {
+        ...state,  //Q.can u comment this and see
+        loading:true
+    }
+
+    case ADMIN_ORDER_LIST_SUCCESS: return {
+        ...state,
+        loading: false,
+        AdmingetOrderItems: action.payload
+    }
+
+    case ADMIN_ORDER_LIST_FAILURE: return {
+        ...state,
+        loading: false,
+        error: action.payload
+    }
+
+    default:
+        return state
+}
+}
+
+
+
 
 
 

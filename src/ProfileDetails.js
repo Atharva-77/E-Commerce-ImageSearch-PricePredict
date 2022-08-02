@@ -212,6 +212,7 @@ function ProfileDetails() {
                                         <th>TOTAL</th>
                                         <th>PAID</th>
                                         <th>DELIVERED</th>
+                                        <th>DETAILS</th>
                                     </tr>
                             {/* </thread> */}
                 
@@ -234,9 +235,9 @@ function ProfileDetails() {
                                             <td>{item.isDelivered?<h3>✔️</h3>:<h3>❌</h3>}</td>
 
                                             <td>
-                                                {/* <Link to={`/order/${item._id}`}> */}
+                                                <Link to={`/placeorder/${item._id}`}>
                                                     <button>Details</button>
-                                                {/* </Link> */}
+                                                </Link>
                                             </td>
                                         </tr>
                                         

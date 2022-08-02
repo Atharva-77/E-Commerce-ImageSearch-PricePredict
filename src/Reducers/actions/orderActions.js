@@ -10,6 +10,9 @@ import {
     ORDER_PAY_REQUEST,
     ORDER_PAY_SUCCESS,
     ORDER_PAY_FAILURE,
+    ADMIN_ORDER_LIST_REQUEST,
+    ADMIN_ORDER_LIST_SUCCESS,
+    ADMIN_ORDER_LIST_FAILURE,
     
     } from '../constants/orderConstants' 
 
@@ -132,6 +135,70 @@ export const getorderListAction_details =(id)=> async(dispatch,getState)=> {
     } catch (error) {
         console.log("User GetorderListDetails actions");
         dispatch(getorderListDetailsFailure(error))
+        
+    }
+}
+
+
+
+
+
+
+
+//ADMIN Get order
+const getAdminorderListDetailsRequest = () =>
+{
+    return {
+        type:ADMIN_ORDER_LIST_REQUEST
+    }
+}
+
+const getAdminOrderSuccess = data =>
+{
+    return{
+      type:ADMIN_ORDER_LIST_SUCCESS, 
+      payload: data
+    }
+}
+
+const getAdminorderListDetailsFailure = error =>
+{
+    return{
+       type:ADMIN_ORDER_LIST_FAILURE,
+       payload: error
+    }
+}
+
+export const getAdminorderListAction_details =()=> async(dispatch,getState)=> {
+
+    try 
+    {
+        dispatch(getAdminorderListDetailsRequest())
+    
+        const {userLogin:{userInfo}} = getState()
+       
+        //Q.use??
+        const config={
+            headers:{
+                // 'Content-Type':"application/json",
+                Authorization:`Bearer ${userInfo.token}`
+            }
+        }
+        // console.log("Order After config");
+        //Q.WHy not direct profile in place of id?
+        // console.log("waiting for data");
+    
+        const {data}= await axios.get(`http://localhost:4000/order/admin/allorder`,config)
+    
+        console.log("orderACTIONADMIN After data",data);
+    
+        dispatch(getAdminOrderSuccess(data))
+        // console.log("order success");
+       
+    
+    } catch (error) {
+        console.log("User GetAdminorderListDetails actions");
+        dispatch(getAdminorderListDetailsFailure(error))
         
     }
 }

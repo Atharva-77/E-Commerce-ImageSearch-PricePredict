@@ -1,7 +1,7 @@
 const exp= require('express')
 const router= exp.Router()
 // const generateToken= require('../generateToken')
-const {protect} = require('../middleware/authMiddleware.js')
+const {protect,adminMiddleware} = require('../middleware/authMiddleware.js')
 
 let orderDb=require('../schema_model/order_schema')
 
@@ -142,7 +142,9 @@ router.get('/myorder',protect,async(req,res)=>
 
 });
 
-//get order
+
+
+//get order.....order screen
 router.get('/:id',protect,async(req,res)=>
 {
     const id=req.user1._id;
@@ -154,7 +156,7 @@ router.get('/:id',protect,async(req,res)=>
         //user:- its defined in order schema....that name used not Db's name
         
         if(orderData){
-            // console.log("order_route");
+            console.log("order_route",orderData);
 
             res.send(orderData)
           
@@ -173,6 +175,36 @@ router.get('/:id',protect,async(req,res)=>
   
     // res.send("success profile")
 
+
+});
+
+
+
+
+
+//ADMIN Get all orders
+router.get('/admin/allorder',protect,adminMiddleware,async(req,res)=>
+{
+    // const id=req.user1._id;
+    console.log("ID IN ALLORDERS");
+    
+    try{
+        const Allorders=await orderDb.find({}).populate('user','Name id')
+        
+            console.log("IRDER_ROUTES ALLORDER",Allorders);
+            // console.log("USER ON ALL ORDER",Allorders.user);
+            res.send(
+                {
+                   Allorders
+                                       
+                }
+            )
+    }
+    
+    
+    catch(error) {
+        res.status(200).send("Invalid details")
+    }
 
 });
 

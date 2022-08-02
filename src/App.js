@@ -23,6 +23,7 @@ import Admin_EditUser from './Admin_EditUser';
 import Admin_Product from './Admin_Product';
 import Admin_EditProduct from './Admin_EditProduct';
 import Admin_CreateProduct from './Admin_CreateProduct';
+import Admin_Order_List from './Admin_Order_List';
 
 
 function App() {
@@ -84,6 +85,10 @@ function App() {
 
               <Route path="/admin/createProduct">
                  <Admin_CreateProduct />
+              </Route>
+
+              <Route path="/admin/orderlist">
+                 <Admin_Order_List />
               </Route>
               
 
