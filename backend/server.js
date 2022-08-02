@@ -29,6 +29,12 @@ app.use('/register_brad',require('./routes/register_brad'))
 app.use('/products',require('./routes/products'))
 app.use('/order',require('./routes/order_routes'))
 
+app.get('/config/paypal',(req,res)=>
+    {
+        // res.send("config paypal")
+        res.send(process.env.PAYPAL_CLIENTID)
+    }
+)
 
 app.listen(port, ()=>
 {

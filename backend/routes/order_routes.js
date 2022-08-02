@@ -19,7 +19,7 @@ router.post("/add",protect,async(req,res)=>
 
     console.log(orderItems,shippingAddress,paymentMethod,taxPrice,shippingPrice,totalPrice);
 
-
+    // console.log("CLIENT ID",process.env.PAYPAL_CLIENTID);
     try{
 
         if(orderItems.length ==0 )
@@ -93,6 +93,55 @@ router.get('/:id',protect,async(req,res)=>
 
 
 });
+
+
+
+
+
+//Put payment
+router.put('/:id/pay',protect,async(req,res)=>
+{
+    const id=req.user1._id;
+    //user1 is in protect i.e. authMIddleware file, when token is decoded
+    console.log("PUT/PAY",id);
+    
+    try{
+        const orderData=await orderDb.findById(req.params.id)
+        //user:- its defined in order schema....that name used not Db's name
+        
+        if(orderData){
+
+            orderData.isPaid=true
+            orderData.paidAt=Date.now()
+
+            //we get this from paypal...
+            orderData.paymentResult={
+                id: req.body.id,
+                status: req.body.status,
+                update_time: req.body.update_time,
+                email_address: req.body.payer.email_address
+            }
+
+            const updatedOrder= await orderData.save()
+
+
+            res.send(updatedOrder)
+          
+        }
+    
+        else{
+            res.status(401).send("NO order found in payment")
+        }
+    }
+    
+    catch(error) {
+        res.status(200).send("Invalid details of payment")
+    }
+    
+
+
+});
+
 
 
 

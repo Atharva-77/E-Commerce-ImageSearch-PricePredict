@@ -7,6 +7,9 @@ import {
     GET_ORDER_LIST_REQUEST,
     GET_ORDER_LIST_SUCCESS,
     GET_ORDER_LIST_FAILURE,
+    ORDER_PAY_REQUEST,
+    ORDER_PAY_SUCCESS,
+    ORDER_PAY_FAILURE,
     
     } from '../constants/orderConstants' 
 
@@ -131,5 +134,57 @@ export const getorderListAction_details =(id)=> async(dispatch,getState)=> {
         dispatch(getorderListDetailsFailure(error))
         
     }
-    }
+}
 
+
+
+
+//Payment action
+export const payorderAction_details =(id,paymentResult)=> async(dispatch,getState)=> {
+                                        //frm paypal
+    try 
+    {
+        dispatch(
+            {
+                type:ORDER_PAY_REQUEST
+            })
+
+        const {userLogin:{userInfo}} = getState()
+        
+        //Q.use??
+        const config={
+            headers:{
+                'Content-Type':"application/json",
+                Authorization:`Bearer ${userInfo.token}`
+            }
+        }
+        // console.log("Order After config");
+        //Q.WHy not direct profile in place of id?
+        // console.log("waiting for data");
+
+        const {data}= await axios.put(`http://localhost:4000/order/${id}/pay`,paymentResult,config)
+
+        // console.log("order After data",data);
+
+        dispatch(
+            {
+                type:ORDER_PAY_SUCCESS, 
+                payload: data
+            })        // console.log("order success");
+        
+
+    } 
+    catch (error) {
+        console.log("Payment failure actions");
+        dispatch(
+            {
+                type:ORDER_PAY_FAILURE, 
+                payload: error
+            })        
+    }
+}
+
+
+
+
+    

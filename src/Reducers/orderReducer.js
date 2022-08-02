@@ -5,6 +5,11 @@ import {    ORDER_LIST_REQUEST,
             GET_ORDER_LIST_REQUEST,
             GET_ORDER_LIST_SUCCESS,
             GET_ORDER_LIST_FAILURE,
+
+            ORDER_PAY_REQUEST,
+            ORDER_PAY_SUCCESS,
+            ORDER_PAY_FAILURE,
+            ORDER_PAY_RESET,
             
         
         } from './constants/orderConstants' 
@@ -79,3 +84,44 @@ switch(action.type){
 }
 }
 
+
+
+
+
+//PAY REDUCER
+const initialPayState=
+{
+    loading: true,
+    success:false,
+    error:''
+}
+
+
+export const orderPayReducer = ( state=initialPayState, action)=>
+{
+switch(action.type){
+    case ORDER_PAY_REQUEST: return {
+        // ...state,  //Q.can u comment this and see
+        loading:true
+    }
+
+    case ORDER_PAY_SUCCESS: return {
+        // ...state,
+        loading: false,
+        success: true
+    }
+
+    case ORDER_PAY_FAILURE: return {
+        // ...state,
+        loading: false,
+        error: action.payload
+    }
+    //Empty
+    case ORDER_PAY_RESET: return {
+
+    }
+
+    default:
+        return state
+}
+}
