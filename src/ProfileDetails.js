@@ -44,17 +44,41 @@ function ProfileDetails() {
 
         else
         {
-            //Q.use??...brad says:- if no user , dispatch userProfileAction
-            if(!user.name)
-                dispatch(userProfileAction_details('profile'))
-            else//Q.use??...brad says:- if we hv user, set email, name..not pass
+            //Q.use??...brad says:- if no user , dispatch userProfileAction..it means fetch user from database & then else part is entered where name,email is set
+            console.log("USER NAME b4 if",user);
+        //  if(!(typeof(user)=='undefined') && !user.name)
+                {
+                    console.log("userProfile b4");
+                    dispatch(userProfileAction_details('profile'))
+                    console.log("userProfile a4");
+                }
+             //Q.use??...brad says:- if we hv user, set email, name..not pass   
+            // else
             {
                 
-                setName(user.name)
-                setEmail(user.email)
+                // setName(user.name)
+                // setEmail(user.email)
             }
+            // if(!(typeof(user)=='undefined'))
+            // {
+            //     setName(user.name)
+            //     setEmail(user.email)
+            //     console.log("USER NAME a4 if",user)
+            // }
+            
         }
-    }, [dispatch,history,userInfo,user])
+    }, [dispatch,history,userInfo])
+
+    useEffect(() => {
+
+        if(!(typeof(user)=='undefined'))
+        {
+            setName(user.name)
+            setEmail(user.email)
+            console.log("USER NAME a4 if",user)
+        }
+       
+    }, [user])
 
     const onName=(e)=> 
     { 
@@ -82,6 +106,24 @@ function ProfileDetails() {
         else
         {
             // dispatch(userRegisterAction_details(Name,email,password))
+               const userData={
+                   "Name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+                    "email":email,
+                    "password":password,
+                    "confirmPassword":confirmPassword
+                }
+
+                const config={
+                    headers:{
+                        'Content-Type':"application/json",
+                        Authorization:`Bearer ${userInfo.token}`
+                    }
+                }
+
+            axios.put(`http://localhost:4000/login_brad/profile`,userData,config)
+             .then(res => console.log(res.data))
+
+             console.log("data filled");
 
         }
        
@@ -97,13 +139,21 @@ function ProfileDetails() {
 
         //  dispatch(userAction_details(email,password))
 
-         setName('')
-         setEmail('')
-         setPassword('')
-         setconfirmPassword('')
+        //  setName('')
+        //  setEmail('')
+        //  setPassword('')
+        //  setconfirmPassword('')
         
     }
 
+    // setName(user.name)
+    // setEmail(user.email)
+    // if(!(typeof(user)=='undefined'))
+    // {
+    //     setName(user.name)
+    //     setEmail(user.email)
+    // }
+    console.log("b4 return",user);
     return (
         <div className="register">
             <Link to="/">
@@ -114,7 +164,7 @@ function ProfileDetails() {
 
             <div className="registration_details">
                 {/* <form> */}
-                <h1 className="heading">brad-Profile</h1>
+                <h1 className="heading">Profile</h1>
                 
                 {/* {error}
                 {loading && <h2>Loading</h2>} */}

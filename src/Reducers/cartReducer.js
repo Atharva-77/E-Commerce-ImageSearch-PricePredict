@@ -1,10 +1,15 @@
-import {CART_ADD_BASKET, CART_REMOVE_BASKET} from './constants/cartConstants'
-
+import {
+  CART_ADD_BASKET, 
+  CART_REMOVE_BASKET, 
+  CART_SAVE_SHIPPING_ADDRESS ,
+  CART_PAYMENT_METHOD} from './constants/cartConstants'
 
 const initialStateCart=
 {
     loading: true,
     basketItems:[],
+    shippingAddr:{},
+    paymentMethod:'',
     error:''
 }
 
@@ -74,6 +79,23 @@ export const cartReducer = ( state=initialStateCart ,action) =>
          basketItems: state.basketItems.filter(x=> x.idname !==item.idname )
        }
      }
+
+
+     case CART_SAVE_SHIPPING_ADDRESS: {
+
+        return {
+         ...state,
+         shippingAddr: action.payload
+       }
+     }
+
+     case CART_PAYMENT_METHOD: {
+
+      return {
+       ...state,
+       paymentMethod: action.payload
+     }
+   }
 
 
 

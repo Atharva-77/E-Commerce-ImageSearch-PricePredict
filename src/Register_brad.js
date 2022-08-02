@@ -65,7 +65,9 @@ function Register() {
         }
         else
         {
+            console.log("b4 reg actions");
             dispatch(userRegisterAction_details(Name,email,password))
+            console.log("a4 reg actions");
 
         }
        
@@ -119,7 +121,7 @@ function Register() {
                 <button className="create_acc" onClick={submit_form} >Create Your Account</button>
                 <h3>OR</h3>
 
-                <Link to="/login" style={{ textDecoration: 'none' }}>
+                <Link to="/login_brad" style={{ textDecoration: 'none' }}>
                      <button className="login" >Login</button>
                 </Link>
                 {/* </form> */}

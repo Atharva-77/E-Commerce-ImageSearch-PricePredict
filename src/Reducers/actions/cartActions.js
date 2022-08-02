@@ -1,4 +1,8 @@
-import {CART_ADD_BASKET, CART_REMOVE_BASKET} from '../constants/cartConstants'
+import {
+    CART_ADD_BASKET, 
+    CART_REMOVE_BASKET, 
+    CART_SAVE_SHIPPING_ADDRESS ,
+    CART_PAYMENT_METHOD} from '../constants/cartConstants'
 import axios from 'axios'
 
 // const addTocart = () =>
@@ -39,6 +43,27 @@ export const removeCartAction =(id) => async(dispatch) =>{
         payload:{
             idname:id
         }
+    })
+
+}
+
+
+
+export const saveShippingAddressAction =(data) => async(dispatch) =>{
+
+    dispatch({
+        type:CART_SAVE_SHIPPING_ADDRESS,
+        payload:data
+    })
+
+}
+
+
+export const paymentMethodAction =(data) => async(dispatch) =>{
+
+    dispatch({
+        type:CART_PAYMENT_METHOD,
+        payload:data
     })
 
 }

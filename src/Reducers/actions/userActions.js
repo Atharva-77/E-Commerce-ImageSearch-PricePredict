@@ -131,7 +131,9 @@ export const userRegisterAction_details =(name,email,password)=> async(dispatch)
         const {data}= await axios.post('http://localhost:4000/register_brad/add',{name,email,password},config)
         console.log("After data");
         dispatch(userRegisterSuccess(data))
+        console.log("USER RR SUEECESS");
         dispatch(userLoginSuccess(data))
+        console.log("USER LL");
         // localStorage.setItem('cartItemsss',JSON.stringify(getState().cartList.cartItemsss))
 
     } catch (error) {
@@ -186,9 +188,12 @@ export const userProfileAction_details =(id)=> async(dispatch,getState)=> {
         }
         console.log("Profile After config");
         //Q.WHy not direct profile in place of id?
+        console.log("waiting for data");
         const {data}= await axios.get(`http://localhost:4000/login_brad/${id}`,config)
         console.log("Profile After data",data);
+
         dispatch(userProfileDetailsSuccess(data))
+        console.log("Profile success");
        
 
     } catch (error) {

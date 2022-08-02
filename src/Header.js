@@ -21,8 +21,10 @@ function Header() {
 
     const userLogin=useSelector(state => state.userLogin)
     const {userInfo}=userLogin
+
     // console.log((userInfo));
     // const [{basket},dispatch]= useStateValue();
+    
     const dispatch=useDispatch()
     const cartList = useSelector(state => state.cartList)
     const {basketItems}=cartList
@@ -90,7 +92,7 @@ function Header() {
                 </div>    
                 :
                 
-                <Link to="/register" >
+                <Link to="/register_brad" >
                     <div className="header_rightSubpart" >
                       <span className="lineOne">Hello Guests</span>
                        <span className="lineTwo">Sign In</span>

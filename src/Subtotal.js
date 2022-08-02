@@ -1,20 +1,28 @@
 
 import React from 'react'
 import './Subtotal.css'
+
 import CurrencyFormat from 'react-currency-format'
 import {useStateValue} from './StateProvider';
 import { getBasketTotal } from './reducer';
+import {useSelector,useDispatch} from 'react-redux'
 
 import { useHistory } from "react-router-dom";
 
 function Subtotal({totalItems,price}) {
 
+
+    const userLogin=useSelector(state => state.userLogin)
+    const {userInfo}=userLogin
+
     // const [{basket},dispatch]= useStateValue();
+
     let history = useHistory();
 
     const checkoutHandler=()=>
     {
-        history.push(`/login?redirect=shipping`)
+        {!(typeof(userInfo)=='undefined') && userInfo.length!=0? history.push(`/shipping`):history.push(`/login_brad`)}
+       
     }
 
     return (

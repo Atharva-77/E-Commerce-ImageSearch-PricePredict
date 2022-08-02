@@ -14,6 +14,8 @@ import store from './Store'
 import Login_brad from './Login_brad';
 import Register_brad from './Register_brad';
 import ProfileDetails from './ProfileDetails';
+import Shipping from './Shipping';
+import Payment from './Payment';
 
 
 function App() {
@@ -47,6 +49,14 @@ function App() {
               <Route path="/seller">
                   <Seller />
                </Route>
+
+               <Route path="/shipping">
+                 <Shipping />
+              </Route>
+
+              <Route path="/payment">
+                 <Payment />
+              </Route>
 
               <Route path="/checkout/:id?"> 
               {/* or <Route path="/checkout/">  */}

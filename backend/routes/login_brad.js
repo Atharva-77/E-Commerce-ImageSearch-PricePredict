@@ -106,9 +106,9 @@ router.put('/profile',protect,async(req,res)=>
         
         if(User){
 
-            User.Name=req.body.name || User.Name
-            // console.log("USER.NAME",req.body.name || User.Name);
-            // console.log("USER.NAME-",User.Name);
+            User.Name=req.body.Name || User.Name
+            console.log("USER.NAME",req.body.name || User.Name);
+            console.log("USER.NAME-",User.Name,User.Name);
             
             User.email=req.body.email || User.email
 
@@ -120,7 +120,7 @@ router.put('/profile',protect,async(req,res)=>
         console.log("BODY",req.body);
 
            const updateUser= await User.save()                
-
+            console.log("Updated user",updateUser);
             res.send(
                 {
                     ids:updateUser._id,
