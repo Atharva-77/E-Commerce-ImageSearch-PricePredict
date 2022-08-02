@@ -58,6 +58,7 @@ function ASeller_Product() {
                     console.log("(adminP) deleted",res.data)
                     setreload(!reload)
                 })
+                
         }
        
     }

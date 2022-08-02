@@ -19,6 +19,28 @@ CORS(app)
 feature_vector_list = []
 product_id_list = []
 
+@app.route("/feature_vector_db", methods = ['GET','POST'])
+def feature_vector_db():
+	print("Before")
+
+	feature_vector_list = []
+	product_id_list = []
+
+	data = request.get_json(force = True)
+	print(data[0])
+	for i in range(len(data)):
+		featureVector = data[i]['featureVector']
+		productId = data[i]['productId']
+		feature_vector_list.append(featureVector)
+		product_id_list.append(productId)
+
+	print("Data Arrives",product_id_list)
+
+	if len(product_id_list) > 0:
+		return {'message_result': "good"}
+	else:
+		return {'message_result': "bad"}
+
 @app.route("/extract_features", methods = ['GET','POST'])
 def extract_features():
 	print("Before")
@@ -26,11 +48,15 @@ def extract_features():
 	print("Data Arrives",data)
 	data_values = list(data.values())
 	product_id = data_values[0]
-	image_path = data_values[1]
+	image_directions = list(data_values[1].values())
+	print(image_directions)
+	image_path = image_directions[0]
+	image_link = image_directions[1]
 	
 	model = ResNet50(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
 
 	def extract_features_func(img_path, model):
+		print(img_path)
 		input_shape = (128,128,3)
 		regex = re.compile(
 			r'^(?:http|ftp)s?://' # http:// or https://
@@ -62,11 +88,29 @@ def extract_features():
 		
 		return normalized_features
 
-	features = extract_features_func(image_path, model)
+	if image_link != '':
+		features = extract_features_func(image_link, model)
+	else:
+		features = extract_features_func(image_path, model)
 	feature_vector_list.append(features)
 	product_id_list.append(product_id)
 
 	return {"product_id" : product_id, "image_feature" : features.tolist()}
+
+@app.route('/delete_product', methods = ['GET','POST'])
+def delete_product():
+	data = request.get_json(force = True)
+	data_values = list(data.values())
+	prod_id = data_values[0]
+
+	val = -1
+	for i in range(len(product_id_list)):
+		if product_id_list[i] == prod_id:
+			ind = i
+			break
+	
+	product_id_list.pop(i)
+	feature_vector_list.pop(i)
 
 @app.route("/image_search", methods = ['GET','POST'])
 def image_search():
@@ -106,5 +150,5 @@ def image_search():
 	# print(product_id_list)
 	return {"product_ids" : result_product_id}
 
-if __name__ == "__main__":
+if __name__ == "__main__":	
 	app.run(port = 7080, debug = True)

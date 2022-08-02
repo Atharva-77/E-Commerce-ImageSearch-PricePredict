@@ -21,7 +21,7 @@ router.post("/add",async(req,res)=>
         
         const newFeature=new ImageSearchDb({
             productId : product_id,
-            featureVector : image_feature
+           featureVector : image_feature
         })
 
         console.log(newFeature);
@@ -76,7 +76,7 @@ router.get("/",async(req,res)=>
         
         const AllImageSearch=await ImageSearchDb.find({})
         
-        console.log("ALLIMG ",AllImageSearch);
+        // console.log("ALLIMG ",AllImageSearch);
         res.send(AllImageSearch)
         
         // find({"sellerId":id.toString()})

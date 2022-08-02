@@ -14,6 +14,10 @@ function CheckoutProduct({id,title,price,rating,imageURL,qty,countInStock}) {
     const [qty1, setqty1] = useState(qty)
     console.log("QTY1,QTY",qty1,qty);
     let i=qty;
+
+    let rate;
+    rate=Math.round(rating)
+    
     const removeFromCart=(id)=>
     {
         dispatch(removeCartAction(id))
@@ -39,7 +43,7 @@ function CheckoutProduct({id,title,price,rating,imageURL,qty,countInStock}) {
                  </p>
                  
                 <div className="checkout_product_rating">
-                   {Array((rating))
+                   {Array((rate))
                    .fill()
                    .map((_,i) =>
                    (

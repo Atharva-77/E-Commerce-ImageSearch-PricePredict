@@ -1,29 +1,80 @@
-// import React from 'react'
-// import './Home.css'
-// import Product from './Product'
 
-// function Home() {
-//     return (
-//         <div>
-//             <h2>Home</h2>
-//         </div>
-
-//     )
-// }
-
-// export default Home
-
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import './Home.css'
 import Product from './Product'
 import {listProduct} from './Reducers/actions/productActions'
 import { useSelector,useDispatch } from 'react-redux'
 import { useParams } from 'react-router';
+import axios from 'axios';
 
 function Home() {
     const {keyword}=useParams()
     console.log("Keyword",keyword);
     const dispatch=useDispatch()
+
+    const [featureVector, setfeatureVector] = useState('')
+    const [productId, setproductId] = useState('')
+    const [mess, setmess] = useState(0)
+    // console.log(setfeatureMessage)
+    let x = 0;
+
+    useEffect(() => {
+
+        axios.get("http://localhost:4000/imgFeature/")
+        .then(
+               res=>
+               {
+                //    console.log("Feature wala data",res.data)
+                   setfeatureVector(res.data)
+                //    setproductId(res.data.productId)
+                   console.log("PIDS",res.data)
+                   setmess(1);
+                   x = 1;
+                   console.log("line 31", x,mess)
+                   console.log(1);
+               }
+            )
+        console.log("outside x",x);
+        // if(x == 1)
+        // {
+        //     console.log("In x", x)
+        //     const featureVectorData={
+        //         // "productId":productId,
+        //         "featureVector":featureVector
+        //     }
+        //     axios.post("http://localhost:7080/feature_vector_db",featureVectorData)
+        //     .then(
+        //        res=>
+        //        {
+        //            console.log("Feature wala data")
+        //            console.log(2);
+        //        }
+        //     )
+        // }
+
+
+    }, [])
+
+    useEffect(() => {
+        console.log("line 59 x",x);
+        if(mess == 1)
+        {
+            console.log("In x", x)
+            const featureVectorData={
+                // "productId":productId,
+                "featureVector":featureVector
+            }
+            // axios.post("http://localhost:7080/feature_vector_db",featureVectorData)
+            // .then(
+            //    res=>
+            //    {
+            //        console.log("Feature wala data")
+            //        console.log(2);
+            //    }
+            // )
+        }
+    }, [mess])
+
 
     useEffect(() => {
         dispatch(listProduct(keyword))
