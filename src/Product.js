@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import { Link } from 'react-router-dom';
 import './Product.css'
@@ -26,35 +24,34 @@ function Product({id,title,price,rating,image}) {
     
     
     return (
-        <div className="product">
+        <div className="product"> 
             
             <div className="product_info">
 
-            <Link to={`/product/${id}`} style={{ textDecoration: 'none' ,color:'#374151'}}>
+            <Link to={`/product/${id}`} style={{ textDecoration: 'none' ,color:'#374151',textAlign:'center'}}>
                 <p>{title}</p>
-            
-
-                <p className="product_price">
-                    <small>$</small>
-                     <strong>{price}</strong>
-                 </p>
+        
                 {/* <div className="product_rating">
-                   WHat is this below?
                    {Array(rating)
                    .fill()
                    .map((_,i) =>
                    (
-                    <p>⭐</p> 
+                    <p>:star:</p> 
                    ))}
                     
                 </div> */}
-                </Link>
+            </Link>
             </div>    
-            <img className="product_img" src={image} /> 
+            <img className="product_img" src={image} />
+            <p className="product_price" style = {{textAlign:'center'}}>
+                <p>:star::star::star::star:</p>
+                <small>$</small>
+                <strong>{price}</strong>
+            </p>
             {/* https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_ST400_.jpg */}
             {/* https://images-na.ssl-images-amazon.com/images/I/81-QB7nDh4L.jpg */}
             
-            <button >Add to Basket</button>
+            <button style={{width:200, borderRadius:5, height:23}}>Add to Basket</button>
 
         </div>
     )

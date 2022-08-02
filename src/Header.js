@@ -16,8 +16,6 @@ import Dropdown from './Dropdown'
 import { logout_action, profileReset_action,registerReset_action } from './Reducers/actions/userActions';
 import axios from 'axios';
 
-import {ImgProductDetails_action} from './Reducers/actions/productActions'
-
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -49,8 +47,6 @@ function Header() {
    
     const [file, setfile] = useState('')
     const [Imgpath, setImgpath] = useState('')
-    const [ImgSearchData, setImgSearchData] = useState('')
-    
 
     const userLogin=useSelector(state => state.userLogin)
     const {userInfo}=userLogin
@@ -104,7 +100,6 @@ function Header() {
                                 console.log("Image_Data Header ",res.data)
                                 console.log(4);
                                 setImgvalue(false)
-                                setImgSearchData(res.data)
                             }
                         )
                 //     setMessage(true)
@@ -154,12 +149,8 @@ function Header() {
 
     const searchImgHandler=()=>
     {
-        
-        console.log("SEARCH3",ImgSearchData);
-        dispatch(ImgProductDetails_action(ImgSearchData))
-
-        history.push(`/himg`)
-
+               
+        console.log("SEARCH3");
     }
 
     return (
@@ -182,37 +173,23 @@ function Header() {
                         onChange={(e)=>setkeyword(e.target.value)}
 
                          placeholder="Search here"/>
+                <div className = "dropImage">
+                {/* <button onClick={searchHandler}>Search Here</button> */}
+                <SearchOutlinedIcon className="header_searchIcon" onClick={searchHandler}/>
                 
-                     <div className = "dropImage">
-                            {/* <button onClick={searchHandler}>Search Here</button> */}
-                            <SearchOutlinedIcon className="header_searchIcon" onClick={searchHandler}/>
-                            <CameraAlt  className="header_searchIcon_Img" onChange={searchImgHandler} />
-                            <ArrowDropDownIcon className="arrow_iconCamera" onClick={()=>setopenCamera(!openCamera)}/>
-                                {/* <input type="file" id="file" accept={fileTypes} onChange={searchImgHandler}/> */}
-                          {/* <> */}
-                            {openCamera? 
-                                            <Dropdown >            
-                                                NinuUpload<input type="file" id="file" accept={fileTypes} onChange={uploadImgHandler}/>
-                                                {/* <input
-                                                    accept="image/*"
-                                                    className={classes.input}
-                                                    id="contained-button-file"
-                                                    multiple
-                                                    type="file"
-                                                />
-                                                <label htmlFor="contained-button-file">
-                                                    <Button variant="contained" color="primary" component="span">
-                                                    Upload
-                                                    </Button>
-                                                </label> */}
+                <CameraAlt  className="header_searchIcon_Img" onChange={searchImgHandler} />
+                <ArrowDropDownIcon className="arrow_iconCamera" onClick={()=>setopenCamera(!openCamera)}/>
+                     {/* <input type="file" id="file" accept={fileTypes} onChange={searchImgHandler}/> */}
+                     {openCamera? 
+                                        <Dropdown>            
+                                            Upload<input type="file" id="file" accept={fileTypes} onChange={uploadImgHandler}/>
 
-                                                <p onClick={searchImgHandler} style={{cursor: 'pointer'}}>Search</p>
-                                            </Dropdown>
-                                            :
-                                            null
-                             }
-                           {/* </> */}
-                     </div>
+                                            <p onClick={searchImgHandler} style={{cursor: 'pointer'}}>Search</p>
+                                        </Dropdown>
+                                        :
+                                        null
+                        }</div>
+                {/* </CameraAlt> */}
 
 
                      {/* <input
@@ -238,7 +215,14 @@ function Header() {
 
 
             <div className="header_rightnav"> 
-           
+                {/* <Link to="/register" >
+                    <div className="header_rightSubpart" >
+                      <span className="lineOne">Hello Guests</span>
+                       <span className="lineTwo">Sign In</span>
+                    </div>
+                    
+                </Link> */}
+
 
                 {/* ADMIN */}
                 {!(typeof(userInfo)=='undefined') && userInfo.length!=0 && (userInfo.isAdmin||userInfo.isSeller)?
