@@ -18,6 +18,7 @@ function Login_brad() {
 
     const [boolpg, setboolpg] = useState(0); //success or fail
    
+
     const dispatch = useDispatch()
     const userLogin = useSelector(state => state.userLogin)
     const {loading,userInfo,error} =userLogin
@@ -33,6 +34,8 @@ function Login_brad() {
         //when getting request, userinfo becomes true as  userLoginRequest is called.
         //length==0 becomes when 1st time login pg is visited
         //invalid details is received when details don't match
+
+        //if user is logged in  direct to home page
         if( !(typeof(userInfo)=='undefined') && userInfo.length!=0 && userInfo!=='Invalid details')
         {
             history.push(redirect)

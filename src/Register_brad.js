@@ -1,35 +1,44 @@
 import React,{useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 
-// import {  useHistory } from 'react-router'; 
-// import { userAction_details } from './Reducers/actions/userActions';
+import {  useHistory } from 'react-router'; 
+import { userAction_details, userRegisterAction_details } from './Reducers/actions/userActions';
 
 import './Register.css' ;
 // import { set } from 'mongoose';
 
 function Register() {
-    // let history = useHistory()
+    let history = useHistory()
 
-    const [name, setName] = useState('')
+    const [Name, setName] = useState('')
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setconfirmPassword] = useState('');
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-    // const userLogin = useSelector(state => state.userLogin)
-    // const {loading,userInfo,error} =userLogin
+    const userRegister = useSelector(state => state.userRegister)
+    const {loading,userInfoR,error} =userRegister
 
-    // const redirect=`/`
-    // console.log("USERINFO:-",(userInfo.length));
-    // useEffect(() => {
-    //     if(userInfo.length!=0)
-    //     {
-    //         history.push(redirect)
-    //     }
-    // }, [history,userInfo,redirect])
+    const redirect=`/`
+    if(!(typeof(userInfoR)=='undefined') && userInfoR!=='Invalid details')
+    console.log("info len:-",Object.keys(userInfoR).length);
+    else
+    console.log("info lenyo:-",userInfoR);
+
+    
+    useEffect(() => {
+        //when getting request, userinfo becomes true as  userLoginRequest is called.
+        //length==0 becomes when 1st time login pg is visited
+        //invalid details is received when details don't match
+        //if user is logged in  direct to home page
+        if( !(typeof(userInfoR)=='undefined') && userInfoR.length!=0 && userInfoR!=='Invalid details')
+        {
+            history.push(redirect)
+        }
+    }, [history,userInfoR,redirect])
 
     const onName=(e)=> 
     { 
@@ -50,17 +59,27 @@ function Register() {
     
     const submit_form=()=>
     {
-        // dispatch(userAction_details(email,password))
-
-        const userData={
-            "Name":name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
-            "email":email,
-            "password":password,
-            "confirmPassword":confirmPassword
+        if(password!==confirmPassword)
+        {
+            console.log("Pass not matching");
         }
+        else
+        {
+            dispatch(userRegisterAction_details(Name,email,password))
 
-        axios.post(`http://localhost:4000/register_brad/add`,userData)
-         .then(res => console.log(res.data))
+        }
+       
+        // const userData={
+        //     "Name":name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+        //     "email":email,
+        //     "password":password,
+        //     "confirmPassword":confirmPassword
+        // }
+
+        // axios.post(`http://localhost:4000/register_brad/add`,userData)
+        //  .then(res => console.log(res.data))
+
+        //  dispatch(userAction_details(email,password))
 
          setName('')
          setEmail('')
@@ -79,13 +98,13 @@ function Register() {
 
             <div className="registration_details">
                 {/* <form> */}
-                <h1 className="heading">Register</h1>
+                <h1 className="heading">brad-Register</h1>
                 
                 {/* {error}
                 {loading && <h2>Loading</h2>} */}
 
                 <h2>Your Name</h2>
-                <input value={name} onChange={onName} placeholder="Enter Full Name"/>
+                <input value={Name} onChange={onName} placeholder="Enter Full Name"/>
                 
                 <h2>Email</h2>
                 <input value={email} onChange={onEmail} placeholder="Enter Email"/>
