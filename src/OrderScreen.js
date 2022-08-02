@@ -25,6 +25,10 @@ function OrderScreen() {
 
     const orderPay = useSelector(state => state.orderPay)
     const {loading:loadingPay,success:successPay}=orderPay
+
+
+    const userLogin=useSelector(state => state.userLogin)
+    const {userInfo}=userLogin
     //renaming as one loading already there frm getorderList
 
 
@@ -74,6 +78,30 @@ function OrderScreen() {
     {
       console.log("PAYMENT RESULT",paymentResult);
       dispatch(payorderAction_details(id,paymentResult))
+    }
+
+    const deliverOrder=()=>
+    {
+       
+
+        const config={
+          headers:{
+              // 'Content-Type':"application/json",
+              Authorization:`Bearer ${userInfo.token}`
+          }
+      }
+
+      console.log("DELIVERED ORDER adim",id);
+        axios.put(`http://localhost:4000/order/admin/delivered/${id}`,{},config)
+        .then(res => 
+           {
+               console.log("(ORDERSCREEN) PUT",res.data)
+              //  dispatch(getorderListAction_details(id))
+              //  setreload(!reload)
+           })
+           .catch(err => {console.log("Error is",err);})
+        
+        // history.push(`/admin/createProduct`)
     }
 
 
@@ -203,8 +231,16 @@ function OrderScreen() {
                        </div>
                   } */}
 
-<PayPalButton amount={getorderList.getOrderItems.totalPrice} onSuccess={successHandler} />
-                    Not loading 
+                  {getorderList.getOrderItems.isPaid ?<strong>Paid on {getorderList.getOrderItems.paidAt}</strong>:
+                    <div>  <PayPalButton amount={getorderList.getOrderItems.totalPrice} onSuccess={successHandler} /></div>}
+                 
+                 {userInfo.isAdmin && getorderList.getOrderItems.isPaid && !(getorderList.getOrderItems.isDelivered)?
+                    <button onClick={()=>deliverOrder()}>DELIVERED</button>
+                    :<div>ADMIN PLCSE</div>}
+                 
+                 
+                  {/* <PayPalButton amount={getorderList.getOrderItems.totalPrice} onSuccess={successHandler} /> */}
+                    {/* Not loading  */}
                 </div>}
 
 

@@ -18,8 +18,8 @@ const protect = async(req, res, next)=> {
             console.log(decode);
 
             req.user1= await RegisterDb.findById(decode.id).select('-password').select('-confirmPassword')
-            console.log("Auth MIddleware ",req.user1);
-
+            // console.log("Auth MIddleware ",req.user1);
+            console.log("Auth MIddleware ");
             next()
         }
 
@@ -44,7 +44,7 @@ const adminMiddleware =async(req, res, next)=> {
 
     if(req.user1 && req.user1.isAdmin)
     {
-        console.log(req.user1);
+        console.log("ADMIN ACCESS");
         next()
     }
    

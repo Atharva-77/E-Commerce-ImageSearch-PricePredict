@@ -149,7 +149,7 @@ router.get('/:id',protect,async(req,res)=>
 {
     const id=req.user1._id;
     //user1 is in protect i.e. authMIddleware file, when token is decoded
-    console.log("GET/ORDER",id);
+    // console.log("GET/ORDER",id);
     
     try{
         const orderData=await orderDb.findById(req.params.id).populate('user','Name email')
@@ -191,7 +191,7 @@ router.get('/admin/allorder',protect,adminMiddleware,async(req,res)=>
     try{
         const Allorders=await orderDb.find({}).populate('user','Name id')
         
-            console.log("IRDER_ROUTES ALLORDER",Allorders);
+            // console.log("IRDER_ROUTES ALLORDER",Allorders);
             // console.log("USER ON ALL ORDER",Allorders.user);
             res.send(
                 {
@@ -202,10 +202,50 @@ router.get('/admin/allorder',protect,adminMiddleware,async(req,res)=>
     }
     
     
+    catch(error) {s
+        res.status(200).send("Invalid details")
+    }
+
+});
+
+
+
+
+
+//ADMIN DELIVERED
+router.put('/admin/delivered/:id',protect,adminMiddleware,async(req,res)=>
+{
+    // const id=req.user1._id;
+    console.log("ALL DELIVERED");
+    
+    try{
+        const Allorders=await orderDb.findById(req.params.id)
+        
+        if(Allorders)
+        {
+            Allorders.isDelivered=true
+            Allorders.deliveredAt=Date.now()
+            const UpdatedOrder=await Allorders.save()
+            console.log("IRDER_ROUTES delivered");
+            
+            res.send(UpdatedOrder)
+            
+        }
+        else{
+            res.status(401).send("NO order found.")
+        }
+
+            
+    }
+    
+    
     catch(error) {
         res.status(200).send("Invalid details")
     }
 
 });
+
+
+
 
 module.exports=router;
