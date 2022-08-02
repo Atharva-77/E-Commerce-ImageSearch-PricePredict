@@ -8,7 +8,7 @@ import { cartListDetails,removeCartAction } from './Reducers/actions/cartActions
 
 
 
-function CheckoutProduct({id,title,price,rating,imageURL,qty,countInStock}) {
+function CheckoutProduct({id,title,price,rating,imageURL,imageFile,qty,countInStock}) {
     const dispatch=useDispatch()
     console.log("CKOUT",qty);
     const [qty1, setqty1] = useState(qty)
@@ -29,9 +29,23 @@ function CheckoutProduct({id,title,price,rating,imageURL,qty,countInStock}) {
         dispatch(cartListDetails(id,Number(e.target.value)))
     }
 
+    console.log("IMG URL",imageURL)
+    console.log("IMG FILE",imageFile)
     return (
         <div className="checkout_product">
-          <img className="checkout_product_img" src={imageURL} /> 
+            
+             {(typeof(imageURL)!='undefined') && imageURL.length>7 ?
+                            //  <h2>KYUJI</h2>
+                            <img className="checkout_product_img" src={imageURL} />
+                              :
+                            //   <h2>YOJI</h2>
+                              (typeof(imageURL)!='undefined') ?
+                                <img className="checkout_product_img" src={`${"data:image/png;base64," +new Buffer.from(imageFile.data.data).toString("base64")}`} />
+                                :        
+                                null
+            }
+
+          {/* <img className="checkout_product_img" src={imageURL} />  */}
 
             <div className="checkout_product_info"> 
                 <Link to={`/product/${id}`}>

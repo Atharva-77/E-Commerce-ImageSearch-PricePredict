@@ -9,8 +9,8 @@
 .checkout_product_img
 {
     object-fit: contain;
-    width: 100px;
-    height: 180px;
+    max-width: 100px;
+    max-height: 180px;
 }
 
 .checkout_product_info

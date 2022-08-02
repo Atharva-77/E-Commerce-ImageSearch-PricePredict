@@ -73,6 +73,7 @@ function Checkout({match,location}) {
                            price={item.price}
                            rating={item.avgrating}
                            imageURL={item.imageURL}
+                           imageFile={item.imageFile}
                            qty={item.qty}
                            countInStock={item.countInStock}
                         />

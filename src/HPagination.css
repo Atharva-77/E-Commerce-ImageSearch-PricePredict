@@ -1,0 +1,28 @@
+.page
+{
+    clear: both;
+    display: block;
+    margin: auto;
+}
+.page .button_space
+{
+    background-color: white;; /* Green */
+    border: none;
+    color: rgb(14, 9, 9);
+    padding: 6px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    font-weight: 600;
+    border: 2px solid rgb(106, 195, 247);
+}
+
+.button_space:hover {
+    background-color: rgb(106, 195, 247);
+    color: black;
+    border: 1.5px solid black;
+}

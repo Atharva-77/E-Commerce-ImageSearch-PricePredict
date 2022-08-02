@@ -1,4 +1,4 @@
-.register
+.payment
 {
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
 
 }
 
-.register .logo
+.payment .logo
 {
     object-fit: contain;
     width: 125px;
@@ -15,12 +15,12 @@
     padding-bottom: 19px;
 }
 
-.register .heading
+.payment .heading
 {
     padding-bottom: 10px;
 }
 
-.register .registration_details
+.payment .registration_details
 {
 
     width: 400px;
@@ -57,6 +57,7 @@
 {
     font-weight: 500;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .registration_details > h2
@@ -101,4 +102,21 @@
     color: black;
     text-decoration: none;
 
+}
+
+
+.payment_label
+{
+    max-width: 60px;
+    /* float: left; */
+    margin-left: 10px;
+    display: inline;
+}
+
+.registration_details > input.payment_radio_button
+{
+    max-width: 30px;
+    /* float: right; */
+    width: auto;
+    display: inline-block;
 }

@@ -6,9 +6,14 @@ import {listProduct,feature_action} from './Reducers/actions/productActions'
 import { useSelector,useDispatch } from 'react-redux'
 import { useParams } from 'react-router';
 import axios from 'axios';
+import HPagination from './HPagination'
 
 let x = 0;
 function Home() {
+    const [currentPage, setcurrentPage] = useState(1)
+    const [postPerPage, setpostPerPage] = useState(5)
+    let indexOfLastPost,indexOfFirstPost,currentPosts;
+
     const {keyword}=useParams()
     console.log("Keyword",keyword);
     const dispatch=useDispatch()
@@ -72,6 +77,12 @@ function Home() {
     console.log("PRODUCTS LEN SEARCH",products.length);
 
    
+    indexOfLastPost = currentPage * postPerPage;
+    indexOfFirstPost = indexOfLastPost - postPerPage;
+    currentPosts = products.slice(indexOfFirstPost,indexOfLastPost);
+    const paginate_fun = (pageno)=>{setcurrentPage(pageno)}
+    console.log("here",indexOfFirstPost,indexOfLastPost,currentPosts,paginate_fun);
+   
 
 
 
@@ -86,7 +97,7 @@ function Home() {
                         :error  ?<h2>{error}</h2>
                                 :  <div className="home__row">
                                     {
-                                        products.map((i)=>(
+                                        currentPosts.map((i)=>(
                                             <Product 
                                                 id={i._id}
                                                 title={i.name}
@@ -94,12 +105,20 @@ function Home() {
                                                 rating={i.Avgrating}
                                                 imageURL={i.imageURL}
                                                 imageFile={i.imageFile}
+                                                countInStock={i.countInStock}
                                             />
                                             // console.log("i=",i.description,i.price,i.Avgrating,i.image);
                                             ))
-                                    } 
+                                    }
+
+                                     <HPagination 
+                                                postPerPage={postPerPage} 
+                                                totalPost={products.length} 
+                                                paginate={paginate_fun}/> 
                                    </div>
+
                  }
+                 
 
                  {products.length==0?<h2>No Such Product</h2>:null}
 

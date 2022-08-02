@@ -60,7 +60,8 @@ const ProductSchema= new mongoose.Schema({
     imageFile:
     {
         data: Buffer,
-        contentType: String
+        contentType: String,
+      
     },
 
     brand:

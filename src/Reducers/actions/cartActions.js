@@ -16,13 +16,17 @@ export const cartListDetails = (id,qty) => async(dispatch,getState)=> {
 
     const {data}= await axios.get(`http://localhost:4000/products/${id}`)
 console.log("CARTACtions.js",{data});
-// console.log("CARTACtions.js id:- ",data._id);
+console.log("CARTACtions.js id:- ",data.imageFile);
+
+if(typeof(data.imageFile)=="undefined")
+{
     dispatch({
         type: CART_ADD_BASKET,
         payload:{
             idname:data._id,
             name:data.name,
             imageURL:data.imageURL,
+            // imageFile:data.imageFile,
             price:data.price,
             countInStock:data.countInStock,
             avgrating: data.Avgrating,
@@ -32,7 +36,29 @@ console.log("CARTACtions.js",{data});
 
         }
     })
+}
 
+else
+{
+    dispatch({
+        type: CART_ADD_BASKET,
+        payload:{
+            idname:data._id,
+            name:data.name,
+            imageURL:data.imageURL,
+            imageFile:data.imageFile,
+            price:data.price,
+            countInStock:data.countInStock,
+            avgrating: data.Avgrating,
+            user:data.user,
+            qty
+
+
+        }
+    })
+}
+
+    
     localStorage.setItem('cartItemsss',JSON.stringify(getState().cartList.cartItemsss))
     // console.log("CART ACTIONS",(localStorage.getItem('cartItemr',JSON.stringify(getState().cartList.cartItemr))));
 }

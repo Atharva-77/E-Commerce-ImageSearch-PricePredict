@@ -56,8 +56,21 @@
     margin-left: 53px;
 } 
 
+.product_outOfStock
+{
+    text-align: center;
+    color: rgb(200, 32, 32);
+    margin-top: 10px;
+    font-size: large;
+    font-weight: bold;
+    /* text-size-adjust: 4; */
+}
+.product_notRated
+{
+    color:#D97706;
+    font-size: large;
 
-
+}
 
 
 

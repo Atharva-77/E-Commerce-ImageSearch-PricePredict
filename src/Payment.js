@@ -94,7 +94,7 @@ function Payment() {
     }
 
     return (
-        <div className="register">
+        <div className="payment">
             <Link to="/">
                 {/* <img className="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"/> */}
                 <img className="logo" src="https://www.logodesign.net/logo/peace-bird-in-water-drop-3572ld.png"/>
@@ -110,16 +110,23 @@ function Payment() {
 
                 {/* <h2>Address</h2> */}
                 {/* <input value={address} onChange={onAddress} placeholder="Enter Full Name"/> */}
-                
-                <input type="radio" 
-                        id="paypal1" //id same value as in label
-                        name="paymentmeth" // only 1 frm this name is selected when submitted.Hence all have same name
-                        value="Paypal" // This value is submitted when form submitted
-                         onChange={(e)=>setPaymentMethod(e.target.value)}/>   
+                <p>
+                    <input type="radio" 
+                            id="paypal1" //id same value as in label
+                            name="paymentmeth" // only 1 frm this name is selected when submitted.Hence all have same name
+                            value="Paypal" // This value is submitted when form submitted
+                            onChange={(e)=>setPaymentMethod(e.target.value)}
+                            className="payment_radio_button" />
+
+                    <label for="paypal1" className="payment_label">PAYPAL</label><br />
+                </p>
+                <br />
                         
                         {/* See here https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio */}
-                    <label for="paypal1">PAYPAL</label>
-                 
+
+
+{/* ANOTHER PAYMENT METHOD */}
+{/*                  
                 <input type="radio" 
                        id="stripe1" 
                        name="paymentmeth" 
@@ -127,10 +134,10 @@ function Payment() {
                        onChange={(e)=>setPaymentMethod(e.target.value)}
                        /> 
 
-                    <label for="stripe1">STRIPE</label>
+                    <label for="stripe1">STRIPE</label>*/}
                 
 
-                <button className="create_acc" onClick={submit_form} >Continue</button>
+                <button className="create_acc" onClick={submit_form} >Continue</button> 
 
                 
                 {/* </form> */}

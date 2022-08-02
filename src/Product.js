@@ -4,8 +4,9 @@ import './Product.css'
 // import {useStateValue} from './StateProvider';
 import { useHistory } from "react-router-dom";
 
-function Product({id,title,price,rating,imageURL,imageFile}) {
+function Product({id,title,price,rating,imageURL,imageFile,countInStock}) {
     // console.log("IMG.FILE",imageFile);
+    // log
     // console.log("IMG.datas",id,title,price,rating,imageURL,);
     let history = useHistory();
 
@@ -72,24 +73,33 @@ function Product({id,title,price,rating,imageURL,imageFile}) {
              
            
             <p className="product_price" style = {{textAlign:'center'}}>
-                
-                <div className="product_rating">
-                   {Array(rate)
-                   .fill()
-                   .map((_,i) =>
-                   (
-                    <p>⭐</p> 
-                   ))}
-                    
-                </div>
+                {rate>0?
+                        <div className="product_rating">
+                        {Array(rate)
+                        .fill()
+                        .map((_,i) =>
+                        (
+                            <p>⭐</p> 
+                        ))}
+                            
+                        </div>
+                    :
+                    <p className="product_notRated"><strong>UnRated</strong></p>
+                    // <br />    
+                }
 
                 <small>₹ </small>
                 <strong>{price}</strong>
             </p>
             {/* https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_ST400_.jpg */}
             {/* https://images-na.ssl-images-amazon.com/images/I/81-QB7nDh4L.jpg */}
+          
+            {countInStock>0?
+                <button onClick={addToBasket} style={{width:200, borderRadius:5, height:23}}>Add to Basket</button>
+                :
+                <p className="product_outOfStock">Out Of Stock</p>}
             
-            <button onClick={addToBasket} style={{width:200, borderRadius:5, height:23}}>Add to Basket</button>
+            {/* <button onClick={addToBasket} style={{width:200, borderRadius:5, height:23}}>Add to Basket</button> */}
 
         </div>
     )

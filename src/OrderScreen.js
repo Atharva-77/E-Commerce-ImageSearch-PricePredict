@@ -236,7 +236,7 @@ function OrderScreen() {
                  
                  {userInfo.isAdmin && getorderList.getOrderItems.isPaid && !(getorderList.getOrderItems.isDelivered)?
                     <button onClick={()=>deliverOrder()}>DELIVERED</button>
-                    :<div>ADMIN PLCSE</div>}
+                    :<div>ORDER PLACED</div>}
                  
                  
                   {/* <PayPalButton amount={getorderList.getOrderItems.totalPrice} onSuccess={successHandler} /> */}

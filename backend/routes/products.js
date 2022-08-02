@@ -69,7 +69,7 @@ router.post('/add',async(req,res)=>
         const price=req.body.price
         const countInStock=req.body.countInStock
         const reviews=req.body.reviews
-
+        // const imageFile.data=""
  
         // const userDetails=await ProductsDb.findOne({email:email})
         // console.log("Email is",userDetails);
@@ -85,7 +85,8 @@ router.post('/add',async(req,res)=>
             noOfReview,
             price,
             countInStock,
-            reviews
+            reviews,
+            // imageFile.data:""
         })
 
 
