@@ -12,7 +12,9 @@ import {PRODUCT_LIST_REQUEST,
 
     IMG_PRODUCT_DETAILS_REQUEST,
     IMG_PRODUCT_DETAILS_SUCCESS,
-    IMG_PRODUCT_DETAILS_FAILURE,} from '../constants/productConstants' 
+    IMG_PRODUCT_DETAILS_FAILURE,
+
+    FEATURE_DATA,} from '../constants/productConstants' 
 
 import axios from 'axios';
 
@@ -56,6 +58,37 @@ export const listProduct =(keyword='')=> async(dispatch)=> {
     }
 }
 
+
+
+
+
+
+
+//FEATURE DATA
+// const featureData = error =>
+// {
+//     return{
+//        type: PRODUCT_LIST_FAILURE,
+//        payload: error
+//     }
+// }
+
+
+export const listProduct =(keyword='')=> async(dispatch)=> {
+
+try 
+{
+    dispatch(productListRequest())
+
+    const {data}= await axios.get(`http://localhost:4000/products?keyword=${keyword}`)
+    // console.log("Prod actions data ",data);
+    dispatch(productListSuccess(data))
+} catch (error) {
+
+    dispatch(productListFailure(error))
+    
+}
+}
 
 
 

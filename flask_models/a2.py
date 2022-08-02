@@ -23,16 +23,19 @@ product_id_list = []
 def feature_vector_db():
 	print("Before")
 
-	feature_vector_list = []
-	product_id_list = []
+	feature_vector_list.clear()
+	product_id_list.clear()
 
-	data = request.get_json(force = True)
-	print(data[0])
+	data_raw = request.get_json(force = True)
+	# data = list(data_raw)
+	# print(type(data))
+	data = data_raw['product_feature_data']
 	for i in range(len(data)):
 		featureVector = data[i]['featureVector']
 		productId = data[i]['productId']
 		feature_vector_list.append(featureVector)
 		product_id_list.append(productId)
+		print(len(feature_vector_list))
 
 	print("Data Arrives",product_id_list)
 
@@ -137,7 +140,8 @@ def image_search():
 		return normalized_features
 
 	query_image_features = extract_features_func(image_path, model)
-	# print(type(feature_vector_list), type(feature_vector_list[0]))
+	print(len(feature_vector_list), len(feature_vector_list[0]))
+	print(type(feature_vector_list), type(feature_vector_list[0]))
 	neighbors = NearestNeighbors(n_neighbors = 2, algorithm='brute', metric='euclidean').fit(feature_vector_list)
 	indices = neighbors.kneighbors([query_image_features])
 	ind1 = list(indices)

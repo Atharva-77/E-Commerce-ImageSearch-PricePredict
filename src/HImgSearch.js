@@ -38,7 +38,7 @@ function HImgSearch() {
                                         Imgproducts.map((i)=>(
                                             <Product 
                                                 id={i._id}
-                                                title={i.description}
+                                                title={i.name}
                                                 price={i.price}
                                                 rating={i.Avgrating}
                                                 imageURL={i.imageURL}

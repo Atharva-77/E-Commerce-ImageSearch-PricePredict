@@ -14,66 +14,57 @@ function Home() {
 
     const [featureVector, setfeatureVector] = useState('')
     const [productId, setproductId] = useState('')
-    const [mess, setmess] = useState(0)
-    // console.log(setfeatureMessage)
+    const [messagess, setmessagess] = useState(0)
+    // console.log(setfeaturemessagessage)
     let x = 0;
 
     useEffect(() => {
-
-        axios.get("http://localhost:4000/imgFeature/")
-        .then(
-               res=>
-               {
-                //    console.log("Feature wala data",res.data)
-                   setfeatureVector(res.data)
-                //    setproductId(res.data.productId)
-                   console.log("PIDS",res.data)
-                   setmess(1);
-                   x = 1;
-                   console.log("line 31", x,mess)
-                   console.log(1);
-               }
-            )
-        console.log("outside x",x);
-        // if(x == 1)
-        // {
-        //     console.log("In x", x)
-        //     const featureVectorData={
-        //         // "productId":productId,
-        //         "featureVector":featureVector
-        //     }
-        //     axios.post("http://localhost:7080/feature_vector_db",featureVectorData)
-        //     .then(
-        //        res=>
-        //        {
-        //            console.log("Feature wala data")
-        //            console.log(2);
-        //        }
-        //     )
-        // }
-
+        console.log("USEEFF FV 22",featureVector)
+        // if(featureVector==='')
+        {
+                axios.get("http://localhost:4000/imgFeature/")
+                .then(
+                    res=>
+                    {
+                        //    console.log("Feature wala data",res.data)
+                        setfeatureVector(res.data)
+                        //    setproductId(res.data.productId)
+                        console.log("PIDS",res.data)
+                        setmessagess(1);
+                        //    x = 1;
+                        console.log("line 31",messagess)
+                        //    console.log(1);
+                    }
+                    )
+                console.log("outside messages",messagess);
+        }
 
     }, [])
 
     useEffect(() => {
-        console.log("line 59 x",x);
-        if(mess == 1)
+        console.log("line 59 messagess",messagess);
+        console.log("line 46",featureVector)
+        if(messagess == 1)
         {
-            console.log("In x", x)
+            console.log("In messagess", messagess)
             const featureVectorData={
                 // "productId":productId,
-                "featureVector":featureVector
+                "product_feature_data":featureVector
             }
-            // axios.post("http://localhost:7080/feature_vector_db",featureVectorData)
-            // .then(
-            //    res=>
-            //    {
-            //        console.log("Feature wala data")
-            //        console.log(2);
-            //    }
-            // )
+            axios.post("http://localhost:7080/feature_vector_db",featureVectorData)
+            .then(
+               res=>
+               {
+                   console.log("Feature wala data")
+                   console.log(2);
+               }
+            )
         }
-    }, [mess])
+        else
+        {
+            console.log("Else messagess",messagess);
+        }
+    }, [messagess])
 
 
     useEffect(() => {
