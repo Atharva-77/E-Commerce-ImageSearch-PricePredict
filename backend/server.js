@@ -22,6 +22,7 @@ connectDatabase()
 
 app.use(morgan("dev"))
 //routes
+app.use(exp.json({limit: '50mb'}));
 app.use('/registered',require('./routes/registerHere'))
 app.use('/login_be',require('./routes/login'))
 

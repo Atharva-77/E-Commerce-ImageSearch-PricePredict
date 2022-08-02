@@ -182,33 +182,37 @@ function Header() {
                         onChange={(e)=>setkeyword(e.target.value)}
 
                          placeholder="Search here"/>
-                {/* <button onClick={searchHandler}>Search Here</button> */}
-                <SearchOutlinedIcon className="header_searchIcon" onClick={searchHandler}/>
-                <CameraAlt  className="header_searchIcon_Img" onChange={searchImgHandler} />
-                <ArrowDropDownIcon className="arrow_iconCamera" onClick={()=>setopenCamera(!openCamera)}/>
-                     {/* <input type="file" id="file" accept={fileTypes} onChange={searchImgHandler}/> */}
-                     <>{openCamera? 
-                                        <Dropdown >            
-                                            Upload<input type="file" id="file" accept={fileTypes} onChange={uploadImgHandler}/>
-                                            {/* <input
-                                                accept="image/*"
-                                                className={classes.input}
-                                                id="contained-button-file"
-                                                multiple
-                                                type="file"
-                                            />
-                                            <label htmlFor="contained-button-file">
-                                                <Button variant="contained" color="primary" component="span">
-                                                Upload
-                                                </Button>
-                                            </label> */}
+                
+                     <div className = "dropImage">
+                            {/* <button onClick={searchHandler}>Search Here</button> */}
+                            <SearchOutlinedIcon className="header_searchIcon" onClick={searchHandler}/>
+                            <CameraAlt  className="header_searchIcon_Img" onChange={searchImgHandler} />
+                            <ArrowDropDownIcon className="arrow_iconCamera" onClick={()=>setopenCamera(!openCamera)}/>
+                                {/* <input type="file" id="file" accept={fileTypes} onChange={searchImgHandler}/> */}
+                          {/* <> */}
+                            {openCamera? 
+                                            <Dropdown >            
+                                                NinuUpload<input type="file" id="file" accept={fileTypes} onChange={uploadImgHandler}/>
+                                                {/* <input
+                                                    accept="image/*"
+                                                    className={classes.input}
+                                                    id="contained-button-file"
+                                                    multiple
+                                                    type="file"
+                                                />
+                                                <label htmlFor="contained-button-file">
+                                                    <Button variant="contained" color="primary" component="span">
+                                                    Upload
+                                                    </Button>
+                                                </label> */}
 
-                                            <p onClick={searchImgHandler} style={{cursor: 'pointer'}}>Search</p>
-                                        </Dropdown>
-                                        :
-                                        null
-                                    }</>
-                {/* </CameraAlt> */}
+                                                <p onClick={searchImgHandler} style={{cursor: 'pointer'}}>Search</p>
+                                            </Dropdown>
+                                            :
+                                            null
+                             }
+                           {/* </> */}
+                     </div>
 
 
                      {/* <input
@@ -234,14 +238,7 @@ function Header() {
 
 
             <div className="header_rightnav"> 
-                {/* <Link to="/register" >
-                    <div className="header_rightSubpart" >
-                      <span className="lineOne">Hello Guests</span>
-                       <span className="lineTwo">Sign In</span>
-                    </div>
-                    
-                </Link> */}
-
+           
 
                 {/* ADMIN */}
                 {!(typeof(userInfo)=='undefined') && userInfo.length!=0 && (userInfo.isAdmin||userInfo.isSeller)?
