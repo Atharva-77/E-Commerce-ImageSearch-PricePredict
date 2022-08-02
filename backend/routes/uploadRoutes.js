@@ -29,8 +29,8 @@ router.post('/add', upload.single("file"),async(req,res)=>
     //    console.log("Name",req.file.originalname);
     //    console.log("streams",exp.static(path.join(__dirname, '/public')));
   try{
-    console.log("Direc posn",path.join(__dirname, '../../public/Uploadedimages/'));
-    let x=path.join(__dirname,  '../../UploadImg/');
+    console.log("Direc posn",path.join(__dirname, '../client/UploadImg/'));
+    let x=path.join(__dirname,  '../client/UploadImg/');
     var c=new Date()
     let cc = ""
     if(!(!req.file)){

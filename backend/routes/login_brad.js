@@ -15,12 +15,14 @@ router.post("/add",async(req,res)=>
         const email=req.body.email;
         const password=req.body.password;
 
-        console.log(`email ${email} , password is ${password}`);
-
+       
         const userDetails=await RegisterDb.findOne({email:email})
         
         console.log("Userdetails",userDetails);
-        console.log("login-brad)UserDetails email , pass",userDetails.email,userDetails.password);
+       
+        console.log(`23 email ${email} , password is ${password}`);
+
+        console.log("25 login-brad)UserDetails email , pass",userDetails.email,userDetails.password);
         // if you don't use async & await, o/p dosen't come 
         // res.send(userDetails)
 

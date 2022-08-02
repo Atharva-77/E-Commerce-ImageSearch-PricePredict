@@ -464,8 +464,8 @@ router.delete('/seller/deleteProduct/:id',protect,sellerMiddleware,async(req,res
     
     try{
         const prodDelete=await ProductsDb.findById(req.params.id)
-
-        console.log("PROD DELETE SELLER",typeof(prodDelete.user));
+        console.log("product_delete_object",prodDelete)
+        console.log("PROD DELETE SELLER",typeof(prodDelete));
         if(id.toString()===prodDelete.user.toString())
         {
 

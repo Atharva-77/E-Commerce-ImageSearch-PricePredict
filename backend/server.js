@@ -23,6 +23,10 @@ connectDatabase()
 app.use(morgan("dev"))
 //routes
 app.use(exp.json({limit: '50mb'}));
+
+app.use(exp.json({limit: '50mb', extended: true}))
+app.use(exp.urlencoded({limit: '50mb', extended: true}))
+
 // app.use('/registered',require('./routes/registerHere'))
 // app.use('/login_be',require('./routes/login'))
 
@@ -39,10 +43,10 @@ app.use('/imgFeature',require('./routes/imageFeatureRoutes'))
 //converting uploads to static & importing it here  
 // app.use('/uploads',exp.static(path.join(__dirname,'/uploads')))
 
-app.use('/upload',exp.static(path.join(__dirname, '../UploadImg/')))
 
-console.log("DIR",path.join(__dirname, '../UploadImg/'));
+app.use('/upload',exp.static(path.join(__dirname, './client/UploadImg/')))
 
+console.log("DIR",path.join(__dirname, './client/UploadImg/'));
 
 app.get('/config/paypal',(req,res)=>
     {
@@ -51,9 +55,10 @@ app.get('/config/paypal',(req,res)=>
     }
 )
 
+if(process.env.NODE_ENV === 'production'){
+    app.use(exp.static('client/build'))
 
-
-
+}
 
 app.listen(port, ()=>
 {

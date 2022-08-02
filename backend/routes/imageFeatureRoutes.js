@@ -89,6 +89,41 @@ router.get("/",async(req,res)=>
 })
 
 
+
+//Delete Features
+router.delete('/deleteFeature/:id',async(req,res)=>
+{
+    const id=req.params.id
+   
+    
+    
+    try{ 
+        const featureDelete=await ImageSearchDb.find({"productId":id})
+        console.log("IMGID IN delete",id,typeof(id));
+        console.log("feature DELETE",featureDelete[0]._id,typeof(featureDelete[0]));
+        if(featureDelete[0])
+        {
+            // const featureIdDelete=await ImageSearchDb.findById(req.params.id)
+
+            await featureDelete[0].remove()
+
+            res.send("feature deleted")
+        }
+        else
+            res.send("Feautre not deleted")
+                
+   
+    }
+    
+    
+    catch(error) {
+        console.log("IMGID IN delete erreo",error);
+        res.status(200).send("Invalid details")
+    }
+
+});
+
+
 // router.get("/single/:id",async(req,res)=>
 // {
 
