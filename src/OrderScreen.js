@@ -96,7 +96,7 @@ function OrderScreen() {
         .then(res => 
            {
                console.log("(ORDERSCREEN) PUT",res.data)
-              //  dispatch(getorderListAction_details(id))
+               dispatch(getorderListAction_details(id))
               //  setreload(!reload)
            })
            .catch(err => {console.log("Error is",err);})

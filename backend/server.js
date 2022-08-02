@@ -3,6 +3,8 @@ const dotenv=require('dotenv')
 const connectDatabase= require('./config_folder/connectDB')
 const cors=require('cors')
 const path = require('path')
+const morgan = require('morgan')
+
 
 //Loading config file from config folder
 dotenv.config({path: './config_folder/config.env'})
@@ -18,7 +20,7 @@ app.use(exp.json())
 
 connectDatabase()
 
-
+app.use(morgan("dev"))
 //routes
 app.use('/registered',require('./routes/registerHere'))
 app.use('/login_be',require('./routes/login'))
@@ -40,6 +42,10 @@ app.get('/config/paypal',(req,res)=>
         res.send(process.env.PAYPAL_CLIENTID)
     }
 )
+
+
+
+
 
 app.listen(port, ()=>
 {

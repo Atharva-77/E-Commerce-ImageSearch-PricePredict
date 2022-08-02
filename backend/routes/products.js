@@ -76,10 +76,97 @@ router.post('/add',async(req,res)=>
     {
         res.status(400).send("Invalid details")
     }
+ 
+});
+
+
+
+
+
+
+
+
+//Review product
+router.post('/review/:id',protect,async(req,res)=>
+{
+    try
+    {
+
+        // console.log("USER REVIEW",typeof(req.user1._id));
+
+        const rating=req.body.rating
+        const comment=req.body.comment
+
+        const product=await ProductsDb.findById(req.params.id)
+
+       if(product)
+       {
+            //  Converted to toString() as req.user1._id is an object
+            const beforeReview=product.reviews.find(i=>i.user.toString()===req.user1._id.toString()) 
+            console.log("1.PROD RATING LEN",product.reviews.length);
+            console.log("REVIEW USER ",beforeReview,typeof(req.user1._id.toString()));
+            // console.log("Rting, COMMENT ",rating,comment,req.user1.name,req.user1.Name);
+            if(beforeReview)
+            {
+                res.status(201).send("Already reviewed product")
+            }
+             
+            else
+            {
+                const review=
+                {
+                    name:req.user1.Name,
+                    IndividualRating:Number(rating),
+                    comment,
+                    user:req.user1._id
+    
+                }
+    
+                product.reviews.push(review)
+                product.noOfReview=product.reviews.length
+                let totalReviewSum=0 
+    
+
+                console.log("2.PROD RATING LEN",product.reviews.length);
+                product.reviews.map((i)=>
+                                    {
+                                        totalReviewSum+=i.IndividualRating           
+                                    })
+    
+                     product.Avgrating=(totalReviewSum/product.reviews.length).toFixed(2)
+                 
+
+                //  console.log("PROD DETAILS",product);
+                 console.log("PROD RATING", product.Avgrating, totalReviewSum,  product.reviews.length);
+    
+
+                 await product.save()
+                 .then(()=>res.json('Review added Successfully'))
+                 .catch(err=>res.status(200).json("Product Error is "+err)) 
+
+            }
+           
+             
+            //  res.status(201).send("Review added")
+
+       }
+       else
+       {
+        res.status(401).send("NO Product found")
+       }
+      
+    }
+
+    catch(error) 
+    {
+        res.status(401).send("Invalid details",error)
+    }
 
    
    
 });
+
+
 
 
 
@@ -111,6 +198,7 @@ router.delete('/deleteProduct/:id',protect,adminMiddleware,async(req,res)=>
     }
 
 });
+
 
 
 
@@ -238,7 +326,7 @@ router.put('/admin/products/edit/:id',protect,adminMiddleware,async(req,res)=>
 
 
 
-//ADMIN Get individuaal product
+//ADMIN Get individual product
 router.get('/admin/products/:id',protect,adminMiddleware,(req,res)=>
 {
         // res.status(200)
