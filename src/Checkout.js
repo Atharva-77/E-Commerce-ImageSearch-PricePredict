@@ -57,34 +57,35 @@ function Checkout({match,location}) {
               <div>
                  <h2 className="shopping_title">Your Shopping Basket</h2> 
                  <h2>Shopping Cart</h2>
-                 {basketItems.length===0?
-                   <div>
-                     <h2>Your cart is empty</h2>
-                     <Link to="/">Go back</Link>
-                   </div>
-                     :
-                  <div>
-                      {basketItems.map((item) => (
-                        //   <Link to={``}></Link>
+                    {basketItems.length===0
+                    ?
                         <div>
-                       <CheckoutProduct 
-                           id={item.idname}
-                           title={item.name}
-                           price={item.price}
-                           rating={3} //{item.avgrating}
-                           image={item.image}
-                           qty={item.qty}
-                           countInStock={item.countInStock}
-                        />
-                        
-                         {console.log("Upar",summ+=item.price*item.qty,total_item+=item.qty) }
-                         {/* {console.log("Upar",summ+=item.price*item.qty) } */}
+                            <h2>Your cart is empty</h2>
+                            <Link to="/">Go back</Link>
+                        </div>
+                     :
+                        <div>
+                                {basketItems.map((item) => (
+                                    //   <Link to={``}></Link>
+                                    <div>
+                                        <CheckoutProduct 
+                                            id={item.idname}
+                                            title={item.name}
+                                            price={item.price}
+                                            rating={3} //{item.avgrating}
+                                            image={item.image}
+                                            qty={item.qty}
+                                            countInStock={item.countInStock}
+                                        />
+                                            
+                                        {console.log("Upar",summ+=item.price*item.qty,total_item+=item.qty) }
+                                        {/* {console.log("Upar",summ+=item.price*item.qty) } */}
 
-                         </div>
-                      ))}
-                  </div>
+                                    </div>
+                                ))}
+                        </div>
 
-                 }
+                    }
                 
                 </div>
 
