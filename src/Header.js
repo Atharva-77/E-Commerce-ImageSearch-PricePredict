@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import './Header.css'
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -9,19 +9,48 @@ import {  useHistory } from 'react-router';
 
 import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { ArrowBackIosOutlined } from '@material-ui/icons';
+import { ArrowBackIosOutlined, CameraAlt } from '@material-ui/icons';
 
 import {useSelector,useDispatch} from 'react-redux'
 import Dropdown from './Dropdown'
 import { logout_action, profileReset_action,registerReset_action } from './Reducers/actions/userActions';
+import axios from 'axios';
 
+import {ImgProductDetails_action} from './Reducers/actions/productActions'
 
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+
+// import { makeStyles } from "@material-ui/core/styles";
 
 function Header() {
+    // const useStyles = makeStyles((theme) => ({
+    //     root: {
+    //       "& > *": {
+    //         margin: theme.spacing(1)
+    //       }
+    //     },
+    //     input: {
+    //       display: "none"
+    //     }
+    //   }));
+    //   const classes = useStyles();
+
     let history = useHistory()
+    var fileTypes = [".jpg", ".png", ".jpeg"];
 
     const [open, setopen] = useState(false) //Dropdown toggle
+    const [openCamera, setopenCamera] = useState(false) // Img search dropdown
+    const [Imgvalue, setImgvalue] = useState(false) 
+
     const [keyword, setkeyword] = useState('')
+   
+    const [file, setfile] = useState('')
+    const [Imgpath, setImgpath] = useState('')
+    const [ImgSearchData, setImgSearchData] = useState('')
+    
 
     const userLogin=useSelector(state => state.userLogin)
     const {userInfo}=userLogin
@@ -40,6 +69,50 @@ function Header() {
         
     ))}
 
+
+    useEffect(() => {
+       
+            
+        if(Imgvalue==true)        
+            {
+                const Data = new FormData()
+                Data.append('file',file)
+
+                
+                //  axios.post("https://httpbin.org/anything",Data)
+                axios.post("http://localhost:4000/uploadImg/add",Data)
+                .then(
+                    res=>
+                    {
+                        console.log("dATA IS headre ",res.data)
+                        setImgpath(res.data)
+                        console.log(3);
+                        
+                    }
+                    )
+
+                if(Imgpath!="")
+                {
+                    const ImageSearchData={
+                        "img_path":Imgpath
+                    }
+                    console.log("check_Image_Seacrh_Data header:",ImageSearchData)
+                    axios.post("http://localhost:7080/image_search",ImageSearchData)
+                    .then(
+                            res=>
+                            {
+                                console.log("Image_Data Header ",res.data)
+                                console.log(4);
+                                setImgvalue(false)
+                                setImgSearchData(res.data)
+                            }
+                        )
+                //     setMessage(true)
+                }
+           }
+        
+          
+    }, [file,Imgpath,Imgvalue])
 
 
     const logoutHandler=()=>
@@ -61,6 +134,32 @@ function Header() {
         else
         history.push(`/`)
         console.log("SEARCH");
+    }
+
+
+    const uploadImgHandler=async(e)=>
+    {
+        const file2=e.target.files[0]
+        setfile(file2)
+        console.log(file);
+        setImgvalue(true);
+
+        // const Data = new FormData()
+        // Data.append('file',file)
+
+
+        console.log("SEARCH2");
+    }
+
+
+    const searchImgHandler=()=>
+    {
+        
+        console.log("SEARCH3",ImgSearchData);
+        dispatch(ImgProductDetails_action(ImgSearchData))
+
+        history.push(`/himg`)
+
     }
 
     return (
@@ -85,6 +184,50 @@ function Header() {
                          placeholder="Search here"/>
                 {/* <button onClick={searchHandler}>Search Here</button> */}
                 <SearchOutlinedIcon className="header_searchIcon" onClick={searchHandler}/>
+                <CameraAlt  className="header_searchIcon_Img" onChange={searchImgHandler} />
+                <ArrowDropDownIcon className="arrow_iconCamera" onClick={()=>setopenCamera(!openCamera)}/>
+                     {/* <input type="file" id="file" accept={fileTypes} onChange={searchImgHandler}/> */}
+                     <>{openCamera? 
+                                        <Dropdown >            
+                                            Upload<input type="file" id="file" accept={fileTypes} onChange={uploadImgHandler}/>
+                                            {/* <input
+                                                accept="image/*"
+                                                className={classes.input}
+                                                id="contained-button-file"
+                                                multiple
+                                                type="file"
+                                            />
+                                            <label htmlFor="contained-button-file">
+                                                <Button variant="contained" color="primary" component="span">
+                                                Upload
+                                                </Button>
+                                            </label> */}
+
+                                            <p onClick={searchImgHandler} style={{cursor: 'pointer'}}>Search</p>
+                                        </Dropdown>
+                                        :
+                                        null
+                                    }</>
+                {/* </CameraAlt> */}
+
+
+                     {/* <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="icon-button-file"
+                        type="file"
+                    />
+
+                    <label htmlFor="icon-button-file">
+                        <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                        >
+                        <PhotoCamera />
+                        </IconButton>
+                    </label> */}
+
             </div>
             
 

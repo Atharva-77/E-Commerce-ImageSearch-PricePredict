@@ -58,7 +58,8 @@ export const cartReducer = ( state=initialStateCart ,action) =>
         return {
           ...state,
           basketItems: state.basketItems.map((x) =>  x.idname === existItem.idname ? item : x)
-          
+           //?Put item that also matches :Put all items that dont match
+          //CAN USE Down approach also
         }
       } else {
         {console.log("NOT EXISTITEM");}

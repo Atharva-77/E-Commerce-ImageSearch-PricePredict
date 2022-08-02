@@ -1,0 +1,110 @@
+/* SS04 CODE */
+.home
+{
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1300px;
+    /* Screen size not more than this */
+}
+.home_img
+{
+    width: 100%;
+    /*Fits the window. NO need to scroll to rhs. Even top-bottom*/
+    /* height: 100px; */
+    z-index:-1;
+    margin-bottom: -250px; 
+    /*Pulls product card up. just the way positive top margin pushes content down, a negative top margin pulls content up. */
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+
+
+
+ } 
+
+.home__row
+{
+    display: inline-table;
+    float: left;
+    /* Brings all product in one line */
+    z-index:1;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 40px;
+    margin-top: 60px;
+} 
+
+
+
+
+
+
+
+
+
+
+
+/* My code...all items are in 1 line */
+/* .home
+{
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1300px;
+}
+.home_img
+{
+    width: 100%;
+    z-index:-1;
+    margin-bottom: -250px; 
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+
+
+
+ } 
+
+.home__row
+{
+    display: flex;
+    z-index:1;
+    margin-left: 5px;
+    margin-right: 5px;
+} 
+ */
+
+
+
+
+/* ----------my code */
+
+/* .home
+{ */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* margin-left: auto;
+    margin-right: auto;
+    max-width: 1300px; */
+    /* Screen size not more than this */
+/* }
+.home_img
+{
+    width: 100%; */
+    /*Fits the window. NO need to scroll to rhs. Even top-bottom*/
+    /* height: 100px; */
+    /* z-index:-1;
+    margin-bottom: -250px;  */
+    /*Pulls product card up. just the way positive top margin pushes content down, a negative top margin pulls content up. */
+    /* mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+
+
+
+}
+
+.home__row
+{
+    display: flex;
+    flex:1;
+    margin-left: 5px;
+    margin-right: 5px;
+} */

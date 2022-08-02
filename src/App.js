@@ -28,6 +28,7 @@ import ASeller_Product from './ASeller_Product';
 import ASeller_EditProduct from './ASeller_EditProduct';
 import ASeller_CreateProduct from './ASeller_CreateProduct';
 import ASeller_OrderList from './ASeller_OrderList';
+import HImgSearch from './HImgSearch';
 
 
 function App() {
@@ -139,6 +140,11 @@ function App() {
               <Route path="/product/:id"> 
                  <Header />        
                  <ProductDetails />
+              </Route>
+
+              <Route path="/himg"> 
+                 <Header />        
+                 <HImgSearch />
               </Route>
 
               <Route path="/search/:keyword">

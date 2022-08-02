@@ -8,7 +8,11 @@ import {PRODUCT_LIST_REQUEST,
 
     SELLER_PRODUCT_LIST_REQUEST,
     SELLER_PRODUCT_LIST_SUCCESS,
-    SELLER_PRODUCT_LIST_FAILURE, } from '../constants/productConstants' 
+    SELLER_PRODUCT_LIST_FAILURE, 
+
+    IMG_PRODUCT_DETAILS_REQUEST,
+    IMG_PRODUCT_DETAILS_SUCCESS,
+    IMG_PRODUCT_DETAILS_FAILURE,} from '../constants/productConstants' 
 
 import axios from 'axios';
 
@@ -151,6 +155,64 @@ export const listProductDetails =(id)=> async(dispatch)=> {
     } catch (error) {
 
         dispatch(productDetailsFailure(error))
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//Img Prod Search
+const ImgproductDetailsRequest = () =>
+{
+    return {
+        type: IMG_PRODUCT_DETAILS_REQUEST
+    }
+}
+
+const ImgproductDetailsSuccess = data =>
+{
+    return{
+      type: IMG_PRODUCT_DETAILS_SUCCESS,
+      payload: data
+    }
+}
+
+const ImgproductDetailsFailure = error =>
+{
+    return{
+       type: IMG_PRODUCT_DETAILS_FAILURE,
+       payload: error
+    }
+}
+
+
+export const ImgProductDetails_action =(prod_ids)=> async(dispatch)=> {
+
+    try 
+    {
+        dispatch(ImgproductDetailsRequest())
+        console.log("IMG PROD ",prod_ids);
+
+        const product_ids=
+        {
+            "product_ids":prod_ids
+        }
+        console.log("IMG PROD2 ",product_ids);
+
+        
+        const {data}= await axios.post(`http://localhost:4000/imgFeature/products`,prod_ids)
+        console.log("IMG PROD ACTION",data);
+        dispatch(ImgproductDetailsSuccess(data))
+    } catch (error) {
+
+        dispatch(ImgproductDetailsFailure(error))
         
     }
 }

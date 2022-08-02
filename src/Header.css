@@ -56,7 +56,18 @@
     background-color: var(--dark-blue);
     height: 18px !important;
     padding: 3px;
+    border-right: 3px solid #374151;
 }
+
+.header_search .header_searchIcon_Img
+{
+    background-color: var(--dark-blue);
+    height: 18px !important;
+    padding: 3px;
+    padding-right: 0px;
+    /* border-right: 3px solid #374151; */
+}
+
 
 .header_rightnav
 {
@@ -107,6 +118,19 @@
     transform: scale(1.4);
     padding-left: 0px;
     padding-right: 4px;
+   
+  
+}
+.arrow_iconCamera
+{
+    color: var(--white);
+    /* height: 45px !important; */
+    /* transform:    scale(1.4); */
+   
+    background-color: var(--dark-blue);
+    /* height: 18px !important; */
+    /* padding: 3px; */
+    /* border-right: 3px solid #374151; */
     /* font-size: 20px !important; */
 }
 

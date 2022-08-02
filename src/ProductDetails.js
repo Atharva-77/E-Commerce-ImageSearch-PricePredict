@@ -77,15 +77,27 @@ const ProductDetails= ()=> {
 
     return (
         <div>
-            <h2>Yp {id}</h2>
             <div className="productDetails">
-            
                     <div className="productDetails_info">
-                        <p>{product.name}</p>
+                        {/* <!-- <img class="product_img" src={product.image} /> --> */}
+                        <img class="product_details_img" src={product.image} />
 
-                        <p className="productDetails_price">
-                            <small>$</small>
-                            <strong>{product.price}</strong>
+                        <p class="product_details_name">{product.name}</p>
+                        
+                        <p class="product_details_price_text">M.R.P.: </p>
+                        <p class="product_details_price">Rs. 420.69
+                        {product.countInStock>0?<button class="buy_button" onClick={addToBasket}>Add to Basket</button>:<h2>Out of Stock</h2>}
+                        </p>
+
+                        {/* <!-- <p class="product_desc">{product.description}</p><br /> --> */}
+                        <p class="product_details_desc">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
+                            Morbi ac risus cursus, elementum ligula ut, pulvinar justo. <br />
+                            Fusce feugiat mollis tortor sed rutrum. Cras molestie ultricies nibh, ac luctus eros ullamcorper non. Nam in elit sapien. <br />
+                            Fusce enim sem, egestas molestie orci nec, dapibus auctor sapien. <br />
+                            Mauris id massa et leo dictum lobortis dictum id eros. Morbi vel tristique dui. <br />
+                            In ac nisl felis. Cras condimentum ex vel massa sodales imperdiet. Integer felis elit, vehicula efficitur porta vel, tempor sit amet felis. <br />
+                            Praesent nisl urna, consectetur vitae nibh et, vulputate rhoncus enim. <br />
                         </p>
 
                         <p>{product.description}</p> <br />
@@ -107,10 +119,7 @@ const ProductDetails= ()=> {
                             ))}
                         </div> */}
 
-                    </div>    
-                
-                <img className="productDetails_img" src={product.image} /> 
-                {product.countInStock>0?<button onClick={addToBasket}>Add to Basket</button>:<h2>Out of Stock</h2>}
+                    </div>
                 <br />
                 Quantity<input onChange={(e)=>setqty(e.target.value)}/> 
                 <h2>{qty}</h2>  

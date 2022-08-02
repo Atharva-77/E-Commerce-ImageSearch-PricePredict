@@ -8,7 +8,11 @@ import {PRODUCT_LIST_REQUEST,
 
         SELLER_PRODUCT_LIST_REQUEST,
         SELLER_PRODUCT_LIST_SUCCESS,
-        SELLER_PRODUCT_LIST_FAILURE, } from './constants/productConstants' 
+        SELLER_PRODUCT_LIST_FAILURE, 
+    
+        IMG_PRODUCT_DETAILS_REQUEST,
+        IMG_PRODUCT_DETAILS_SUCCESS,
+        IMG_PRODUCT_DETAILS_FAILURE } from './constants/productConstants' 
 
 const initialState=
 {
@@ -121,3 +125,38 @@ export const productDetailsReducer = ( state=initialStateDetails, action)=>
 
 // export default productListReducer
 
+
+
+
+//Img Product Reducer
+const initialImageProd=
+{
+    loading: true,
+    Imgproducts:[],
+    error:''
+}
+
+export const ImageproductReducer = ( state=initialImageProd, action)=>
+{
+    switch(action.type){
+        case  IMG_PRODUCT_DETAILS_REQUEST: return {
+            ...state,
+            loading:true
+        }
+
+        case IMG_PRODUCT_DETAILS_SUCCESS: return {
+            ...state,
+            loading: false,
+            Imgproducts: action.payload
+        }
+
+        case  IMG_PRODUCT_DETAILS_FAILURE: return {
+            ...state,
+            loading: false,
+            error: action.payload
+        }
+
+        default:
+            return state
+    }
+}

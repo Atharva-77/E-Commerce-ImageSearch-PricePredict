@@ -12,6 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 feature_vector_list = []
+product_id_list = []
 
 @app.route("/extract_features", methods = ['GET','POST'])
 def extract_features():
@@ -42,6 +43,7 @@ def extract_features():
 
 	features = extract_features(image_path, model)
 	feature_vector_list.append(features)
+	product_id_list.append(product_id)
 
 	return {"product_id" : product_id, "image_feature" : features.tolist()}
 
@@ -69,12 +71,19 @@ def image_search():
 		
 		return normalized_features
 
-	features = extract_features(image_path, model)
-
-	neighbors = NearestNeighbors(n_neighbors = 5, algorithm='brute', metric='euclidean').fit(feature_vector_list)
+	query_image_features = extract_features(image_path, model)
+	print(type(feature_vector_list), type(feature_vector_list[0]))
+	neighbors = NearestNeighbors(n_neighbors = 2, algorithm='brute', metric='euclidean').fit(feature_vector_list)
 	indices = neighbors.kneighbors([query_image_features])
-
-	return indices
+	ind1 = list(indices)
+	ind = list(ind1[1])
+	print(ind[0])
+	result_product_id = []
+	for i in range(2):
+		result_product_id.append(product_id_list[ind[0][i]])
+		# print(product_id_list[ind[0][i]])
+	# print(product_id_list)
+	return {"product_ids" : result_product_id}
 
 if __name__ == "__main__":
 	app.run(port = 7080, debug = True)
