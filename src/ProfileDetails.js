@@ -103,6 +103,10 @@ function ProfileDetails() {
         {
             console.log("Pass not matching");
         }
+        else if(password=='' || confirmPassword=='')
+        {
+            console.log("Pass not entered");
+        }
         else
         {
             // dispatch(userRegisterAction_details(Name,email,password))

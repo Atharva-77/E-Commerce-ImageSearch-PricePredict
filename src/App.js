@@ -16,6 +16,7 @@ import Register_brad from './Register_brad';
 import ProfileDetails from './ProfileDetails';
 import Shipping from './Shipping';
 import Payment from './Payment';
+import PlaceOrder from './PlaceOrder';
 
 
 function App() {
@@ -56,6 +57,10 @@ function App() {
 
               <Route path="/payment">
                  <Payment />
+              </Route>
+
+              <Route path="/placeorder">
+                 <PlaceOrder />
               </Route>
 
               <Route path="/checkout/:id?"> 
