@@ -30,3 +30,5 @@ Backend is made in **Nodejs, express** and **Mongodb** is the database used.
 
 For Image search, **resnet-50** model used.
 For Price prediction, **lasso-regression** model used.
+
+Unfortunately you cannot access Machine learning parts(Image search, Price Prediction) as they take a lot of space, hence they couldn't be deployed/ hosted in the free tier of heroku or other such websites.
