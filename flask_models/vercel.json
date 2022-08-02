@@ -1,0 +1,16 @@
+{
+    "name": "Ecommerce-imagesearch",
+    "version": 2,
+    "builds": [
+        {
+            "src": "a2.py",
+            "use": "@liudonghua123/now-flask"
+        }
+    ],
+    "routes": [
+        {
+            "src": "(.*)",
+            "dest": "a2.py"
+        }
+    ]
+}
