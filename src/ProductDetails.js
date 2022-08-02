@@ -80,7 +80,16 @@ const ProductDetails= ()=> {
             <div className="product_details">
                     <div className="product_details_info">
                         {/* <!-- <img class="product_img" src={product.image} /> --> */}
-                        <img class="product_details_img" src={product.imageURL} />
+                        {(typeof(product.imageURL)!='undefined') && product.imageURL.length>7 ?
+                            //  <h2>KYUJI</h2>
+                            <img className="product_details_img" src={product.imageURL} />
+                              :
+                            //   <h2>YOJI</h2>
+                              (typeof(product.imageURL)!='undefined') ?
+                                <img className="product_details_img" src={`${"data:image/png;base64," +new Buffer.from(product.imageFile.data.data).toString("base64")}`} />
+                                :
+                                null
+                        }
 
                         <p class="product_details_name">{product.name}</p>
                         
@@ -93,17 +102,20 @@ const ProductDetails= ()=> {
                         Quantity<input onChange={(e)=>setqty(e.target.value)}/> 
                         <h2>{qty}</h2> */}
 
-                        Quantity <label value={qty}
-                                    onChange={(e)=>dispatch(product.cartListDetails(id,Number(e.target.value)))}/> 
-
-
-                        <select>
-                            {
-                            [...Array(product.countInStock).keys()].map((x) =>(
-                                        <option key={x+1} value={x+1}>{x+1}</option>
-                            ) )
-                            }
-                        </select>
+                        {product.countInStock>0?  
+                            <>
+                                Quantity 
+                                <select onChange={(e)=>setqty(e.target.value)}>
+                                    {
+                                    [...Array(product.countInStock).keys()].map((x) =>(
+                                                <option key={x+1} value={x+1}>{x+1}</option>
+                                    ) )
+                                    }
+                                </select>
+                            </>
+                            :
+                            null
+                        }
                         <br/>
                         <br/>
 

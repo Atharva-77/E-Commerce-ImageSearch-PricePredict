@@ -23,7 +23,7 @@ const upload =multer()
 
 router.post('/add', upload.single("file"),async(req,res)=>
 {
-    
+    console.log("Entered in")
     //    console.log("POST REQ",req.file.mimetype.split("/"));
     //    console.log("Name",req.file.originalname);
     //    console.log("streams",exp.static(path.join(__dirname, '/public')));
@@ -42,35 +42,40 @@ router.post('/add', upload.single("file"),async(req,res)=>
    await pipeline(req.file.stream,fs.createWriteStream(fx))
    console.log("response to be send",fx);
 
-  //  const Viewproduct=await ProductsDb.findById(req.body.id_Img)
+   const Viewproduct=await ProductsDb.findById(req.body.id_Img)
  
 
-  //     Viewproduct.name= Viewproduct.name
-  //     Viewproduct.category= Viewproduct.category
-  //     Viewproduct.price= Viewproduct.price
-  //     Viewproduct.imageURL= Viewproduct.imageURL
-  //     Viewproduct.brand= Viewproduct.brand
-  //     Viewproduct.countInStock= Viewproduct.countInStock
-  //     Viewproduct.description= Viewproduct.description
+      Viewproduct.name= Viewproduct.name
+      Viewproduct.category= Viewproduct.category
+      Viewproduct.price= Viewproduct.price
+      Viewproduct.imageURL= Viewproduct.imageURL
+      Viewproduct.brand= Viewproduct.brand
+      Viewproduct.countInStock= Viewproduct.countInStock
+      Viewproduct.description= Viewproduct.description
 
-  //     Viewproduct.imageFile.data=fs.readFileSync(fx)
-  //     Viewproduct.imageFile.contentType='image/png'
+      Viewproduct.imageFile.data=fs.readFileSync(fx)
+      Viewproduct.imageFile.contentType='image/png'
   
   
 
-  // console.log("VIEW FEATURE",Viewproduct);
+  console.log("VIEW FEATURE",Viewproduct);
 
-  // // const objImg = {img:null}
+  // const objImg = {img:null}
 
-  // // objImg.img = new Buffer.from(fs.readFileSync(fx)).toString("base64")
+  // objImg.img = new Buffer.from(fs.readFileSync(fx)).toString("base64")
 
-  // // console.log("OBJ BUFFER",objImg[0]);
+  // console.log("OBJ BUFFER",objImg[0]);
+  console.log("Exited")
+  Viewproduct.save()
+  .then(()=>res.json({fx, Viewproduct: Viewproduct}))
+  .catch(err=>res.status(200).json("imgg Error is "+err))
 
-  // Viewproduct.save()
-  // .then(()=>res.json((fx)))
-  // .catch(err=>res.status(200).json("imgg Error is "+err))
-
-   res.send(fx)
+  // res.send(
+  //   {
+  //       fx,
+  //       Viewproduct:Viewproduct
+  //   }
+  // )
    
   }
   catch(error)

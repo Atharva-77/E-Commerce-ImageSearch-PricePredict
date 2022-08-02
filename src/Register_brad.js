@@ -100,7 +100,7 @@ function Register() {
 
             <div className="registration_details">
                 {/* <form> */}
-                <h1 className="heading">brad-Register</h1>
+                <h1 className="heading">Register</h1>
                 
                 {/* {error}
                 {loading && <h2>Loading</h2>} */}

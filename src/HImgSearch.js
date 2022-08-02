@@ -42,6 +42,7 @@ function HImgSearch() {
                                                 price={i.price}
                                                 rating={i.Avgrating}
                                                 imageURL={i.imageURL}
+                                                imageFile={i.imageFile}
                                             />
                                             ))
                                     } 

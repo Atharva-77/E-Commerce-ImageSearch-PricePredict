@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import React from 'react'
+import React,{useState} from 'react'
 import './CheckoutProduct.css'
 
 import { useDispatch,useSelector } from 'react-redux';
@@ -10,10 +10,19 @@ import { cartListDetails,removeCartAction } from './Reducers/actions/cartActions
 
 function CheckoutProduct({id,title,price,rating,imageURL,qty,countInStock}) {
     const dispatch=useDispatch()
-
+    console.log("CKOUT",qty);
+    const [qty1, setqty1] = useState(qty)
+    console.log("QTY1,QTY",qty1,qty);
+    let i=qty;
     const removeFromCart=(id)=>
     {
         dispatch(removeCartAction(id))
+    }
+
+    const changeQty=(e)=>
+    {
+        setqty1(e.target.value);
+        dispatch(cartListDetails(id,Number(e.target.value)))
     }
 
     return (
@@ -40,17 +49,34 @@ function CheckoutProduct({id,title,price,rating,imageURL,qty,countInStock}) {
                 </div>
 
                 <br />
-                Quantity <label value={qty}
-                                    onChange={(e)=>dispatch(cartListDetails(id,Number(e.target.value)))}/> 
+                Quantity 
+                {/* <label value={qty} onChange={(e)=>dispatch(cartListDetails(id,Number(e.target.value)))}/>  */}
 
 
-                        <select>
+                        <select value={qty1} onChange={(e)=>changeQty(e)}>
                             {
                             [...Array(countInStock).keys()].map((x) =>(
-                                        <option key={x+1} value={x+1}>{x+1}</option>
+                                <>
+                                <option key={x+1} value={x+1}>{x+1}</option>
+                                        {/* {i==0?
+                                        
+                                            console.log("1st man"):
+                                            console.log("2st man")
+                                        }
+                                        {i==1} */}
+                                </>
+                                        
+                                        // <option key={x+1} value={x+1}>{x+1}</option>
                             ) )
                             }
                         </select>
+                       
+                        {/* <select>
+                             {countInStock.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                             ))}
+                        </select> */}
+                         
                         <br/>
                         <br/>
                 <button onClick={()=> removeFromCart(id)}>Remove from Basket</button>
