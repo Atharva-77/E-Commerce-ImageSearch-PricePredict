@@ -10,6 +10,12 @@ import {USER_LOGIN_REQUEST,
         USER_DETAILS_REQUEST,
         USER_DETAILS_SUCCESS,
         USER_DETAILS_FAILURE,
+        USER_DETAILS_RESET,
+
+        ADMIN_USER_LIST_REQUEST,
+        ADMIN_USER_LIST_SUCCESS,
+        ADMIN_USER_LIST_FAILURE,
+        USER_REGISTER_RESET,
         
         } from '../constants/userConstants' 
 
@@ -88,6 +94,23 @@ export const logout_action=()=>async(dispatch)=>
     dispatch(userLogout())
 }
 
+//Profile logout
+export const profileReset_action=()=>async(dispatch)=> 
+{
+    dispatch ({
+        type:USER_DETAILS_RESET
+    })
+}
+
+
+
+//Register logout
+export const registerReset_action=()=>async(dispatch)=> 
+{
+    dispatch ({
+        type:USER_REGISTER_RESET
+    })
+}
 
 
 
@@ -199,6 +222,68 @@ export const userProfileAction_details =(id)=> async(dispatch,getState)=> {
     } catch (error) {
         console.log("User UserProfileDetails actions");
         dispatch(userProfileDetailsFailure(error))
+        
+    }
+}
+
+
+
+
+
+
+
+//ADMIN User list
+const adminUserProfileRequest = () =>
+    {
+        return {
+            type:ADMIN_USER_LIST_REQUEST
+        }
+    }
+    
+    const adminUserProfileSuccess = data =>
+    {
+        return{
+          type:ADMIN_USER_LIST_SUCCESS, 
+          payload: data
+        }
+    }
+    
+    const adminUserProfileFailure = error =>
+    {
+        return{
+           type:ADMIN_USER_LIST_FAILURE,
+           payload: error
+        }
+    }
+
+export const adminUserAction =()=> async(dispatch,getState)=> {
+
+    try 
+    {
+        dispatch(adminUserProfileRequest())
+
+        const {userLogin:{userInfo}} = getState()
+       
+        //Q.use??
+        const config={
+            headers:{
+                // 'Content-Type':"application/json",
+                Authorization:`Bearer ${userInfo.token}`
+            }
+        }
+        // console.log("Profile After config");
+        //Q.WHy not direct profile in place of id?
+        // console.log("waiting for data");
+        const {data}= await axios.get(`http://localhost:4000/login_brad/allUsers`,config)
+        // console.log("Profile After data",data);
+
+        dispatch(adminUserProfileSuccess(data))
+        // console.log("Profile success");
+       
+
+    } catch (error) {
+        console.log("User ADMINProfileDetails actions");
+        dispatch(adminUserProfileFailure(error))
         
     }
 }

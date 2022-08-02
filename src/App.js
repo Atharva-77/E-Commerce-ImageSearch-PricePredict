@@ -18,6 +18,9 @@ import Shipping from './Shipping';
 import Payment from './Payment';
 import PlaceOrder from './PlaceOrder';
 import OrderScreen from './OrderScreen';
+import Admin_UserList from './Admin_UserList';
+import Admin_EditUser from './Admin_EditUser';
+import Admin_Product from './Admin_Product';
 
 
 function App() {
@@ -59,6 +62,20 @@ function App() {
               <Route path="/payment">
                  <Payment />
               </Route>
+
+             {/* Admin routes */}
+              <Route path="/admin/userlist">
+                 <Admin_UserList />
+              </Route>
+
+              <Route path="/admin/profile/:id">
+                 <Admin_EditUser />
+              </Route>
+
+              <Route path="/admin/product">
+                 <Admin_Product />
+              </Route>
+
 
               <Route path="/placeorder/:id">
                  <OrderScreen />

@@ -35,9 +35,10 @@ function Login_brad() {
         //length==0 becomes when 1st time login pg is visited
         //invalid details is received when details don't match
 
-        //if user is logged in  direct to home page..not working when aftr login i type login_brad url, everything gets refreshed
+        //if user is logged in  direct to home page..not working when aftr login  i type login_brad url, everything gets refreshed
         if( !(typeof(userInfo)=='undefined') && userInfo.length!=0 && userInfo!=='Invalid details')
         {
+            console.log("Login useeffect, redirect");
             history.push(redirect)
         }
     }, [history,userInfo,redirect])

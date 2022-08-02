@@ -1,4 +1,4 @@
-.register
+.login
 {
     display: flex;
     flex-direction: column;
@@ -7,20 +7,20 @@
 
 }
 
-.register .logo
+.login .logo
 {
     object-fit: contain;
-    width: 125px;
-    padding-top: 40px;
+    width: 125px;   
+    /*1. padding-top: 100px; */ padding-top: 62px;
     padding-bottom: 19px;
 }
 
-.register .heading
+.login .heading
 {
     padding-bottom: 10px;
 }
 
-.register .registration_details
+.login .login_details
 {
 
     width: 300px;
@@ -52,44 +52,29 @@
 
 
 
-.registration_details > h1
+.login_details > h1
 {
     font-weight: 500;
     margin-bottom: 10px;
 }
 
-.registration_details > h2
+.login_details > h2
 {
     font-weight: 450;
     /* font-size: 15px; */
     margin-bottom: 5px;
 }
 
-.registration_details > input
+.login_details > input
 {
     width: 95%;
     margin-bottom: 12px;
     height: 25px;
 }
 
-.registration_details .create_acc
-{
-    height: 25px;
-    width: 98%;
-    
-    /* width: fit-content; */
-}
 
-.registration_details >h3
-{
-    padding-top: 5px;
-    display: flex;
-    flex-direction:column ;
-    align-items: center;
-    /* padding-left: 15px; */
-}
 
-.registration_details .login
+.login_details .login_button
 {
     height: 25px;
     width: 98%;
@@ -98,17 +83,6 @@
     margin-top: 8px;
     /*1. border-color: #a88734 #9c7e31 #846a29; */
     color: black;
-    text-decoration: none;
+    /* outline: none; */
 
 }
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-/*   
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  } */
-  

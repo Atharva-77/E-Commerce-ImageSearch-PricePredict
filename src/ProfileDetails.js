@@ -17,6 +17,8 @@ function ProfileDetails() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setconfirmPassword] = useState('');
 
+    const [myOrder, setmyOrder] = useState({})
+
     const dispatch = useDispatch()
 
     const userProfileDetails = useSelector(state => state.userProfileDetails)
@@ -66,7 +68,9 @@ function ProfileDetails() {
             //     console.log("USER NAME a4 if",user)
             // }
             
+            
         }
+
     }, [dispatch,history,userInfo])
 
     useEffect(() => {
@@ -77,6 +81,19 @@ function ProfileDetails() {
             setEmail(user.email)
             console.log("USER NAME a4 if",user)
         }
+
+        const config={
+            headers:{
+                'Content-Type':"application/json",
+                Authorization:`Bearer ${userInfo.token}`
+            }
+        }
+        axios.get(`http://localhost:4000/order/myorder`,config)
+         .then(res => 
+            {
+                console.log("(PROFILEDETAILS)",res.data)
+                setmyOrder(res.data)
+            })
        
     }, [user])
 
@@ -131,32 +148,20 @@ function ProfileDetails() {
 
         }
        
-        // const userData={
-        //     "Name":name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
-        //     "email":email,
-        //     "password":password,
-        //     "confirmPassword":confirmPassword
+       
+        // const config={
+        //     headers:{
+        //         'Content-Type':"application/json",
+        //         Authorization:`Bearer ${userInfo.token}`
+        //     }
         // }
+        // axios.get(`http://localhost:4000/order/myorder`,config)
+        //  .then(res => console.log("(PROFILEDETAILS)",res.data))
 
-        // axios.post(`http://localhost:4000/register_brad/add`,userData)
-        //  .then(res => console.log(res.data))
-
-        //  dispatch(userAction_details(email,password))
-
-        //  setName('')
-        //  setEmail('')
-        //  setPassword('')
-        //  setconfirmPassword('')
         
     }
 
-    // setName(user.name)
-    // setEmail(user.email)
-    // if(!(typeof(user)=='undefined'))
-    // {
-    //     setName(user.name)
-    //     setEmail(user.email)
-    // }
+   
     console.log("b4 return",user);
     return (
         <div className="register">
@@ -189,6 +194,62 @@ function ProfileDetails() {
                 <button className="create_acc" onClick={submit_form} >Update</button>
                 
                 {/* </form> */}
+            </div>
+
+            <div>
+
+                {/* <h2>My Orders</h2> */}
+                { Object.keys(myOrder).length==0?<h2>No orders</h2>:
+                  <>
+                  <h2>My Orders</h2>
+                    <table>
+
+
+                            {/* <thread> */}
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>DATE</th>
+                                        <th>TOTAL</th>
+                                        <th>PAID</th>
+                                        <th>DELIVERED</th>
+                                    </tr>
+                            {/* </thread> */}
+                
+                
+                          {/* <tbody> */}
+                        
+                            {myOrder.map((item) => (
+                                // <div>
+                                
+                                
+                                        <tr>
+                                            <td>{item._id}</td>
+                                        
+                                            <td>{item.createdAt}</td>
+                                        
+                                            <td>{item.totalPrice}</td>
+                                        
+                                            <td>{item.isPaid?<h3>✔️</h3>:<h3>❌</h3>}</td>
+
+                                            <td>{item.isDelivered?<h3>✔️</h3>:<h3>❌</h3>}</td>
+
+                                            <td>
+                                                {/* <Link to={`/order/${item._id}`}> */}
+                                                    <button>Details</button>
+                                                {/* </Link> */}
+                                            </td>
+                                        </tr>
+                                        
+                                // </div>
+                            ))}
+                        
+                        {/* </tbody> */}
+                    </table>
+                 </>
+               
+                }
+               
+                
             </div>
 
         </div>
