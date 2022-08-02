@@ -1,4 +1,11 @@
 .dropdown
 {
-    color:white
+    overflow: hidden;
+    background-color: #E5E7EB;
+    position: absolute;
+    color: rgb(22, 21, 21);
+    text-decoration: none;
+    border: 1px solid black;
+    margin-top: 16px;
+    padding: 20px;
 }

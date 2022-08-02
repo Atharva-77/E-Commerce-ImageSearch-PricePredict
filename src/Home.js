@@ -66,12 +66,6 @@ function Home() {
 
 
                
-                <Product 
-                    title="The atharva Startup"
-                    price={20.00}
-                    rating={3}
-                    image="https://images-na.ssl-images-amazon.com/images/I/81-QB7nDh4L.jpg"/>
-                  
                 {/* </div> */}
                 
                 

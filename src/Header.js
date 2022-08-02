@@ -102,8 +102,8 @@ function Header() {
 
                 {/* ADMIN */}
                 {!(typeof(userInfo)=='undefined') && userInfo.length!=0 && (userInfo.isAdmin||userInfo.isSeller)?
-                    <div>
-                            <div>
+                    <div className='dropdowncontainer'>
+                            <div className='drop'>
                                  {/* <div className="header_rightSubpart" > */}
                                 <span className="lineOne">{userInfo.name}</span>
                                 <ArrowDropDownIcon className="arrow_icon" onClick={()=>setopen(!open)}/>
@@ -113,11 +113,13 @@ function Header() {
                                <>
                                     {open? 
                                         <Dropdown >            
-                                            <Link to="/admin/userlist"><p >Users</p></Link>
-                                            <Link to="/admin/product"><p>Products</p></Link>
-                                            <Link to="/admin/orderlist"><p>Orders</p></Link> 
+                                            <Link to="/admin/userlist"  style={{ textDecoration: 'none', color : 'black' }}><p >Users</p></Link>
 
-                                            <p onClick={logoutHandler}>Logout</p>
+                                            <Link to="/admin/product"  style={{ textDecoration: 'none', color : 'black' }}><p>Products</p></Link>
+
+                                            <Link to="/admin/orderlist"  style={{ textDecoration: 'none', color : 'black' }}><p>Orders</p></Link> 
+
+                                            <p onClick={logoutHandler} style={{cursor: 'pointer'}}>Logout</p>
                                         </Dropdown>
                                         :
                                         null
@@ -127,10 +129,11 @@ function Header() {
                                <>
                                     {open? 
                                         <Dropdown >           
-                                            <Link to="/seller/product"><p>Products</p></Link>
-                                            <Link to="/seller/orderlist"><p>Orders</p></Link> 
+                                            <Link to="/seller/product" style={{ textDecoration: 'none', color : 'black' }}><p>Products</p></Link>
 
-                                            <p onClick={logoutHandler}>Logout</p>
+                                            <Link to="/seller/orderlist" style={{ textDecoration: 'none', color : 'black' }}><p>Orders</p></Link> 
+
+                                            <p onClick={logoutHandler} style={{cursor: 'pointer'}}>Logout</p>
                                         </Dropdown>
                                         :
                                         null
@@ -154,8 +157,8 @@ function Header() {
                 :
                     <div>
                             {!(typeof(userInfo)=='undefined') && userInfo.length!=0 ?
-                                <div>
-                                    <div>
+                                <div className='dropdowncontainer'>
+                                    <div className='drop'>
                                         {/* <div className="header_rightSubpart" > */}
                                             <span className="lineOne">{userInfo.name}</span>
                                         <ArrowDropDownIcon className="arrow_icon" onClick={()=>setopen(!open)}/>
@@ -164,8 +167,8 @@ function Header() {
 
                                     {open? 
                                             <Dropdown >            
-                                                <Link to="/profile_brad"><p>Profile</p></Link>
-                                                <p onClick={logoutHandler}>Logout</p>
+                                                <Link to="/profile_brad" style={{ textDecoration: 'none', color : 'black' }}><p>Profile</p></Link>
+                                                <p onClick={logoutHandler} style={{cursor: 'pointer'}}>Logout</p>
                                             </Dropdown>
                                             :
                                             null

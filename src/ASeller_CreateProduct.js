@@ -19,6 +19,7 @@ function ASeller_CreateProduct() {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [price, setPrice] = useState(0);
+    const [Originalprice, setOriginalPrice] = useState();
     const [countInStock, setCountInStock] = useState(0);
     const [message, setMessage] = useState(false)
 
@@ -60,6 +61,12 @@ function ASeller_CreateProduct() {
     { 
         setPrice(e.target.value)
     }
+
+    const onOriginalPrice=(e)=> 
+    { 
+        setOriginalPrice(e.target.value)
+    }
+
     const onCountInStock=(e)=> 
     { 
         setCountInStock(e.target.value)
@@ -107,6 +114,12 @@ function ASeller_CreateProduct() {
     }
     
     
+    const price_predict=()=>
+    {
+        console.log('Price predict');
+    }
+
+
     
     const submit_form=()=>
     {
@@ -168,7 +181,12 @@ function ASeller_CreateProduct() {
                 <h2>Description</h2>
                 <input value={description} onChange={onDescription} placeholder="Enter Description"/>
                 
-                <h2>Price</h2>
+                <h2>Original Price</h2>
+                <input value={Originalprice} onChange={onOriginalPrice} placeholder="Enter Original Price for price prediction"/>
+
+                <button className="create_acc" onClick={price_predict} >Predict Price</button>
+
+                <h2>Your Price</h2>
                 <input value={price} onChange={onPrice} placeholder="Enter Price"/>
 
                 <h2>CountInStock</h2>

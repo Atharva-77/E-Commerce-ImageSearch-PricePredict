@@ -30,9 +30,9 @@ function Product({id,title,price,rating,image}) {
             
             <div className="product_info">
 
-            <Link to={`/product/${id}`}>
+            <Link to={`/product/${id}`} style={{ textDecoration: 'none' ,color:'#374151'}}>
                 <p>{title}</p>
-            </Link>
+            
 
                 <p className="product_price">
                     <small>$</small>
@@ -48,11 +48,14 @@ function Product({id,title,price,rating,image}) {
                    ))}
                     
                 </div> */}
+                </Link>
             </div>    
             <img className="product_img" src={image} /> 
             {/* https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_ST400_.jpg */}
             {/* https://images-na.ssl-images-amazon.com/images/I/81-QB7nDh4L.jpg */}
+            
             <button >Add to Basket</button>
+
         </div>
     )
 }

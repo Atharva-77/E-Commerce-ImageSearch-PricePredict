@@ -11,6 +11,13 @@
     padding: 10px;
     border-bottom: 1px solid lightgray;
 }
+
+.subtotalcompo{
+    float: right;
+    /* padding-left: 90vh; */
+}
+
+
 /* 
 .checkout_ad
 {

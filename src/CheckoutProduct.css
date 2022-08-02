@@ -15,7 +15,8 @@
 
 .checkout_product_info
 {
-    padding-left: 10px;
+    padding-left: 20px;
+    width: 134vh;
 }
 
 .checkout_product_info > button
@@ -35,4 +36,5 @@
 {
     font-size: 18px;
     font-weight: 600;
+    color: #111;
 }
