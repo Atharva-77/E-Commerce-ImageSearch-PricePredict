@@ -22,13 +22,13 @@ def predict_api():
     For direct API calls trought request
     '''
     data = request.get_json(force=True)
-    rizuList=list(data.values())
-    print("Val in PREDICT ",data,rizuList)
-    for i in range(len(rizuList)):
-        rizuList[i]=int(rizuList[i])
+    datalist=list(data.values())
+    print("Val in PREDICT ",data,datalist)
+    for i in range(len(datalist)):
+        datalist[i]=int(datalist[i])
         
     
-    prediction = model.predict([np.array(rizuList)])
+    prediction = model.predict([np.array(datalist)])
 
     output = int(round(prediction[0]))
    

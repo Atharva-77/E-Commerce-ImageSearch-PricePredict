@@ -47,6 +47,51 @@ function ASeller_CreateProduct() {
         }
     }, [history,userInfo])
 
+
+    useEffect(() => {
+       
+        if(id_Img!=0)
+        {       
+            console.log("value_id_img_inside",id_Img);
+                const Data = new FormData()
+                Data.append('id_Img', id_Img)
+                Data.append('file',file)
+
+      
+            //  axios.post("https://httpbin.org/anything",Data)
+            axios.post("http://localhost:4000/uploadImg/add",Data)
+             .then(
+                    res=>
+                    {
+                        console.log("dATA IS",res.data)
+                        setImgpath(res.data)
+                        console.log(3);
+                    }
+                 )
+
+            if(Imgpath!="" && id_Img!=NaN){
+                    const ImageSearchData={
+                    "prod_id":id_Img,
+                    "img_path":Imgpath
+                }
+                console.log("check_Image_Seacrh_Data:",ImageSearchData)
+                axios.post("http://localhost:7080/extract_features",ImageSearchData)
+                .then(
+                        res=>
+                        {
+                            console.log("Image_Data",res.data)
+                            console.log(4);
+                        }
+                    )
+                //  .catch(err=>console.log(err))
+                setMessage(true)
+            }
+        }
+            //  console.log(Data);
+        // history.push(`/admin/product`)
+        // setMessage(true)
+    }, [message,id_Img,Imgpath])
+
     const onName=(e)=> 
     { 
         setName(e.target.value)
@@ -100,6 +145,7 @@ function ASeller_CreateProduct() {
     
     const price_predict=()=>
     {
+
         console.log('Price predict');
         console.log("DOM",document.getElementById('brand').value);
         console.log("DOM",document.getElementById('condition').value,Originalprice);
@@ -115,17 +161,19 @@ function ASeller_CreateProduct() {
             headers:{
                  "Access-Control-Allow-Origin": "*",
                  "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-                 
-
             }
         }
+
+
+
         axios.post(`http://localhost:8000/predict_api`,predictPrice,config)
         .then(res => 
             {
                 setPredictedPrice(res.data);
                 console.log("Aseller O/P",res.data)
+                console.log(1);
             }).catch(err=>console.log("Aseller O/P",err))
-        
+    
 
     }
 
@@ -157,35 +205,52 @@ function ASeller_CreateProduct() {
             {
                 console.log("UPDaTED PROD SELLER",res.data._id)
                 setid_Img(res.data._id)
+                console.log(2);
             })
 
         console.log("PROD IN SUBMIT",ProductData);
             
 
 
-
-         if(id_Img!=0)   
-         {       
-                const Data = new FormData()
-                Data.append('id_Img', id_Img)
-                Data.append('file',file)
+        console.log("value_id_img",id_Img);
+        // if(id_Img!=0)   
+        // {       
+        //     console.log("value_id_img_inside",id_Img);
+        //         const Data = new FormData()
+        //         Data.append('id_Img', id_Img)
+        //         Data.append('file',file)
 
       
-            //  axios.post("https://httpbin.org/anything",Data)
-            axios.post("http://localhost:4000/uploadImg/add",Data)
-             .then(
-                    res=>
-                    {
-                        console.log("dATA IS",res.data)
-                        setImgpath(res.data)
-                    }
-                 )
-            //  .catch(err=>console.log(err))
-            setMessage(true)
-        }
-            //  console.log(Data);
-        // history.push(`/admin/product`)
-        // setMessage(true)
+        //     //  axios.post("https://httpbin.org/anything",Data)
+        //     axios.post("http://localhost:4000/uploadImg/add",Data)
+        //      .then(
+        //             res=>
+        //             {
+        //                 console.log("dATA IS",res.data)
+        //                 setImgpath(res.data)
+        //                 console.log(3);
+        //             }
+        //          )
+
+        //     const ImageSearchData={
+        //         "prod_id":id_Img,
+        //         "img_path":Imgpath
+        //     }
+        //     console.log("check_Image_Seacrh_Data:",ImageSearchData)
+        //     axios.post("http://localhost:7080/extract_features",ImageSearchData)
+        //     .then(
+        //             res=>
+        //             {
+        //                 console.log("Image_Data",res.data)
+        //                 console.log(4);
+        //             }
+        //         )
+        //     //  .catch(err=>console.log(err))
+        //     setMessage(true)
+        // }
+        //     //  console.log(Data);
+        // // history.push(`/admin/product`)
+        // // setMessage(true)
 
 
          
