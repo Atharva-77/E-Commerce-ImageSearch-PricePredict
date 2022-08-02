@@ -52,4 +52,22 @@ const adminMiddleware =async(req, res, next)=> {
     res.status(401).send("NOT ADMIN")
 }
 
-module.exports ={protect, adminMiddleware };
+
+
+const sellerMiddleware =async(req, res, next)=> {
+
+// console.log("Seller MIDDLEWARE",req.user1.isSeller,req.user1);
+
+    if(req.user1 && req.user1.isSeller)
+    {
+        console.log("SELLER PART",req.user1.isSeller);
+        console.log("SELLER ACCESS");
+        next()
+    }
+   
+    else
+    res.status(401).send("NOT SELLER")
+}
+
+
+module.exports ={protect, adminMiddleware, sellerMiddleware };

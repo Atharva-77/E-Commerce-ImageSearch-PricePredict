@@ -34,6 +34,7 @@ router.post("/add",async(req,res)=>
                         name:userDetails.Name,
                         email:email,
                         isAdmin:userDetails.isAdmin,
+                        isSeller:userDetails.isSeller,
                         token:generateToken(userDetails._id)                      
                     }
                 )

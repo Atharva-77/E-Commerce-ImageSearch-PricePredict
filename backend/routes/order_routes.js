@@ -1,15 +1,16 @@
 const exp= require('express')
 const router= exp.Router()
 // const generateToken= require('../generateToken')
-const {protect,adminMiddleware} = require('../middleware/authMiddleware.js')
+const {protect, adminMiddleware, sellerMiddleware} = require('../middleware/authMiddleware.js')
 
 let orderDb=require('../schema_model/order_schema')
+let sellerDb=require('../schema_model/seller_schema')
 
 
 router.post("/add",protect,async(req,res)=>
 {
 
-    console.log("order_route.js");
+    console.log("ADD order_route.js");
     const orderItems=req.body.orderItems
     const shippingAddress=req.body.shippingAddress
     const paymentMethod=req.body.paymentMethod
@@ -17,7 +18,7 @@ router.post("/add",protect,async(req,res)=>
     const shippingPrice=req.body.shippingPrice
     const totalPrice=req.body.totalPrice
 
-    console.log(orderItems,shippingAddress,paymentMethod,taxPrice,shippingPrice,totalPrice);
+    // console.log("ORDER ITEMS",orderItems);
 
     // console.log("CLIENT ID",process.env.PAYPAL_CLIENTID);
     try{
@@ -32,6 +33,7 @@ router.post("/add",protect,async(req,res)=>
             const newOrder=new orderDb({
                 user:req.user1._id,
                 orderItems,
+                // userSeller:,
                  shippingAddress,
                  paymentMethod ,
                  taxPrice ,
@@ -40,8 +42,53 @@ router.post("/add",protect,async(req,res)=>
             })
     
     
-            const savedOrder= await newOrder.save()    
+            const savedOrder= await newOrder.save()   
+            
             console.log("SAVED ORDER",savedOrder);
+            
+            
+            
+            //SELLER SCHEMA PART
+            sellerObj={pid:0,name:'',image:'',price:0,sellerId:0,qty:0,orderId:0,buyerId:0}
+            sellerArray=[]
+            let NewSellerOrder;
+            let saveSellerOrder;
+            orderItems.map((item) => 
+            (
+                
+            
+                     NewSellerOrder=new sellerDb({
+                        pid:item.idname,
+                        name:item.name,
+                        image:item.image,
+                        price:item.price,
+
+                        sellerId:item.user,
+                        qty:item.qty,
+
+                        orderId:savedOrder._id,
+                        buyerId:req.user1._id
+                    }),
+
+                    // NewSellerOrder= new sellerDb({sellerObj}),
+                    // sellerArray.push(sellerObj),
+                    
+                    NewSellerOrder.save() ,
+                    
+                    // console.log("NEWSELLERORDER ",NewSellerOrder.populate('sellerId','Name email'))
+
+                    console.log("TYPEOF ",typeof(item.user),typeof(savedOrder._id),typeof(req.user1._id))
+                    // console.log("2.TYPEOF ",typeof(item.user),typeof(JSON.stringify(savedOrder._id)),typeof(JSON.stringify(req.user1._id)))
+                    
+             
+            ))
+
+
+
+            
+            console.log("SELLERARRAY",sellerArray)
+
+
             res.send(
                 {
                     // "new order done"
@@ -111,6 +158,9 @@ router.put('/:id/pay',protect,async(req,res)=>
 });
 
 
+
+
+
 //get orders on profile page
 router.get('/myorder',protect,async(req,res)=>
 {
@@ -144,6 +194,8 @@ router.get('/myorder',protect,async(req,res)=>
 
 
 
+
+
 //get order.....order screen
 router.get('/:id',protect,async(req,res)=>
 {
@@ -156,7 +208,7 @@ router.get('/:id',protect,async(req,res)=>
         //user:- its defined in order schema....that name used not Db's name
         
         if(orderData){
-            console.log("order_route",orderData);
+            // console.log("order_route",orderData);
 
             res.send(orderData)
           
@@ -182,6 +234,9 @@ router.get('/:id',protect,async(req,res)=>
 
 
 
+
+
+
 //ADMIN Get all orders
 router.get('/admin/allorder',protect,adminMiddleware,async(req,res)=>
 {
@@ -202,7 +257,7 @@ router.get('/admin/allorder',protect,adminMiddleware,async(req,res)=>
     }
     
     
-    catch(error) {s
+    catch(error) {
         res.status(200).send("Invalid details")
     }
 
@@ -246,6 +301,102 @@ router.put('/admin/delivered/:id',protect,adminMiddleware,async(req,res)=>
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//**********===*****|====*****||**********||********************************************** 
+//*********===******|===******||**********||********************************************* 
+//**********===*****|===******||**********||*********************************************** 
+//*********===******|====*****||=====*****||=====***************************************************** 
+
+
+
+//SELLER Get all orders
+router.get('/seller/allorder',protect,sellerMiddleware,async(req,res)=>
+{
+    const id=req.user1._id;
+    console.log("SID IN ALLORDERS");
+    
+    try{
+
+        const Allorders=await sellerDb.find({"sellerId":id.toString()}) //.populate('user','Name id')
+         
+        // if(id.toString()===Allorders.user.toString())
+        //  {
+            res.send(
+                {
+                   Allorders                   
+                }
+            )
+        //  }
+
+        //  else
+        
+            // res.status(401).send("Not authorized to View the Orders ")
+            // console.log("IRDER_ROUTES ALLORDER",Allorders);
+            // console.log("USER ON ALL ORDER",Allorders.user);
+            
+    }
+    
+    
+    catch(error) {
+        res.status(200).send("Invalid details")
+    }
+
+});
+
+
+
+
+
+//SELLER DELIVERED
+// router.put('/seller/delivered/:id',protect,sellerMiddleware,async(req,res)=>
+// {
+//     // const id=req.user1._id;
+//     console.log("ALL DELIVERED");
+    
+//     try{
+//         const Allorders=await orderDb.findById(req.params.id)
+        
+//         if(Allorders)
+//         {
+//             Allorders.isDelivered=true
+//             Allorders.deliveredAt=Date.now()
+//             const UpdatedOrder=await Allorders.save()
+//             console.log("IRDER_ROUTES delivered");
+            
+//             res.send(UpdatedOrder)
+            
+//         }
+//         else{
+//             res.status(401).send("NO order found.")
+//         }
+
+            
+//     }
+    
+    
+//     catch(error) {
+//         res.status(200).send("Invalid details")
+//     }
+
+// });
 
 
 module.exports=router;

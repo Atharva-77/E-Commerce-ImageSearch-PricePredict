@@ -1,6 +1,6 @@
 const exp= require('express')
 const router= exp.Router()
-const {protect,adminMiddleware} = require('../middleware/authMiddleware.js')
+const {protect,adminMiddleware, sellerMiddleware} = require('../middleware/authMiddleware.js')
 
 let ProductsDb=require('../schema_model/product_schema')
 
@@ -10,10 +10,36 @@ router.get('/',(req,res)=>
         // res.status(200)
         // throw new Error('Not authzz')
 
-    ProductsDb.find()       //find method returns a promise.So result returened in json format
-    .then(i=> res.json(i)) 
+    console.log("KEYWORD ",req.query.keyword);
+    
+    const keyword=req.query.keyword
+    ? {
+            name:{
+                $regex: req.query.keyword,
+                $options:'i'
+            },
+            // description:{
+            //     $regex: req.query.keyword,
+            //     $options:'i'
+            // },
+
+      }
+    :{}
+
+
+    console.log("REGEX KEYWORD",({...keyword}) );
+
+    ProductsDb.find({...keyword})       //find method returns a promise.So result returened in json format
+    .then(i=> 
+        {
+          //console.log("PROD FIND", i );
+         res.json(i);
+        }) 
     .catch(err=> res.status(400).json('Error: '+err))
 });
+
+
+
 
 router.get('/:id',(req,res)=>
 {
@@ -24,6 +50,7 @@ router.get('/:id',(req,res)=>
     .then(i=> res.json(i)) 
     .catch(err=> res.status(400).json('Error: '+err))
 });
+
 
 
 
@@ -103,9 +130,11 @@ router.post('/review/:id',protect,async(req,res)=>
        {
             //  Converted to toString() as req.user1._id is an object
             const beforeReview=product.reviews.find(i=>i.user.toString()===req.user1._id.toString()) 
-            console.log("1.PROD RATING LEN",product.reviews.length);
-            console.log("REVIEW USER ",beforeReview,typeof(req.user1._id.toString()));
+            // console.log("1.PROD RATING LEN",product.reviews.length);
+            // console.log("REVIEW USER ",beforeReview,typeof(req.user1._id.toString()));
             // console.log("Rting, COMMENT ",rating,comment,req.user1.name,req.user1.Name);
+
+            console.log("USER Rating,comment",rating,comment);
             if(beforeReview)
             {
                 res.status(201).send("Already reviewed product")
@@ -127,7 +156,7 @@ router.post('/review/:id',protect,async(req,res)=>
                 let totalReviewSum=0 
     
 
-                console.log("2.PROD RATING LEN",product.reviews.length);
+                // console.log("2.PROD RATING LEN",product.reviews.length);
                 product.reviews.map((i)=>
                                     {
                                         totalReviewSum+=i.IndividualRating           
@@ -136,7 +165,7 @@ router.post('/review/:id',protect,async(req,res)=>
                      product.Avgrating=(totalReviewSum/product.reviews.length).toFixed(2)
                  
 
-                //  console.log("PROD DETAILS",product);
+                 console.log("PROD DETAILS",product);
                  console.log("PROD RATING", product.Avgrating, totalReviewSum,  product.reviews.length);
     
 
@@ -172,7 +201,7 @@ router.post('/review/:id',protect,async(req,res)=>
 
 
 
-//delete Product
+//ADMIN delete Product
 router.delete('/deleteProduct/:id',protect,adminMiddleware,async(req,res)=>
 {
     // const id=req.user1._id;
@@ -337,4 +366,269 @@ router.get('/admin/products/:id',protect,adminMiddleware,(req,res)=>
     .catch(err=> res.status(400).json('Error: '+err))
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//**********===*****|====*****||**********||********************************************** 
+//*********===******|===******||**********||********************************************* 
+//**********===*****|===******||**********||*********************************************** 
+//*********===******|====*****||=====*****||=====***************************************************** 
+
+
+
+//SELLER PART STARTS FROM HERE................................................................
+//SELLER POST product
+router.post('/seller/products/add',protect,sellerMiddleware,async(req,res)=>
+{
+    const id=req.user1._id;
+    try
+    {
+        const user=id
+        const category=req.body.category
+        const name=req.body.name
+        const price=req.body.price
+        const image=req.body.image
+        const brand=req.body.brand
+        const countInStock=req.body.countInStock
+        const description=req.body.description
+
+        // const noOfReview=req.body.noOfReview
+
+        // const Avgrating=0
+        // const reviews=[]
+
+
+        const newSellerProduct=new ProductsDb({
+            user,
+            category,
+            name,
+            image,
+            brand,
+            description,
+            // Avgrating,
+            // noOfReview,
+            price,
+            countInStock
+            // reviews
+        })
+
+
+        newSellerProduct.save()
+        .then(()=>res.json('Seller Product saved Successfully'))
+        .catch(err=>res.status(200).json("Product Error is "+err)) 
+        
+        console.log(newSellerProduct)
+
+
+      
+    }
+
+    catch(error) 
+    {
+        res.status(400).send("Invalid details")
+    }
+
+   
+   
+});
+
+
+
+
+
+
+//SELLER delete Product
+router.delete('/seller/deleteProduct/:id',protect,sellerMiddleware,async(req,res)=>
+{
+    const id=req.user1._id;
+    console.log("ID IN delete",typeof(id));
+    
+    try{
+        const prodDelete=await ProductsDb.findById(req.params.id)
+
+        console.log("PROD DELETE SELLER",typeof(prodDelete.user));
+        if(id.toString()===prodDelete.user.toString())
+        {
+
+            if(prodDelete)
+            {
+                await prodDelete.remove()
+
+                res.send("Product deleted")
+            }
+            else
+                res.status(401).send("No product found")
+        }
+        else
+             res.status(401).send("Not authorized to delete the Product")
+
+       
+            
+           
+    }
+    
+    
+    catch(error) {
+        res.status(200).send("Invalid details")
+    }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+//SELLER PUT
+//EDIT PRODUCT
+router.put('/seller/products/edit/:id',protect,sellerMiddleware,async(req,res)=>
+{
+    const Userid=req.user1._id;
+    //user1 is in protect i.e. authMIddleware file, when token is decoded
+    // console.log("PUT/PROFILE",Userid);
+    
+    try{
+        const Editproduct=await ProductsDb.findById(req.params.id)
+
+        if(Userid.toString()===Editproduct.user.toString())
+        {
+            if(Editproduct)
+                    {
+
+                        Editproduct.name=req.body.name || Editproduct.name
+                        // console.log("Editproduct.NAME",req.body.name || Editproduct.name);
+                        
+                        Editproduct.email=req.body.email || Editproduct.email
+                        Editproduct.category=req.body.category || Editproduct.category
+                        Editproduct.price=req.body.price || Editproduct.price
+                        Editproduct.image=req.body.image || Editproduct.image
+                        Editproduct.brand=req.body.brand || Editproduct.brand
+                        Editproduct.countInStock=req.body.countInStock || Editproduct.countInStock
+                        Editproduct.description=req.body.description || Editproduct.description
+
+                
+                       const updateProduct= await Editproduct.save()                
+                        // console.log("Updated product",updateProduct);
+                        res.send(
+                            {
+                                user:updateProduct.user,
+                                category:updateProduct.category,
+                                name:updateProduct.name,
+                                image:updateProduct.image,
+                                brand:updateProduct.brand,
+                                description:updateProduct.description,
+                                price:updateProduct.price,
+                                countInStock:updateProduct.countInStock                      
+                            }
+                        )
+                    }
+                
+                    else{
+                        res.status(401).send("NO Product found")
+                    }
+        }
+        else
+        res.status(401).send("Not authorized to Edit the Product")
+                    
+                    
+    }
+    
+    catch(error) {
+        res.status(200).send("Invalid details")
+    }
+
+});
+
+
+
+
+//SELLER Get individual product
+router.get('/seller/products/:id',protect,sellerMiddleware,async(req,res)=>
+{
+        // res.status(200)
+        // throw new Error('Not authzz')
+        try
+        {
+            const Userid=req.user1._id;
+            const Viewproduct=await ProductsDb.findById(req.params.id)
+    
+            if(Userid.toString()===Viewproduct.user.toString())
+            {
+              
+                res.send(Viewproduct)
+            }
+    
+            
+    
+            else{
+                res.status(401).send("Not authorized to View the Product")
+            }
+
+        }
+        catch(error) {
+            res.status(200).send("Invalid details")
+        }
+        
+
+    
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//SELLER Get products of each seller
+router.get('/seller/allproducts',protect,sellerMiddleware,async(req,res)=>
+{
+        // res.status(200)
+        // throw new Error('Not authzz')
+        try
+        {
+            const Userid=req.user1._id;
+            const Viewproduct=await ProductsDb.find({"user":Userid})
+            // console.log("VIEWPROD",Viewproduct);
+            res.status(201).send(Viewproduct)
+           
+
+        }
+        catch(error) {
+            res.status(200).send("Invalid details")
+        }
+        
+
+    
+});
 module.exports=router;
