@@ -20,7 +20,7 @@ router.post("/add",async(req,res)=>
         const userDetails=await RegisterDb.findOne({email:email})
         
         console.log("Userdetails",userDetails);
-        console.log("UserDeatils email , pass",userDetails.email,userDetails.password);
+        console.log("login-brad)UserDetails email , pass",userDetails.email,userDetails.password);
         // if you don't use async & await, o/p dosen't come 
         // res.send(userDetails)
 
@@ -39,12 +39,12 @@ router.post("/add",async(req,res)=>
                 )
             }
             else    
-                 res.send("Fail")
+                 res.send("Fail. Email or password not matching")
 
 
         }
         else
-            res.send("Fail")
+            res.send("Fail.No user")
     }
     catch(error) {
         res.status(200).send("Invalid details")
@@ -83,7 +83,7 @@ router.get('/profile',protect,async(req,res)=>
     }
     
     catch(error) {
-        res.status(200).send("Invalid details...error")
+        res.status(200).send("Invalid details")
     }
     
 
@@ -93,5 +93,59 @@ router.get('/profile',protect,async(req,res)=>
 
 });
 
+
+
+router.put('/profile',protect,async(req,res)=>
+{
+    const id=req.user1._id;
+    //user1 is in protect i.e. authMIddleware file, when token is decoded
+    console.log("PUT/PROFILE",id);
+    
+    try{
+        const User=await RegisterDb.findById(id)
+        
+        if(User){
+
+            User.Name=req.body.name || User.Name
+            // console.log("USER.NAME",req.body.name || User.Name);
+            // console.log("USER.NAME-",User.Name);
+            
+            User.email=req.body.email || User.email
+
+            if(req.body.password)
+            {
+                User.password=req.body.password
+            }
+        console.log("New Profile",User);
+        console.log("BODY",req.body);
+
+           const updateUser= await User.save()                
+
+            res.send(
+                {
+                    ids:updateUser._id,
+                    name:updateUser.Name,
+                    email:updateUser.email,
+                    isAdmin:updateUser.isAdmin,
+                    token:generateToken(updateUser._id)                      
+                }
+            )
+        }
+    
+        else{
+            res.status(401).send("NO user found")
+        }
+    }
+    
+    catch(error) {
+        res.status(200).send("Invalid details")
+    }
+    
+
+  
+    // res.send("success profile")
+
+
+});
 
 module.exports=router;

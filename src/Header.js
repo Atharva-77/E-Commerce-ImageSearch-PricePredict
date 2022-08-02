@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './Header.css'
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -6,11 +6,22 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { Link } from 'react-router-dom';
 // import {useStateValue} from './StateProvider';
 
-import { useDispatch,useSelector } from 'react-redux';
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { ArrowBackIosOutlined } from '@material-ui/icons';
+
+import {useSelector,useDispatch} from 'react-redux'
+import Dropdown from './Dropdown'
+import { logout_action } from './Reducers/actions/userActions';
+
 
 
 function Header() {
+    const [open, setopen] = useState(false) //Dropdown toggle
 
+    const userLogin=useSelector(state => state.userLogin)
+    const {userInfo}=userLogin
+    // console.log((userInfo));
     // const [{basket},dispatch]= useStateValue();
     const dispatch=useDispatch()
     const cartList = useSelector(state => state.cartList)
@@ -22,6 +33,14 @@ function Header() {
          total_item+=item.qty
         
     ))}
+
+
+
+    const logoutHandler=()=>
+    {
+        console.log("Logout clicked");
+        dispatch(logout_action())
+    }
 
     return (
 
@@ -41,12 +60,58 @@ function Header() {
             </div>
             
             <div className="header_rightnav"> 
+                {/* <Link to="/register" >
+                    <div className="header_rightSubpart" >
+                      <span className="lineOne">Hello Guests</span>
+                       <span className="lineTwo">Sign In</span>
+                    </div>
+                    
+                </Link> */}
+
+                {!(typeof(userInfo)=='undefined') && userInfo.length!=0?
+                <div>
+                    <div>
+                    {/* <div className="header_rightSubpart" > */}
+                        <span className="lineOne">{userInfo.name}</span>
+                       <ArrowDropDownIcon className="arrow_icon" onClick={()=>setopen(!open)}/>
+
+                    </div>
+
+                    {open? 
+                            <Dropdown >            
+                                <Link to="/profile_brad"><p>Profile</p></Link>
+                                <p onClick={logoutHandler}>Logout</p>
+                            </Dropdown>
+                            :
+                            null
+                    } 
+                   { console.log("here1")}
+                     
+                </div>    
+                :
+                
                 <Link to="/register" >
                     <div className="header_rightSubpart" >
                       <span className="lineOne">Hello Guests</span>
                        <span className="lineTwo">Sign In</span>
                     </div>
+                    { console.log("here2")}
+                    
                 </Link>
+                
+                }
+                
+                {/* <ArrowDropDownIcon className="arrow_icon" onClick={()=>setopen(!open)}/>
+                
+                 {open? 
+                <Dropdown >            
+                    <p>Atharva</p>
+                    <p>Nilesh</p>
+                    <p>Shirode</p>
+                </Dropdown>
+                :
+                  null} */}
+                
                 <div className="header_rightSubpart" >
                     <span className="lineOne">Returns &</span>
                     <span className="lineTwo">Orders</span>           
@@ -59,6 +124,7 @@ function Header() {
                 <Link to="/checkout">
                     <div className="shopping_cart">
                         <ShoppingCartIcon className="shoppingIcon"/>
+
                         <span className="lineTwo basketCount">
                             {total_item}
                             {/* {basketItems.length} */}

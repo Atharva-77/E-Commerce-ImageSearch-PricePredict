@@ -10,7 +10,11 @@ import ProductDetails from './ProductDetails'
 
 import {Provider} from 'react-redux'
 import store from './Store'
+
 import Login_brad from './Login_brad';
+import Register_brad from './Register_brad';
+import ProfileDetails from './ProfileDetails';
+
 
 function App() {
   return (
@@ -30,6 +34,14 @@ function App() {
 
               <Route path="/login_brad">
                   <Login_brad />
+              </Route>
+
+              <Route path="/register_brad">
+                  <Register_brad />
+              </Route>
+
+              <Route path="/profile_brad">
+                  <ProfileDetails />
               </Route>
 
               <Route path="/seller">

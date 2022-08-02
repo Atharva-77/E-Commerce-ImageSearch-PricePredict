@@ -17,20 +17,22 @@ router.post('/add',async(req,res)=>
 {
     try
     {
-        const Name=req.body.Name
+        console.log("LOGG",req.body);
+        const Name=req.body.name
         const email=req.body.email
         const password=req.body.password
-        const confirmPassword=req.body.confirmPassword
+        // const confirmPassword=req.body.confirmPassword
  
         const userDetails=await RegisterDb.findOne({email:email})
         console.log("Email is",userDetails);
+        console.log();
 
         // Unique email
         if(userDetails==null)
          {
             console.log("New email");
-            if(password === confirmPassword)
-            {
+            // if(password === confirmPassword)
+            // {
                  const newUser=new RegisterDb({
                      Name,
                      email,
@@ -38,10 +40,8 @@ router.post('/add',async(req,res)=>
                     //  confirmPassword
                  })
          
-         
-                //  newUser.save()
-                //  .then(()=>res.json('Success'))
-                //  .catch(err=>res.status(200).json("Error is "+err)) 
+                 console.log(newUser.Name,newUser.email,newUser.password)
+                //  console.log(newUser)
 
                 newUser.save()
                  .then(()=>res.status(201).json(
@@ -52,14 +52,15 @@ router.post('/add',async(req,res)=>
                         isAdmin:newUser.isAdmin,
                         token:generateToken(newUser._id)
                      }))
-                 .catch(err=>res.status(200).json("Error is "+err)) 
-                 
+                 .catch(err=>res.status(200).json("Register ka Error is "+err)) 
+                //  console.log(newUser)
                  console.log(newUser)
-            }
-            else
-            {
-                res.status(200).json("Password Not Matching")
-            }
+            // }
+            // else
+            // {
+            //     console.log("(register_brad) Userdetails",newUser);
+            //     res.status(200).json("Password Not Matching registr")
+            // }
      
 
          }
