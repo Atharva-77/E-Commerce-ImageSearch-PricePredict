@@ -31,6 +31,8 @@ function ASeller_CreateProduct() {
     const [Imgpath, setImgpath] = useState('')
     const [features, setfeatures] = useState('')
 
+    const [createProdMessage, setcreateProdMessage] = useState(false)
+
     const dispatch = useDispatch()
 
     const userLogin = useSelector(state => state.userLogin)
@@ -130,6 +132,7 @@ function ASeller_CreateProduct() {
             //  .catch(err=>console.log(err))
             
             console.log("MESSAGE3")
+            setcreateProdMessage(false)
             setMessage(true)
         }
     }, [features])
@@ -190,12 +193,12 @@ function ASeller_CreateProduct() {
     {
 
             console.log('Price predict');
-            console.log("DOM",document.getElementById('brand').value);
+            // console.log("DOM",document.getElementById('brand').value);
             console.log("DOM",document.getElementById('condition').value,Originalprice);
             console.log("Category value",document.getElementById('category').value)
 
             const predictPrice={
-                "product_brand":document.getElementById('brand').value,
+                "product_brand": brand,//document.getElementById('brand').value,
                 "product_condition":document.getElementById('condition').value,
                 "product_cost":Originalprice
             }
@@ -228,18 +231,40 @@ function ASeller_CreateProduct() {
     
     const submit_form=(e)=>
     {
+        setcreateProdMessage(true)
+        let ProductData={}
         e.preventDefault();
-        const ProductData={
-            "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
-            "category":category,
-             "brand":brand,
-             "description":description,
-             "price":price,
-             "countInStock":countInStock,
-             "imageURL":imageURL,
-             
-         }
+        if(brand=='')
+        {
+             ProductData={
+                "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+                "category":document.getElementById('category').value,
+                 "brand":document.getElementById('brand').value,
+                 "description":description,
+                 "price":price,
+                 "countInStock":countInStock,
+                 "imageURL":imageURL,
+                 
+             }
+        }
+        else
+        {
+             ProductData={
+                "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+                "category":category,
+                 "brand":brand,
+                 "description":description,
+                 "price":price,
+                 "countInStock":countInStock,
+                 "imageURL":imageURL,
+                 
+             }
+        }
+       
 
+         
+
+         console.log("PRODUCT DATA",ProductData)
          const config={
              headers:{
                  'Content-Type':"application/json",
@@ -252,7 +277,8 @@ function ASeller_CreateProduct() {
             {
                 console.log("UPDaTED PROD SELLER",typeof(res.data._id))
                 setid_Img(res.data._id)
-                console.log(2);
+                console.log("DATA FRM SELLER",res.data);
+                
             })
 
         console.log("PROD IN SUBMIT",ProductData);
@@ -284,108 +310,98 @@ function ASeller_CreateProduct() {
 
                 <h2>Category</h2>
                 {/* <input value={category} onChange={onCategory} placeholder="Enter Category"/> */}
-                <select className="category" name="product_category" id="category" >
-                        <option value="1">Phone</option>
-                        <option value="2">Others</option>
+                <select className="category" name="product_category" id="category" onChange={(e)=>onCategory(e)}>
+                        <option value="Phone" >Phone</option>
+                        <option value="Others">Others</option>
                                     
                 </select>
                 
-                {document.getElementById('category')==null?console.log("Null") :
-                <>
-                   { document.getElementById('category').value==1?
+         
+                    {category=="Others"?
                     
-                    <><h2>Brand</h2>
-                            <select className="brand" name="product_brand" id="brand">
-                                <option value="1">Nokia</option>
-                                <option value="2">lenovo</option>
-                                <option value="3">SAMSUNG</option>
-                                <option value="4">InFocus</option>
-                               <option value="5">ViVO</option>
-                                <option value="6">OPPO</option>
-                                <option value="7">LG</option>
-                                <option value="8">YU</option>
-                                <option value="9">Panasonic</option>
-                                <option value="10">Apple</option>
-                                <option value="11">Redmi</option>
-                                <option value="12">Moto</option>
-                                <option value="13">Realme</option>
-                                <option value="14">Honor</option>
-                                <option value="15">Blackberry</option>
-                                <option value="16">Sony</option>
-                                <option value="17">One Plus</option>
-                                <option value="18">Google</option>
-                                <option value="19">Mi</option>
-                                <option value="20">Micromax</option>
-                                <option value="21">Huawei</option>
-                                <option value="22">HTC</option>
-                                            
-                            </select>
-                            </>
-                   :
-                    <>
+                       
+                        <>
+                            <h2>Brand</h2>
+                              <input value={brand} onChange={onBrand} placeholder="Enter Brand"/>
+
+                        </>
+                     :
+                      <>
                         <h2>Brand</h2>
-                            <select className="brand" name="product_brand" id="brand">
-                                <option value="1">yo</option>
-                                <option value="2">rr</option>
+                        <select className="brand" name="product_brand2" id="brand" value={brand} onChange={(e)=>onBrand(e)}>
+                            <option value="1">Nokia</option>
+                            <option value="2">lenovo</option>
+                            <option value="3">SAMSUNG</option>
+                            <option value="4">InFocus</option>
+                            <option value="5">ViVO</option>
+                            <option value="6">OPPO</option>
+                            <option value="7">LG</option>
+                            <option value="8">YU</option>
+                            <option value="9">Panasonic</option>
+                            <option value="10">Apple</option>
+                            <option value="11">Redmi</option>
+                            <option value="12">Moto</option>
+                            <option value="13">Realme</option>
+                            <option value="14">Honor</option>
+                            <option value="15">Blackberry</option>
+                            <option value="16">Sony</option>
+                            <option value="17">One Plus</option>
+                            <option value="18">Google</option>
+                            <option value="19">Mi</option>
+                            <option value="20">Micromax</option>
+                            <option value="21">Huawei</option>
+                            <option value="22">HTC</option>
                                         
+                        </select>
+
+
+                            <h2>Original Price</h2>
+                            <input value={Originalprice} onChange={onOriginalPrice} placeholder="Enter Original Price for price prediction"/>
+                            
+                            
+                            <h2>Condition</h2>
+                            {/* <input value={Originalprice} onChange={onOriginalPrice} placeholder="Enter Original Price for price prediction"/> */}
+                            <select className="condition" name="product_condition" id="condition">
+                                    <option value="1">1- Like New</option>
+                                    <option value="2">2- Superb</option>
+                                    <option value="3">3- Good</option>
+                                    <option value="4">4- Okay</option>
                             </select>
-                    </>
-                 }
-                </>
-               }
 
-                {/* <h2>Brand</h2>
-                    <select className="brand" name="product_brand" id="brand">
-                        <option value="1">Nokia</option>
-                        <option value="2">lenovo</option>
-                        <option value="3">SAMSUNG</option>
-                        <option value="4">InFocus</option>
-                        <option value="5">ViVO</option>
-                        <option value="6">OPPO</option>
-                        <option value="7">LG</option>
-                        <option value="8">YU</option>
-                        <option value="9">Panasonic</option>
-                        <option value="10">Apple</option>
-                        <option value="11">Redmi</option>
-                        <option value="12">Moto</option>
-                        <option value="13">Realme</option>
-                        <option value="14">Honor</option>
-                        <option value="15">Blackberry</option>
-                        <option value="16">Sony</option>
-                        <option value="17">One Plus</option>
-                        <option value="18">Google</option>
-                        <option value="19">Mi</option>
-                        <option value="20">Micromax</option>
-                        <option value="21">Huawei</option>
-                        <option value="22">HTC</option>
-                                    
-                    </select> */}
+                            <button className="create_acc" onClick={price_predict} >Predict Price</button>
+                            <br />
+                       </>
+                    }
+            
 
 
 
 
 
-                <input value={brand} onChange={onBrand} placeholder="Enter Brand"/>
+                {/* <input value={brand} onChange={onBrand} placeholder="Enter Brand"/> */}
 
-                <h2>Description</h2>
-                <input value={description} onChange={onDescription} placeholder="Enter Description"/>
-                
+{/*                
                 <h2>Original Price</h2>
                 <input value={Originalprice} onChange={onOriginalPrice} placeholder="Enter Original Price for price prediction"/>
                 
                 
                 <h2>Condition</h2>
                 {/* <input value={Originalprice} onChange={onOriginalPrice} placeholder="Enter Original Price for price prediction"/> */}
-                    <select className="condition" name="product_condition" id="condition">
-                            <option value="1">1- Like New</option>
-                            <option value="2">2- Superb</option>
-                            <option value="3">3- Good</option>
-                            <option value="4">4- Okay</option>
+                    {/* <select className="condition" name="product_condition" id="condition">
+                            <option value="1">1 - Like New</option>
+                            <option value="2">2 - Superb</option>
+                            <option value="3">3 - Good</option>
+                            <option value="4">4 - Okay</option>
                     </select>
 
-                <button className="create_acc" onClick={price_predict} >Predict Price</button>
+                <button className="create_acc" onClick={price_predict} >Predict Price</button> */} 
+                
                 
                 {Predictedprice!=0?<p>Predicted price is:-{Predictedprice}</p>:null}
+               
+                <h2>Description</h2>
+                <textarea value={description} onChange={onDescription} placeholder="Enter Description"/>
+                <br />
 
                 <h2>Your Price</h2>
                 <input value={price} onChange={onPrice} placeholder="Enter Price"/>
@@ -403,8 +419,15 @@ function ASeller_CreateProduct() {
                  {/* <input type="submit" /> */}
 
                 <button className="create_acc" onClick={(e)=>{submit_form(e)}} >Create Product</button>
-                {message && <h2>Product created</h2>} 
-                {message && <div><button onClick={()=>{history.push(`/seller/product`)}}> See Product</button></div>}
+                {createProdMessage? <h2>Product Creating...</h2>
+                :
+                <>
+                   {message && <h2>Product created</h2>} 
+                   {message && <div><button onClick={()=>{history.push(`/seller/product`)}}> See Product</button></div>}
+                </>
+                }
+                {/* {message && <h2>Product created</h2>} 
+                {message && <div><button onClick={()=>{history.push(`/seller/product`)}}> See Product</button></div>} */}
                 
                 {/* </form> */}
             </div>

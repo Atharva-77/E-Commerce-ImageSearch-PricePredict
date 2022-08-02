@@ -247,17 +247,17 @@ export const ImgProductDetails_action =(prod_ids)=> async(dispatch)=> {
     try 
     {
         dispatch(ImgproductDetailsRequest())
-        console.log("IMG PROD ",prod_ids);
+        // console.log("IMG PROD ",prod_ids);
 
         const product_ids=
         {
             "product_ids":prod_ids
         }
-        console.log("IMG PROD2 ",product_ids);
+        // console.log("IMG PROD2 ",product_ids);
 
         
         const {data}= await axios.post(`http://localhost:4000/imgFeature/products`,prod_ids)
-        console.log("IMG PROD ACTION",data);
+        // console.log("IMG PROD ACTION",data);
         dispatch(ImgproductDetailsSuccess(data))
     } catch (error) {
 

@@ -22,7 +22,7 @@ function HImgSearch() {
     const Imageproduct = useSelector(state => state.Imageproduct)
     const {loading,Imgproducts,error}=Imageproduct
     // console.log("Home wala prods",products);
-    console.log("PRODUCTS LEN SEARCH",Imgproducts.length,Imgproducts);
+    // console.log("PRODUCTS LEN SEARCH",Imgproducts.length,Imgproducts);
 
 
     return (

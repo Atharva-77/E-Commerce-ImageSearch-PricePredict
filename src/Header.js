@@ -24,6 +24,8 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 // import { makeStyles } from "@material-ui/core/styles";
+let x = 0;
+let file2;
 
 function Header() {
     // const useStyles = makeStyles((theme) => ({
@@ -51,6 +53,8 @@ function Header() {
     const [Imgpath, setImgpath] = useState('')
     const [ImgSearchData, setImgSearchData] = useState('')
 
+    const [imgSearchLoaderMessage, setimgSearchLoaderMessage] = useState(false) 
+
     const userLogin=useSelector(state => state.userLogin)
     const {userInfo}=userLogin
 
@@ -72,7 +76,7 @@ function Header() {
     useEffect(() => {
        
             
-        if(Imgvalue==true)        
+        if(Imgvalue==true && x==0)        
             {
                 const Data = new FormData()
                 Data.append('file',file)
@@ -83,15 +87,22 @@ function Header() {
                 .then(
                     res=>
                     {
+                        x=1;
                         console.log("dATA IS headre ",res.data)
                         setImgpath(res.data)
+                        setimgSearchLoaderMessage(true);
+                        // x=1;
                         console.log(3);
-                        
+                        console.log(x);
                     }
                     )
-
-                if(Imgpath!="")
+            }
+                // console.log("x=",x);
+                // console.log("line 100", Imgpath, Imgvalue)
+              
+                if(Imgpath!="" && x==1 && Imgvalue == true)
                 {
+                    console.log("line 101", Imgpath, Imgvalue)
                     const ImageSearchData={
                         "img_path":Imgpath
                     }
@@ -100,18 +111,28 @@ function Header() {
                     .then(
                             res=>
                             {
+                                // x=0;
                                 console.log("Image_Data Header ",res.data)
                                 console.log(4);
+                                console.log("1st",x)
                                 setImgvalue(false)
+                                console.log("2nd",x)
                                 setImgSearchData(res.data)
+                                console.log("3rd",x)
+                                setimgSearchLoaderMessage(false)
+                                console.log("4th",x)
+                                x=0;
                             }
                         )
                 //     setMessage(true)
                 }
-           }
+        //    }
         
           
-    }, [file,Imgpath,Imgvalue])
+    }, [Imgpath,Imgvalue])
+
+
+    
 
 
     const logoutHandler=()=>
@@ -138,14 +159,15 @@ function Header() {
 
     const uploadImgHandler=async(e)=>
     {
-        const file2=e.target.files[0]
+        
+        console.log("line 163",file2);
+         file2=e.target.files[0]
         setfile(file2)
-        console.log(file);
+        console.log("line 166",file2);
         setImgvalue(true);
 
         // const Data = new FormData()
         // Data.append('file',file)
-
 
         console.log("SEARCH2");
     }
@@ -154,6 +176,7 @@ function Header() {
     const searchImgHandler=()=>
     {
         console.log("SEARCH3",ImgSearchData);
+        setopenCamera(false)
         dispatch(ImgProductDetails_action(ImgSearchData))
 
         history.push(`/himg`)
@@ -189,8 +212,22 @@ function Header() {
                      {openCamera? 
                                         <Dropdown>            
                                             Upload<input type="file" id="file" accept={fileTypes} onChange={uploadImgHandler}/>
+                                            <br /><br />
+                                           
+                                            {typeof(file2)!='undefined'?
+                                              <>
+                                                {imgSearchLoaderMessage?
+                                                <h4>Processing Your image...</h4>
+                                                :
+                                                <p onClick={searchImgHandler} style={{cursor: 'pointer'}}>Search</p>}
+                                          
+                                              </>
+                                            :
+                                            <h4>Please Upload an image</h4>
+                                          }
 
-                                            <p onClick={searchImgHandler} style={{cursor: 'pointer'}}>Search</p>
+                                            
+                                            
                                         </Dropdown>
                                         :
                                         null
