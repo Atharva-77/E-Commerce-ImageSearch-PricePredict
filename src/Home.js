@@ -2,11 +2,12 @@
 import React,{useEffect,useState} from 'react'
 import './Home.css'
 import Product from './Product'
-import {listProduct} from './Reducers/actions/productActions'
+import {listProduct,feature_action} from './Reducers/actions/productActions'
 import { useSelector,useDispatch } from 'react-redux'
 import { useParams } from 'react-router';
 import axios from 'axios';
 
+let x = 0;
 function Home() {
     const {keyword}=useParams()
     console.log("Keyword",keyword);
@@ -16,40 +17,36 @@ function Home() {
     const [productId, setproductId] = useState('')
     const [messagess, setmessagess] = useState(0)
     // console.log(setfeaturemessagessage)
-    let x = 0;
+   
+
+    const featureR = useSelector(state => state.featureR)
+    const {loadingF,feature,errorF}=featureR
+    // console.log("line 23 FEATURE ",feature);
+
 
     useEffect(() => {
         console.log("USEEFF FV 22",featureVector)
-        // if(featureVector==='')
+        if(feature.length==0)
         {
-                axios.get("http://localhost:4000/imgFeature/")
-                .then(
-                    res=>
-                    {
-                        //    console.log("Feature wala data",res.data)
-                        setfeatureVector(res.data)
-                        //    setproductId(res.data.productId)
-                        console.log("PIDS",res.data)
-                        setmessagess(1);
-                        //    x = 1;
-                        console.log("line 31",messagess)
-                        //    console.log(1);
-                    }
-                    )
+                dispatch(feature_action())
+                x=1;
                 console.log("outside messages",messagess);
         }
+        
 
     }, [])
+  
 
     useEffect(() => {
         console.log("line 59 messagess",messagess);
-        console.log("line 46",featureVector)
-        if(messagess == 1)
+        console.log("line 46",feature.length) 
+        console.log("line 42", x)  
+        if(feature.length != 0 && x==1)
         {
             console.log("In messagess", messagess)
+            
             const featureVectorData={
-                // "productId":productId,
-                "product_feature_data":featureVector
+                "product_feature_data":feature
             }
             axios.post("http://localhost:7080/feature_vector_db",featureVectorData)
             .then(
@@ -59,12 +56,10 @@ function Home() {
                    console.log(2);
                }
             )
+            x=0;
         }
-        else
-        {
-            console.log("Else messagess",messagess);
-        }
-    }, [messagess])
+       
+    }, [feature])
 
 
     useEffect(() => {
@@ -75,6 +70,9 @@ function Home() {
     const {loading,products,error}=productList
     // console.log("Home wala prods",products);
     console.log("PRODUCTS LEN SEARCH",products.length);
+
+   
+
 
 
     return (

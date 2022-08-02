@@ -12,7 +12,11 @@ import {PRODUCT_LIST_REQUEST,
     
         IMG_PRODUCT_DETAILS_REQUEST,
         IMG_PRODUCT_DETAILS_SUCCESS,
-        IMG_PRODUCT_DETAILS_FAILURE } from './constants/productConstants' 
+        IMG_PRODUCT_DETAILS_FAILURE,
+    
+        FEATURE_DATA_REQUEST,
+        FEATURE_DATA_SUCCESS,
+        FEATURE_DATA_FAILURE} from './constants/productConstants' 
 
 const initialState=
 {
@@ -45,6 +49,46 @@ export const productListReducer = ( state=initialState, action)=>
             return state
     }
 }
+
+
+
+
+//FeatureData
+const initialFeatureState=
+{
+    loadingF: true,
+    feature:[],
+    errorF:''
+}
+
+export const featureReducer = ( state=initialFeatureState, action)=>
+{
+    switch(action.type){
+        case FEATURE_DATA_REQUEST: return {
+            ...state,
+            loadingF:true
+        }
+
+        case FEATURE_DATA_SUCCESS: return {
+            ...state,
+            loadingF: false,
+            feature: action.payload
+        }
+
+        case FEATURE_DATA_FAILURE: return {
+            ...state,
+            loading: false,
+            errorF: action.payload
+        }
+
+        default:
+            return state
+    }
+}
+
+
+
+
 
 
 

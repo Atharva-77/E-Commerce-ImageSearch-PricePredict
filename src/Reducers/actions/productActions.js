@@ -14,7 +14,9 @@ import {PRODUCT_LIST_REQUEST,
     IMG_PRODUCT_DETAILS_SUCCESS,
     IMG_PRODUCT_DETAILS_FAILURE,
 
-    FEATURE_DATA,} from '../constants/productConstants' 
+    FEATURE_DATA_REQUEST,
+    FEATURE_DATA_SUCCESS,
+    FEATURE_DATA_FAILURE} from '../constants/productConstants' 
 
 import axios from 'axios';
 
@@ -65,27 +67,41 @@ export const listProduct =(keyword='')=> async(dispatch)=> {
 
 
 //FEATURE DATA
-// const featureData = error =>
-// {
-//     return{
-//        type: PRODUCT_LIST_FAILURE,
-//        payload: error
-//     }
-// }
+const featureDataRequest = () =>
+{
+    return {
+        type: FEATURE_DATA_REQUEST
+    }
+}
+
+const featureDataSuccess = data =>
+{
+    return{
+      type: FEATURE_DATA_SUCCESS, 
+      payload: data
+    }
+}
+
+const featureDataFailure = error =>
+{
+    return{
+       type: FEATURE_DATA_FAILURE,
+       payload: error
+    }
+}
 
 
-export const listProduct =(keyword='')=> async(dispatch)=> {
+export const feature_action =()=> async(dispatch)=> {
 
 try 
 {
-    dispatch(productListRequest())
+    dispatch(featureDataRequest())
 
-    const {data}= await axios.get(`http://localhost:4000/products?keyword=${keyword}`)
-    // console.log("Prod actions data ",data);
-    dispatch(productListSuccess(data))
+    const {data}= await axios.get("http://localhost:4000/imgFeature/")
+    dispatch(featureDataSuccess(data))
 } catch (error) {
 
-    dispatch(productListFailure(error))
+    dispatch(featureDataFailure(error))
     
 }
 }

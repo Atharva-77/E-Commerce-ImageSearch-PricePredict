@@ -192,6 +192,8 @@ function ASeller_CreateProduct() {
             console.log('Price predict');
             console.log("DOM",document.getElementById('brand').value);
             console.log("DOM",document.getElementById('condition').value,Originalprice);
+            console.log("Category value",document.getElementById('category').value)
+
             const predictPrice={
                 "product_brand":document.getElementById('brand').value,
                 "product_condition":document.getElementById('condition').value,
@@ -281,9 +283,58 @@ function ASeller_CreateProduct() {
                 <input value={Name} onChange={onName} placeholder="If user searches, it searches by this field"/>
 
                 <h2>Category</h2>
-                <input value={category} onChange={onCategory} placeholder="Enter Category"/>
+                {/* <input value={category} onChange={onCategory} placeholder="Enter Category"/> */}
+                <select className="category" name="product_category" id="category" >
+                        <option value="1">Phone</option>
+                        <option value="2">Others</option>
+                                    
+                </select>
                 
-                <h2>Brand</h2>
+                {document.getElementById('category')==null?console.log("Null") :
+                <>
+                   { document.getElementById('category').value==1?
+                    
+                    <><h2>Brand</h2>
+                            <select className="brand" name="product_brand" id="brand">
+                                <option value="1">Nokia</option>
+                                <option value="2">lenovo</option>
+                                <option value="3">SAMSUNG</option>
+                                <option value="4">InFocus</option>
+                               <option value="5">ViVO</option>
+                                <option value="6">OPPO</option>
+                                <option value="7">LG</option>
+                                <option value="8">YU</option>
+                                <option value="9">Panasonic</option>
+                                <option value="10">Apple</option>
+                                <option value="11">Redmi</option>
+                                <option value="12">Moto</option>
+                                <option value="13">Realme</option>
+                                <option value="14">Honor</option>
+                                <option value="15">Blackberry</option>
+                                <option value="16">Sony</option>
+                                <option value="17">One Plus</option>
+                                <option value="18">Google</option>
+                                <option value="19">Mi</option>
+                                <option value="20">Micromax</option>
+                                <option value="21">Huawei</option>
+                                <option value="22">HTC</option>
+                                            
+                            </select>
+                            </>
+                   :
+                    <>
+                        <h2>Brand</h2>
+                            <select className="brand" name="product_brand" id="brand">
+                                <option value="1">yo</option>
+                                <option value="2">rr</option>
+                                        
+                            </select>
+                    </>
+                 }
+                </>
+               }
+
+                {/* <h2>Brand</h2>
                     <select className="brand" name="product_brand" id="brand">
                         <option value="1">Nokia</option>
                         <option value="2">lenovo</option>
@@ -308,7 +359,7 @@ function ASeller_CreateProduct() {
                         <option value="21">Huawei</option>
                         <option value="22">HTC</option>
                                     
-                    </select>
+                    </select> */}
 
 
 
