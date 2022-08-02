@@ -45,7 +45,7 @@ function OrderScreen() {
 
          const paypalScript=async()=>
         {
-          const {data:clientId}= await axios.get('http://localhost:4000/config/paypal')
+           const { data: clientId } = await axios.get('http://localhost:4000/config/paypal')
           console.log("1.CLIENT ID",clientId);
 
           const script= document.createElement("script")
@@ -144,15 +144,16 @@ function OrderScreen() {
     // }
     // dispatch(getorderListAction_details(id))
     return (
-        <div className="register">
+        <div className="orderscreen">
             <Link to="/">
                 <img className="logo" src="https://www.logodesign.net/logo/peace-bird-in-water-drop-3572ld.png"/>
 
             </Link>
 
-            <div className="registration_detail">
+            <div className="orderscreen_details">
                 {/* <form> */}
-                <h1 className="heading">Order screen</h1>
+                <h1 className="heading">Order Summary</h1>
+                <br/>
                 {/* {console.log("LOAD",loading)}
                 {console.log("GETORDERLIST ",typeof(getorderList.getOrderItems),Object.keys(getorderList.getOrderItems).length,(getorderList.getOrderItems))} */}
                 {/* {loading==true?<div><h2>Loading</h2></div>:<div>Not loading</div>} */}
@@ -164,16 +165,16 @@ function OrderScreen() {
                 :
                 <div>
 
-                    <h2>ORDER NUMBER {getorderList.getOrderItems._id}</h2>
+                    <h2>ORDER NUMBER: {getorderList.getOrderItems._id}</h2>
                      {getorderList.getOrderItems.shippingAddress.address},
-                    
+                    <br/>
                     <strong>Name</strong> {getorderList.getOrderItems.user.Name} <br />
                     <strong>Email</strong>
                     {/* <a href={`mailto:${getorderList.getOrderItems.user.email}`}> */}
                         {' '}{getorderList.getOrderItems.user.email}
                     {/* </a> */}<br /><br />
 
-                     <h2>Shipping address</h2>
+                     <h2>Shipping address:</h2>
                      {getorderList.getOrderItems.shippingAddress.address},
                      {getorderList.getOrderItems.shippingAddress.city} {' '},
                      {getorderList.getOrderItems.shippingAddress.postalCode},{' '} 
@@ -185,16 +186,16 @@ function OrderScreen() {
 
                 
                  
-                 <h2>Payment Method</h2>
+                 <h2>Payment Method:</h2>
                   Method:-{getorderList.getOrderItems.paymentMethod} 
                  <br/>
 
                  {getorderList.getOrderItems.isPaid ?<strong>Paid on {getorderList.getOrderItems.paidAt}</strong>:
                     <div> Not paid</div>}
-                 <br/><br/>  
+                 <br/>
 
 
-                 <h2>Order Items</h2>
+                 <h2>Order Items:</h2>
                  {getorderList.getOrderItems.orderItems.length===0?
 
                    <div>
@@ -207,12 +208,13 @@ function OrderScreen() {
                         <div>
                           <img src={item.imageURL} className="placeOrder_img_class"/>  
                           {/* {console.log("IMG URL",itemURL)} */}
-                          <Link to={`/product/${item.idname}`}>
+                          <p className="item_info_orderscreen">
+                          <Link to={`/product/${item.idname}`} style={{ textDecoration: 'none', color : 'black' }}>
                               {item.name}
                           </Link>  
-                            {' '}
+                          <br/>
                           {item.qty} x {item.price} = ₹ {item.qty * item.price}
-
+                          </p>
                         
 
                         </div>
@@ -220,13 +222,14 @@ function OrderScreen() {
                   </div>
                  } 
                 
-                
-                  <h2>Order Summary</h2>
+                  <br/>
+                  <h2>Payment Details:</h2>
                   Item Cost :- ₹ {getorderList.getOrderItems.totalPrice-getorderList.getOrderItems.shippingPrice-getorderList.getOrderItems.taxPrice}<br/>
                   Shipping :- ₹ {getorderList.getOrderItems.shippingPrice}<br/>
                   Tax :- ₹ {getorderList.getOrderItems.taxPrice}<br/>
                   Total Cost:- ₹ {getorderList.getOrderItems.totalPrice}<br/><br/>
 
+                  <br/>
                   {/* {!getorderList.getOrderItems.isPaid && 
                       <div>
                             {loadingPay && <h2>LoadingPay</h2>}

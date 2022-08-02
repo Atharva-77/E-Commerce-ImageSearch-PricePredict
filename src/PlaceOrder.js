@@ -93,32 +93,34 @@ function PlaceOrder() {
     }
 
     return (
-        <div className="register">
+        <div className="placeorder">
+            
             <Link to="/">
                 {/* <img className="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"/> */}
                 <img className="logo" src="https://www.logodesign.net/logo/peace-bird-in-water-drop-3572ld.png"/>
 
             </Link>
 
-            <div className="registration_detail">
+            <div className="place_order">
                 {/* <form> */}
-                <h1 className="heading">PlaceOrder</h1>
+                <h1 className="heading">Order Summary</h1>
+                <br />
                 
                 {/* {error}
                 {loading && <h2>Loading</h2>} */}
 
-                <h2>Shipping address</h2>
+                <h2>Shipping address:</h2>
                     {cartList.shippingAddr.address},
                     {cartList.shippingAddr.city} {' '},
                     {cartList.shippingAddr.postalCode},{' '} 
                     {cartList.shippingAddr.country}
                 <br/><br/>
                 
-                <h2>Payment Method</h2>
-                Method:-{cartList.paymentMethod}                
-                <br/><br/>  
+                <h2>Payment Method:</h2>
+                Method : {cartList.paymentMethod}
+                <br/><br/>
 
-                <h2>Order Items</h2>
+                <h2>Order Items:</h2>
                 {basketItems.length===0?
                    <div>
                      <h2>Your cart is empty</h2>
@@ -131,35 +133,38 @@ function PlaceOrder() {
                         <div>
                             
                             <img src={item.imageURL} className="placeOrder_img_class"/>  
-                            
-                            <Link to={`/product/${item.idname}`}>
+                            <p className="item_info_placeorder">
+                            <Link to={`/product/${item.idname}`} style={{ textDecoration: 'none', color : 'black' }}>
                                 {item.name}
                             </Link>  
-                            {' '}
-                          {item.qty} x {item.price} = ₹ {item.qty * item.price}
+                            <br />
+                            {item.qty} x {item.price} = ₹ {item.qty * item.price}
+                            </p>
 
                       
                         
                          {console.log("Sum",summ+=item.price*item.qty) }
                          {/* {console.log("Upar",summ+=item.price*item.qty) } */}
 
-                         </div>
+                        </div>
                       ))}
                   </div>}
                 
                 <br/>
 
-                {shipping_price= summ<500 ? 500:0}
-                {tax_price= summ*0.1}
-                {total_price= summ+shipping_price+tax_price}
-
-                  <h2>Order Summary</h2>
+                {console.log("ship price",shipping_price= summ<500 ? 500:0)}
+                {console.log("Tax price",tax_price= summ*0.1)}
+                {console.log("Total price",total_price= summ+shipping_price+tax_price)}
+                
+                  
+                  <h2>Payment Details:</h2>
                   Item Cost :- ₹ {summ}<br/>
                   Shipping :- ₹ {shipping_price}<br/>
                   Tax :- ₹ {tax_price}<br/>
                   Total Cost:- ₹ {total_price}<br/><br/>
-
-                <button className="create_acc" onClick={submit_form} >Place Order</button>
+                
+                <br />
+                <button className="placeorder_submit" onClick={submit_form} >Place Order</button>
                
                 {/* </form> */}
             </div>

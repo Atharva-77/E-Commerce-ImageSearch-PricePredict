@@ -2,7 +2,7 @@
 import React,{useEffect,useState} from 'react'
 import './Home.css'
 import Product from './Product'
-import {listProduct,feature_action} from './Reducers/actions/productActions'
+import { listProduct } from './Reducers/actions/productActions'
 import { useSelector,useDispatch } from 'react-redux'
 import { useParams } from 'react-router';
 import axios from 'axios';
@@ -24,47 +24,47 @@ function Home() {
     // console.log(setfeaturemessagessage)
    
 
-    const featureR = useSelector(state => state.featureR)
-    const {loadingF,feature,errorF}=featureR
+    // const featureR = useSelector(state => state.featureR)
+    // const {loadingF,feature,errorF}=featureR
     // console.log("line 23 FEATURE ",feature);
 
 
-    useEffect(() => {
-        console.log("USEEFF FV 22",featureVector)
-        if(feature.length==0)
-        {
-                dispatch(feature_action())
-                x=1;
-                console.log("outside messages",messagess);
-        }
+    // useEffect(() => {
+    //     console.log("USEEFF FV 22",featureVector)
+    //     if(feature.length==0)
+    //     {
+    //             dispatch(feature_action())
+    //             x=1;
+    //             console.log("outside messages",messagess);
+    //     }
         
 
-    }, [])
+    // }, [])
   
 
-    useEffect(() => {
-        console.log("line 59 messagess",messagess);
-        console.log("line 46",feature.length) 
-        console.log("line 42", x)  
-        if(feature.length != 0 && x==1)
-        {
-            console.log("In messagess", messagess)
+    // useEffect(() => {
+    //     console.log("line 59 messagess",messagess);
+    //     console.log("line 46",feature.length) 
+    //     console.log("line 42", x)  
+    //     if(feature.length != 0 && x==1)
+    //     {
+    //         console.log("In messagess", messagess)
             
-            const featureVectorData={
-                "product_feature_data":feature
-            }
-            axios.post("http://localhost:7080/feature_vector_db",featureVectorData)
-            .then(
-               res=>
-               {
-                   console.log("Feature wala data")
-                   console.log(2);
-               }
-            )
-            x=0;
-        }
+    //         const featureVectorData={
+    //             "product_feature_data":feature
+    //         }
+    //         axios.post("https://ecommerce-imagesearch.herokuapp.com/feature_vector_db",featureVectorData)
+    //         .then(
+    //            res=>
+    //            {
+    //                console.log("Feature wala data")
+    //                console.log(2);
+    //            }
+    //         )
+    //         x=0;
+    //     }
        
-    }, [feature])
+    // }, [feature])
 
 
     useEffect(() => {

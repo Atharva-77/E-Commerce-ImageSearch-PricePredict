@@ -48,7 +48,7 @@ function ASeller_EditProduct() {
                             Authorization:`Bearer ${userInfo.token}`
                         }
                     }
-                    axios.get(`http://localhost:4000/products/seller/products/${id}`,config)
+            axios.get(`http://localhost:4000/products/seller/products/${id}`,config)
                     .then(res=>
                         {
                             console.log("RES.DATA ",res.data);
@@ -116,7 +116,7 @@ function ASeller_EditProduct() {
                     }
                 }
 
-            axios.put(`http://localhost:4000/products/seller/products/edit/${id}`,ProductData,config)
+        axios.put(`http://localhost:4000/products/seller/products/edit/${id}`,ProductData,config)
              .then(res => console.log("UPDTED PROD ADMIN",res.data))
 
 

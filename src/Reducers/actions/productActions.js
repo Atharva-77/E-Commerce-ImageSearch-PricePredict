@@ -67,44 +67,44 @@ export const listProduct =(keyword='')=> async(dispatch)=> {
 
 
 //FEATURE DATA
-const featureDataRequest = () =>
-{
-    return {
-        type: FEATURE_DATA_REQUEST
-    }
-}
+// const featureDataRequest = () =>
+// {
+//     return {
+//         type: FEATURE_DATA_REQUEST
+//     }
+// }
 
-const featureDataSuccess = data =>
-{
-    return{
-      type: FEATURE_DATA_SUCCESS, 
-      payload: data
-    }
-}
+// const featureDataSuccess = data =>
+// {
+//     return{
+//       type: FEATURE_DATA_SUCCESS, 
+//       payload: data
+//     }
+// }
 
-const featureDataFailure = error =>
-{
-    return{
-       type: FEATURE_DATA_FAILURE,
-       payload: error
-    }
-}
+// const featureDataFailure = error =>
+// {
+//     return{
+//        type: FEATURE_DATA_FAILURE,
+//        payload: error
+//     }
+// }
 
 
-export const feature_action =()=> async(dispatch)=> {
+// export const feature_action =()=> async(dispatch)=> {
 
-try 
-{
-    dispatch(featureDataRequest())
+// try 
+// {
+//     dispatch(featureDataRequest())
 
-    const {data}= await axios.get("http://localhost:4000/imgFeature/")
-    dispatch(featureDataSuccess(data))
-} catch (error) {
+//     const {data}= await axios.get("http://localhost:4000http://localhost:4000/imgFeature/")
+//     dispatch(featureDataSuccess(data))
+// } catch (error) {
 
-    dispatch(featureDataFailure(error))
+//     dispatch(featureDataFailure(error))
     
-}
-}
+// }
+// }
 
 
 
@@ -256,7 +256,7 @@ export const ImgProductDetails_action =(prod_ids)=> async(dispatch)=> {
         // console.log("IMG PROD2 ",product_ids);
 
         
-        const {data}= await axios.post(`http://localhost:4000/imgFeature/products`,prod_ids)
+        const {data}= await axios.post(`/imgFeature/products`,prod_ids)
         // console.log("IMG PROD ACTION",data);
         dispatch(ImgproductDetailsSuccess(data))
     } catch (error) {

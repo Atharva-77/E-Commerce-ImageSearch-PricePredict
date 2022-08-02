@@ -45,6 +45,10 @@ function ASeller_Product() {
         console.log("(adminP) id ",id);
         if(window.confirm("Are you sure?"))
         {
+            const flaskDeleteProd =
+            {
+                "prod_id":id
+            }
             const config={
                 headers:{
                     // 'Content-Type':"application/json",
@@ -58,7 +62,18 @@ function ASeller_Product() {
                     console.log("(adminP) deleted",res.data)
                     setreload(!reload)
                 })
+
+            axios.delete(`http://localhost:4000/imgFeature/deleteFeature/${id}`,config)
+            .then(res => 
+                {
+                    console.log("feature deleted",res.data)
+                })
                 
+            axios.post(`https://e-commerce-imagesearch.vercel.app/delete_product`,flaskDeleteProd)
+            .then(res => 
+                {
+                    console.log("flask feature deleted",res.data)
+                })
         }
        
     }

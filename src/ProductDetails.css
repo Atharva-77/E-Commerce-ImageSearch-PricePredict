@@ -138,7 +138,7 @@
 }
 
 .product_details_img{
-	width: 360px;
+	max-width: 360px;
 	height: 480px;
 	margin: 50px;
 	float: left;

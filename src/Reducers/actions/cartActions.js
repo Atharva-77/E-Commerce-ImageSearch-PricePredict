@@ -14,7 +14,7 @@ import axios from 'axios'
                                             // with getState u cn access any
 export const cartListDetails = (id,qty) => async(dispatch,getState)=> {
 
-    const {data}= await axios.get(`http://localhost:4000/products/${id}`)
+    const { data } = await axios.get(`http://localhost:4000/products/${id}`)
 console.log("CARTACtions.js",{data});
 console.log("CARTACtions.js id:- ",data.imageFile);
 

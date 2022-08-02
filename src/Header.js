@@ -6,6 +6,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { Link } from 'react-router-dom';
 // import {useStateValue} from './StateProvider';
 import {  useHistory } from 'react-router'; 
+import { storage } from './firebase/index.js';
 
 import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -25,7 +26,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 // import { makeStyles } from "@material-ui/core/styles";
 let x = 0;
-let file2;
+let file;
 
 function Header() {
     // const useStyles = makeStyles((theme) => ({
@@ -49,11 +50,12 @@ function Header() {
 
     const [keyword, setkeyword] = useState('')
    
-    const [file, setfile] = useState('')
+    // const [file, setfile] = useState('')
     const [Imgpath, setImgpath] = useState('')
     const [ImgSearchData, setImgSearchData] = useState('')
 
     const [imgSearchLoaderMessage, setimgSearchLoaderMessage] = useState(false) 
+    const [url, setUrl] = useState('')
 
     const userLogin=useSelector(state => state.userLogin)
     const {userInfo}=userLogin
@@ -76,51 +78,46 @@ function Header() {
     useEffect(() => {
        
             
-        if(Imgvalue==true && x==0)        
-            {
-                const Data = new FormData()
-                Data.append('file',file)
+        // if(Imgvalue==true && x==0)        
+        //     {
+        //         const Data = new FormData()
+        //         Data.append('file',file)
 
                 
-                //  axios.post("https://httpbin.org/anything",Data)
-                axios.post("http://localhost:4000/uploadImg/add3",Data)
-                .then(
-                    res=>
-                    {
-                        x=1;
-                        console.log("dATA IS headre ",res.data)
-                        setImgpath(res.data)
-                        setimgSearchLoaderMessage(true);
-                        // x=1;
-                        console.log(3);
-                        console.log(x);
-                    }
-                    )
-            }
+        //         //  axios.post("https://httpbin.org/anything",Data)
+        //         axios.post("http://localhost:4000/uploadImg/add3",Data)
+        //         .then(
+        //             res=>
+        //             {
+        //                 x=1;
+        //                 console.log("dATA IS headre ",res.data)
+        //                 setImgpath(res.data)
+        //                 setimgSearchLoaderMessage(true);
+        //                 // x=1;
+        //                 console.log(3);
+        //                 console.log(x);
+        //             }
+        //             )
+        //     }
                 // console.log("x=",x);
                 // console.log("line 100", Imgpath, Imgvalue)
               
-                if(Imgpath!="" && x==1 && Imgvalue == true)
+                if(url!='')
                 {
                     console.log("line 101", Imgpath, Imgvalue)
+                    // setImgpath(url)
                     const ImageSearchData={
-                        "img_path":Imgpath
+                        "img_link":url
                     }
-                    console.log("check_Image_Seacrh_Data header:",ImageSearchData)
-                    axios.post("http://localhost:7080/image_search",ImageSearchData)
+                    console.log("/check_Image_Search_Data header:",ImageSearchData)
+                    axios.post("https://e-commerce-imagesearch.vercel.app/image_search",ImageSearchData)
                     .then(
                             res=>
                             {
                                 // x=0;
                                 console.log("Image_Data Header ",res.data)
-                                console.log(4);
-                                console.log("1st",x)
-                                setImgvalue(false)
-                                console.log("2nd",x)
                                 setImgSearchData(res.data)
-                                console.log("3rd",x)
                                 setimgSearchLoaderMessage(false)
-                                console.log("4th",x)
                                 x=0;
                             }
                         )
@@ -129,7 +126,7 @@ function Header() {
         //    }
         
           
-    }, [Imgpath,Imgvalue])
+    }, [url])
 
 
     
@@ -159,11 +156,46 @@ function Header() {
 
     const uploadImgHandler=async(e)=>
     {
+        setimgSearchLoaderMessage(true);
+        console.log("line 163",file);
+        file=e.target.files[0]
+        console.log("file",file)
+        // setfile(file)
+        // console.log("file",file)
+        // console.log("line 164",file);
+        var img_extension=file.type.split("/")[1]
+    
+        var current_date=new Date()
+        let final_date = ""
+        final_date = current_date.toString().substring(0,24)
+        final_date = final_date.replace(":","-")
+        final_date = final_date.replace(":","-")
+        console.log("FIANL DATE IS",final_date,img_extension);
+        var imgName=final_date+"."+img_extension
+ 
         
-        console.log("line 163",file2);
-         file2=e.target.files[0]
-        setfile(file2)
-        console.log("line 166",file2);
+         
+        const uploadTask = storage.ref(`images/${imgName}`).put(file);
+        uploadTask.on(
+            "state_changed",
+            snapshot => {},
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                .ref("images")
+                .child(imgName)
+                .getDownloadURL()
+                .then(url => {
+                    setUrl(url);
+                });
+            }
+        )
+        console.log(url)
+         
+        
+    
         setImgvalue(true);
 
         // const Data = new FormData()
@@ -214,7 +246,7 @@ function Header() {
                                             Upload<input type="file" id="file" accept={fileTypes} onChange={uploadImgHandler}/>
                                             <br /><br />
                                            
-                                            {typeof(file2)!='undefined'?
+                                            {typeof(file)!='undefined'?
                                               <>
                                                 {imgSearchLoaderMessage?
                                                 <h4>Processing Your image...</h4>

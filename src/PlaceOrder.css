@@ -1,4 +1,4 @@
-.register
+.placeorder
 {
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
 
 }
 
-.register .logo
+.placeorder .logo
 {
     object-fit: contain;
     width: 125px;
@@ -15,12 +15,12 @@
     padding-bottom: 19px;
 }
 
-.register .heading
+.placeorder .heading
 {
     padding-bottom: 10px;
 }
 
-.register .registration_details
+.placeorder .placeorder_details
 {
 
     /* width: 300px; */
@@ -52,27 +52,27 @@
 
 
 
-.registration_details > h1
+.placeorder_details > h1
 {
     font-weight: 500;
     margin-bottom: 10px;
 }
 
-.registration_details > h2
+.placeorder_details > h2
 {
     font-weight: 450;
     /* font-size: 15px; */
     margin-bottom: 5px;
 }
 
-.registration_details > input
+.placeorder_details > input
 {
     width: 95%;
     margin-bottom: 12px;
     height: 25px;
 }
 
-.registration_details .create_acc
+.placeorder_details .create_acc
 {
     height: 25px;
     width: 98%;
@@ -80,7 +80,7 @@
     /* width: fit-content; */
 }
 
-.registration_details >h3
+.placeorder_details >h3
 {
     padding-top: 5px;
     display: flex;
@@ -89,7 +89,7 @@
     /* padding-left: 15px; */
 }
 
-.registration_details .login
+.placeorder_details .login
 {
     height: 25px;
     width: 98%;
@@ -108,3 +108,37 @@
     width: 75px;
     height: 85px;
 }
+
+.item_info_placeorder{
+    display: block;
+    float: right;
+    font-size: 21px;
+    margin-left: 32px;
+    /* margin-top: 5px; */
+    word-wrap: break-word;
+    clear: both;
+    width: 600px;
+}
+
+
+
+
+.placeorder_submit{
+    margin-top: 20px;
+    font-weight: bold;
+	clear: right;
+    color: white;
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    /* color: #fff; */
+    background-color: #374151;
+    border: none;
+    border-radius: 6px;
+}
+
+.placeorder_submit:hover {background-color: rgb(1, 17, 53)}

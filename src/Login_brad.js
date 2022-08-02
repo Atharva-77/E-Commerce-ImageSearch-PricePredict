@@ -103,7 +103,7 @@ function Login_brad() {
                    {(userInfo=="Invalid details" || error) && <h2>Error</h2>}
                 {loading && <h2>Loading</h2>}
 
-                    <h2>brad-Email</h2>
+                    <h2>Email</h2>
                     <input value={email} onChange={onEmail} placeholder="Enter Email"/>
                     
                     <h2>Password</h2>

@@ -1,4 +1,4 @@
-.register
+.orderscreen
 {
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
 
 }
 
-.register .logo
+.orderscreen .logo
 {
     object-fit: contain;
     width: 125px;
@@ -15,12 +15,12 @@
     padding-bottom: 19px;
 }
 
-.register .heading
+.orderscreen .heading
 {
     padding-bottom: 10px;
 }
 
-.register .registration_details
+.orderscreen .orderscreen_details
 {
 
     /* width: 300px; */
@@ -28,12 +28,12 @@
     height: fit-content; /*Automatically adjusts height according to cotents in it. If px specified, then may overflow out of the border*/
 
     height: fit-content;
-    border: 1px solid;
+    /* border: 1px solid; */
     display: flex;
     flex-direction: column;
     padding: 20px;
 
-    border: 1px solid ;
+    /* border: 1px solid ; */
 
 
 
@@ -52,27 +52,27 @@
 
 
 
-.registration_details > h1
+.orderscreen_details > h1
 {
     font-weight: 500;
     margin-bottom: 10px;
 }
 
-.registration_details > h2
+.orderscreen_details > h2
 {
     font-weight: 450;
     /* font-size: 15px; */
     margin-bottom: 5px;
 }
 
-.registration_details > input
+.orderscreen_details > input
 {
     width: 95%;
     margin-bottom: 12px;
     height: 25px;
 }
 
-.registration_details .create_acc
+.orderscreen_details .create_acc
 {
     height: 25px;
     width: 98%;
@@ -80,16 +80,16 @@
     /* width: fit-content; */
 }
 
-.registration_details >h3
+.orderscreen_details >h3
 {
-    padding-top: 5px;
+    /* padding-top: 5px; */
     display: flex;
     flex-direction:column ;
     align-items: center;
     /* padding-left: 15px; */
 }
 
-.registration_details .login
+.orderscreen_details .login
 {
     height: 25px;
     width: 98%;
@@ -107,4 +107,15 @@
     object-fit: contain;
     width: 75px;
     height: 85px;
+}
+
+.item_info_orderscreen{
+    display: block;
+    float: right;
+    font-size: 21px;
+    margin-left: 32px;
+    /* margin-top: 5px; */
+    word-wrap: break-word;
+    clear: both;
+    width: 600px;
 }

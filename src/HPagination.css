@@ -3,6 +3,8 @@
     clear: both;
     display: block;
     margin: auto;
+    text-align: center;
+    margin-right: 20px;
 }
 .page .button_space
 {

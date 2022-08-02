@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch,useSelector } from 'react-redux';
+import { storage } from './firebase/index.js';
 
 import {  useHistory } from 'react-router'; 
 import { userAction_details, userRegisterAction_details } from './Reducers/actions/userActions';
@@ -14,8 +15,8 @@ function ASeller_CreateProduct() {
     var fileTypes = [".jpg", ".png", ".jpeg"];
 
     const [Name, setName] = useState('')
-    const [category, setCategory] = useState('');
-    const [brand, setBrand] = useState('');
+    const [category, setCategory] = useState('Phone');
+    const [brand, setBrand] = useState('1');
 
     const [description, setDescription] = useState('');
     const [imageURL, setImageURL] = useState('');
@@ -30,7 +31,9 @@ function ASeller_CreateProduct() {
     const [id_Img, setid_Img] = useState(0)
     const [Imgpath, setImgpath] = useState('')
     const [features, setfeatures] = useState('')
+    const [url, setUrl] = useState('')
 
+    
     const [createProdMessage, setcreateProdMessage] = useState(false)
 
     const dispatch = useDispatch()
@@ -51,47 +54,57 @@ function ASeller_CreateProduct() {
     }, [history,userInfo])
 
 
-    useEffect(() => {
+    // useEffect(() => {
        
-        if(id_Img!=0)
-        {       
-            console.log("value_id_img_inside",id_Img);
-                const Data = new FormData()
-                Data.append('id_Img', id_Img)
-                Data.append('file',file)
+    //     if(id_Img!=0)
+    //     {       
+    //         console.log("value_id_img_inside",id_Img);
+    //             const Data = new FormData()
+    //             Data.append('id_Img', id_Img)
+    //             Data.append('file',file)
 
       
-            //  axios.post("https://httpbin.org/anything",Data)
-            axios.post("http://localhost:4000/uploadImg/add",Data)
-             .then(
-                    res=>
-                    {
-                        console.log("dATA IS",res.data)
-                        setImgpath(res.data)
-                        console.log(3);
-                    }
-                 )
+    //         //  axios.post("https://httpbin.org/anything",Data)
+    //         axios.post("/uploadImg/add",Data)
+    //          .then(
+    //                 res=>
+    //                 {
+    //                     console.log("dATA IS",res.data)
+    //                     setImgpath(res.data)
+    //                     console.log(3);
+    //                 }
+    //              )
             
        
-        }
+    //     }
         
-    }, [id_Img])
+    // }, [id_Img])
 
 
     useEffect(() => {
        
-        console.log("YO IMGpath, IDimG",Imgpath,id_Img)
-        if(Imgpath!="" && id_Img!=NaN)
+        console.log("YO IMGpath, IDimG",Imgpath,id_Img, imageURL, url)
+        if((imageURL!='' || url!='') && id_Img!=0)
         {
-              
-            const ImageSearchData={
-                "prod_id":id_Img,
-                "img_path":Imgpath
+            let ImageSearchData;
+            if(imageURL!=''){
+                ImageSearchData={
+                    "prod_id":id_Img,
+                    "img_link":imageURL
+                }
             }
+            else{
+                ImageSearchData={
+                    "prod_id":id_Img,
+                    "img_link":url
+                }
+            }
+
+            
 
             console.log("check_Image_Seacrh_Data:",ImageSearchData)
             
-            axios.post("http://localhost:7080/extract_features",ImageSearchData)
+            axios.post("https://e-commerce-imagesearch.vercel.app/extract_features",ImageSearchData)
             .then(
                     res=>
                     {
@@ -105,13 +118,13 @@ function ASeller_CreateProduct() {
             // console.log("MESSAGE2")
             // setMessage(true)
         }
-    }, [Imgpath])
+    }, [imageURL,url,id_Img])
 
 
     useEffect(() => {
        
         // console.log("YO IMGpath, IDimG",Imgpath,id_Img)
-        if(Imgpath!="" && id_Img!=NaN)
+        if((imageURL!='' || url!='') && id_Img!=NaN)
         {
               
             const ImageFeatureData={
@@ -177,16 +190,45 @@ function ASeller_CreateProduct() {
 
 
 
-
-
     const uploadFileHandler=async(e)=>
     { 
                const file=e.target.files[0]
                setfile(file)
                console.log(file);
+
+        var img_extension=file.type.split("/")[1]
+        
+        var current_date=new Date()
+        let final_date = ""
+        final_date = current_date.toString().substring(0,24)
+        final_date = final_date.replace(":","-")
+        final_date = final_date.replace(":","-")
+        console.log("FIANL DATE IS",final_date,img_extension);
+        var imgName=final_date+"."+img_extension
+
+        if(imageURL=='')
+        {
+            const uploadTask = storage.ref(`images/${imgName}`).put(file);
+            uploadTask.on(
+                "state_changed",
+                snapshot => {},
+                error => {
+                    console.log(error);
+                },
+                () => {
+                    storage
+                    .ref("images")
+                    .child(imgName)
+                    .getDownloadURL()
+                    .then(url => {
+                        setUrl(url);
+                    });
+                }
+            )
+            console.log(url)
+        }
        
     }
-    
     
     
     const price_predict=()=>
@@ -216,7 +258,7 @@ function ASeller_CreateProduct() {
 
 
 
-            axios.post(`http://localhost:8000/predict_api`,predictPrice,config)
+            axios.post(`https://ecommerce-priceprediction.herokuapp.com/predict_api`,predictPrice,config)
             .then(res => 
                 {
                     setPredictedPrice(res.data);
@@ -234,32 +276,95 @@ function ASeller_CreateProduct() {
         setcreateProdMessage(true)
         let ProductData={}
         e.preventDefault();
-        if(brand=='')
-        {
-             ProductData={
-                "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
-                "category":document.getElementById('category').value,
-                 "brand":document.getElementById('brand').value,
-                 "description":description,
-                 "price":price,
-                 "countInStock":countInStock,
-                 "imageURL":imageURL,
-                 
-             }
+
+        // var img_extension=file.type.split("/")[1]
+        
+        // var current_date=new Date()
+        // let final_date = ""
+        // final_date = current_date.toString().substring(0,24)
+        // final_date = final_date.replace(":","-")
+        // final_date = final_date.replace(":","-")
+        // console.log("FIANL DATE IS",final_date,img_extension);
+        // var imgName=final_date+"."+img_extension
+
+        // if(imageURL=='')
+        // {
+        //     const uploadTask = storage.ref(`images/${imgName}`).put(file);
+        //     uploadTask.on(
+        //         "state_changed",
+        //         snapshot => {},
+        //         error => {
+        //             console.log(error);
+        //         },
+        //         () => {
+        //             storage
+        //             .ref("images")
+        //             .child(imgName)
+        //             .getDownloadURL()
+        //             .then(url => {
+        //                 setImageURL(url);
+        //             });
+        //         }
+        //     )
+        //     console.log(url)
+        // }
+        if(imageURL!=''){
+            if(brand=='')
+            {
+                ProductData={
+                    "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+                    "category":document.getElementById('category').value,
+                    "brand":document.getElementById('brand').value,
+                    "description":description,
+                    "price":price,
+                    "countInStock":countInStock,
+                    "imageURL":imageURL,
+                    
+                }
+            }
+            else
+            {
+                ProductData={
+                    "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+                    "category":category,
+                    "brand":brand,
+                    "description":description,
+                    "price":price,
+                    "countInStock":countInStock,
+                    "imageURL":imageURL,
+                    
+                }
+            }
         }
-        else
-        {
-             ProductData={
-                "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
-                "category":category,
-                 "brand":brand,
-                 "description":description,
-                 "price":price,
-                 "countInStock":countInStock,
-                 "imageURL":imageURL,
-                 
-             }
-        }
+        else{
+            if(brand=='')
+            {
+                ProductData={
+                    "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+                    "category":document.getElementById('category').value,
+                    "brand":document.getElementById('brand').value,
+                    "description":description,
+                    "price":price,
+                    "countInStock":countInStock,
+                    "imageURL":url,
+                    
+                }
+            }
+            else
+            {
+                ProductData={
+                    "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
+                    "category":category,
+                    "brand":brand,
+                    "description":description,
+                    "price":price,
+                    "countInStock":countInStock,
+                    "imageURL":url,
+                    
+                }
+            }
+        }                                                                                                                                                                                                         
+        
        
 
          
@@ -272,7 +377,7 @@ function ASeller_CreateProduct() {
              }
          }
 
-        axios.post(`http://localhost:4000/products/seller/products/add`,ProductData,config)
+        axios.post(`/products/seller/products/add`,ProductData,config)
         .then(res => 
             {
                 console.log("UPDaTED PROD SELLER",typeof(res.data._id))
@@ -368,6 +473,12 @@ function ASeller_CreateProduct() {
                                     <option value="4">4- Okay</option>
                             </select>
 
+                            <h2>Ram</h2>
+                            <input placeholder="Enter Ram of the phone in GB"/>
+
+                            <h2>Storage</h2>
+                            <input placeholder="Enter Storage of the phone in GB"/>
+
                             <button className="create_acc" onClick={price_predict} >Predict Price</button>
                             <br />
                        </>
@@ -415,17 +526,36 @@ function ASeller_CreateProduct() {
                 
                 <strong>Upload image</strong>
                 <input type="file" id="file" accept={fileTypes} onChange={uploadFileHandler}/>
+
                 {/* <input type="file" id="myFile" name={image} onChange={uploadFileHandler}/>  */}
                  {/* <input type="submit" /> */}
 
-                <button className="create_acc" onClick={(e)=>{submit_form(e)}} >Create Product</button>
-                {createProdMessage? <h2>Product Creating...</h2>
+                {/* <button className="create_acc" onClick={(e)=>{submit_form(e)}} >Create Product</button> */}
+               
+                {(imageURL!='' || url!='')?
+                    <>
+                     <button className="create_acc" onClick={(e)=>{submit_form(e)}} >Create Product</button>
+
+                      {createProdMessage? <h2>Product Creating...</h2>
+                        :
+                        <>
+                        {message && <h2>Product created</h2>} 
+                        {message && <div><button onClick={()=>{history.push(`/seller/product`)}}> See Product</button></div>}
+                        </>
+                        }
+                    </>
+                :
+                    <>Please fill the data completely.</>
+                }
+               
+                {/* {createProdMessage? <h2>Product Creating...</h2>
                 :
                 <>
                    {message && <h2>Product created</h2>} 
                    {message && <div><button onClick={()=>{history.push(`/seller/product`)}}> See Product</button></div>}
                 </>
-                }
+                } */}
+
                 {/* {message && <h2>Product created</h2>} 
                 {message && <div><button onClick={()=>{history.push(`/seller/product`)}}> See Product</button></div>} */}
                 

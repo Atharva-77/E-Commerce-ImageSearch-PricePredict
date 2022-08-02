@@ -42,16 +42,12 @@
 {
     display: flex;
     background-color: white;
-
     padding: 15px;
-
 }
-
 .shopping_title
 {
     padding-left: 30px;
 }
-
 .subtotalcompo
 {
     float:right;

@@ -81,7 +81,7 @@ try
     //Q.WHy not direct profile in place of id?
     // console.log("waiting for data");
 
-    const {data}= await axios.post(`http://localhost:4000/order/add/`,order,config)
+    const { data } = await axios.post(`http://localhost:4000/order/add/`,order,config)
 
     console.log("order After data",data);
 
@@ -325,7 +325,7 @@ export const payorderAction_details =(id,paymentResult)=> async(dispatch,getStat
         //Q.WHy not direct profile in place of id?
         // console.log("waiting for data");
 
-        const {data}= await axios.put(`http://localhost:4000/order/${id}/pay`,paymentResult,config)
+        const { data } = await axios.put(`http://localhost:4000/order/${id}/pay`,paymentResult,config)
 
         // console.log("order After data",data);
 

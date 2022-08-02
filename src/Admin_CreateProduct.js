@@ -84,8 +84,8 @@ function Admin_CreateProduct() {
         formData.append('image', file)
         
         console.log("FILE IS ADMIN Create",formData,formData.append('image', file));
-         axios.post("https://httpbin.org/anything",formData)
-        //  axios.post("https://localhost:4000//uploadImg",formData)
+        //  axios.post("https://httpbin.org/anything",formData)
+        axios.post("http://localhost:4000/uploadImg",formData)
          .then(res=>console.log(res.data)).catch(err=>console.log(err))
 
          try {

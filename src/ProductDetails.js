@@ -191,10 +191,10 @@ const ProductDetails= ()=> {
                         </>
                         :
                         <>
-                        <a href="/login_brad" target="_blank" class="product_details_login_review">Please Login to write Review</a>
-                        {/* <Link class="product_details_review_link" to="/login_brad">
-                            <div > Please Login to write Review</div>   
-                        </Link> */}
+                        {/* <a href="/login_brad" target="_blank" class="product_details_login_review">Please Login to write Review</a> */}
+                        <Link class="product_details_login_review" to="/login_brad" >
+                            <div>Please Login to write Review</div>
+                        </Link>
                         </>
 
                     }

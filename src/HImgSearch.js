@@ -43,6 +43,7 @@ function HImgSearch() {
                                                 rating={i.Avgrating}
                                                 imageURL={i.imageURL}
                                                 imageFile={i.imageFile}
+                                                countInStock={i.countInStock}
                                             />
                                             ))
                                     } 
