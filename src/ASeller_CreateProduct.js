@@ -18,6 +18,7 @@ function ASeller_CreateProduct() {
 
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
+    const [Predictedprice, setPredictedPrice] = useState(0);
     const [price, setPrice] = useState(0);
     const [Originalprice, setOriginalPrice] = useState();
     const [countInStock, setCountInStock] = useState(0);
@@ -93,7 +94,13 @@ function ASeller_CreateProduct() {
         console.log("FILE IS ADMIN Create",formData,formData.append('image', file));
          axios.post("https://httpbin.org/anything",formData)
         //  axios.post("https://localhost:4000//uploadImg",formData)
-         .then(res=>console.log(res.data)).catch(err=>console.log(err))
+         .then(res=>
+                {
+                    console.log(res.data)
+                   
+
+                })
+            .catch(err=>console.log(err))
 
          try {
             const config = {
@@ -117,6 +124,31 @@ function ASeller_CreateProduct() {
     const price_predict=()=>
     {
         console.log('Price predict');
+        console.log("DOM",document.getElementById('brand').value);
+        console.log("DOM",document.getElementById('condition').value,Originalprice);
+        const predictPrice={
+            "product_brand":document.getElementById('brand').value,
+            "product_condition":document.getElementById('condition').value,
+            "product_cost":Originalprice
+        }
+        console.log("PP",predictPrice);
+
+        const config={
+            headers:{
+                 "Access-Control-Allow-Origin": "*",
+                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                 
+
+            }
+        }
+        axios.post(`http://localhost:8000/predict_api`,predictPrice,config)
+        .then(res => 
+            {
+                setPredictedPrice(res.data);
+                console.log("Aseller O/P",res.data)
+            }).catch(err=>console.log("Aseller O/P",err))
+        
+
     }
 
 
@@ -169,13 +201,43 @@ function ASeller_CreateProduct() {
                 {/* {error}*/ }
                 
 
-                <h2>Your Name</h2>
-                <input value={Name} onChange={onName} placeholder="Enter Full Name"/>
+                <h2>Product Name</h2>
+                <input value={Name} onChange={onName} placeholder="If user searches, it searches by this field"/>
 
                 <h2>Category</h2>
                 <input value={category} onChange={onCategory} placeholder="Enter Category"/>
                 
                 <h2>Brand</h2>
+                    <select className="brand" name="product_brand" id="brand">
+                        <option value="1">Nokia</option>
+                        <option value="2">lenovo</option>
+                        <option value="3">SAMSUNG</option>
+                        <option value="4">InFocus</option>
+                        <option value="5">ViVO</option>
+                        <option value="6">OPPO</option>
+                        <option value="7">LG</option>
+                        <option value="8">YU</option>
+                        <option value="9">Panasonic</option>
+                        <option value="10">Apple</option>
+                        <option value="11">Redmi</option>
+                        <option value="12">Moto</option>
+                        <option value="13">Realme</option>
+                        <option value="14">Honor</option>
+                        <option value="15">Blackberry</option>
+                        <option value="16">Sony</option>
+                        <option value="17">One Plus</option>
+                        <option value="18">Google</option>
+                        <option value="19">Mi</option>
+                        <option value="20">Micromax</option>
+                        <option value="21">Huawei</option>
+                        <option value="22">HTC</option>
+                                    
+                    </select>
+
+
+
+
+
                 <input value={brand} onChange={onBrand} placeholder="Enter Brand"/>
 
                 <h2>Description</h2>
@@ -183,8 +245,20 @@ function ASeller_CreateProduct() {
                 
                 <h2>Original Price</h2>
                 <input value={Originalprice} onChange={onOriginalPrice} placeholder="Enter Original Price for price prediction"/>
+                
+                
+                <h2>Condition</h2>
+                {/* <input value={Originalprice} onChange={onOriginalPrice} placeholder="Enter Original Price for price prediction"/> */}
+                    <select className="condition" name="product_condition" id="condition">
+                            <option value="1">1- Like New</option>
+                            <option value="2">2- Superb</option>
+                            <option value="3">3- Good</option>
+                            <option value="4">4- Okay</option>
+                    </select>
 
                 <button className="create_acc" onClick={price_predict} >Predict Price</button>
+                
+                {Predictedprice!=0?<p>Predicted price is:-{Predictedprice}</p>:null}
 
                 <h2>Your Price</h2>
                 <input value={price} onChange={onPrice} placeholder="Enter Price"/>

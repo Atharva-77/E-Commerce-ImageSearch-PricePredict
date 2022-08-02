@@ -112,3 +112,17 @@ td, th {
     background-color: #dddddd;
   } */
   
+
+.brand
+{
+    height: 30px;
+    width: 326px;
+    margin-bottom: 10px;
+}
+
+.condition
+{
+    height: 30px;
+    width: 326px;
+    margin-bottom: 10px;
+}
