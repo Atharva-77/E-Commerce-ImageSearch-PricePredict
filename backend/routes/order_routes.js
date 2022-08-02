@@ -18,7 +18,7 @@ router.post("/add",protect,async(req,res)=>
     const shippingPrice=req.body.shippingPrice
     const totalPrice=req.body.totalPrice
 
-    // console.log("ORDER ITEMS",orderItems);
+    console.log("ORDER ITEMS",orderItems);
 
     // console.log("CLIENT ID",process.env.PAYPAL_CLIENTID);
     try{
@@ -335,8 +335,13 @@ router.get('/seller/allorder',protect,sellerMiddleware,async(req,res)=>
     
     try{
 
-        const Allorders=await sellerDb.find({"sellerId":id.toString()}) //.populate('user','Name id')
-         
+        const Allorders=await sellerDb.find({"sellerId":id.toString()}).populate('orderId','orderItems isPaid isDelivered') //.populate('user','Name id')
+        // var x=Allorders[0].orderId
+        console.log("SELLER/ALLORDERsss",Allorders);
+
+        // await orderDb.find({})
+        //  const x1=await orderDb.findById(x)
+        // console.log("ORDERDB",x1); 
         // if(id.toString()===Allorders.user.toString())
         //  {
             res.send(
@@ -356,6 +361,7 @@ router.get('/seller/allorder',protect,sellerMiddleware,async(req,res)=>
     
     
     catch(error) {
+        console.log();
         res.status(200).send("Invalid details")
     }
 

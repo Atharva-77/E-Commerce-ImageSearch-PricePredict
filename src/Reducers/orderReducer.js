@@ -10,12 +10,15 @@ import {    ORDER_LIST_REQUEST,
             ORDER_PAY_SUCCESS,
             ORDER_PAY_FAILURE,
             ORDER_PAY_RESET,
+
             ADMIN_ORDER_LIST_REQUEST,
             ADMIN_ORDER_LIST_SUCCESS,
             ADMIN_ORDER_LIST_FAILURE,
+
             SELLER_ORDER_LIST_REQUEST,
             SELLER_ORDER_LIST_SUCCESS,
             SELLER_ORDER_LIST_FAILURE,
+            ORDER_LIST_RESET,
             
         
         } from './constants/orderConstants' 
@@ -47,6 +50,14 @@ switch(action.type){
         // ...state,
         loading: false,
         error: action.payload
+    }
+    case ORDER_LIST_RESET: return {
+        loading: false,
+        order:[],
+        success:false,
+        error:''
+        // ...state,
+
     }
 
     default:

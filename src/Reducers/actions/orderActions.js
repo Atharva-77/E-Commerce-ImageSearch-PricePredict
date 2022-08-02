@@ -7,15 +7,19 @@ import {
     GET_ORDER_LIST_REQUEST,
     GET_ORDER_LIST_SUCCESS,
     GET_ORDER_LIST_FAILURE,
+   
     ORDER_PAY_REQUEST,
     ORDER_PAY_SUCCESS,
     ORDER_PAY_FAILURE,
+    
     ADMIN_ORDER_LIST_REQUEST,
     ADMIN_ORDER_LIST_SUCCESS,
     ADMIN_ORDER_LIST_FAILURE,
+   
     SELLER_ORDER_LIST_REQUEST,
     SELLER_ORDER_LIST_SUCCESS,
     SELLER_ORDER_LIST_FAILURE,
+    ORDER_LIST_RESET,
     
     } from '../constants/orderConstants' 
 
@@ -44,6 +48,19 @@ const orderListDetailsFailure = error =>
        payload: error
     }
 }
+
+const orderListDetailsReset = () =>
+{
+    return {
+        type:ORDER_LIST_RESET
+    }
+}
+
+export const orderReset_action=()=>async(dispatch)=> 
+{
+    dispatch(orderListDetailsReset())
+}
+
 
 export const orderListAction_details =(order)=> async(dispatch,getState)=> {
 
@@ -260,7 +277,7 @@ export const getSellerOrderListAction_details =()=> async(dispatch,getState)=> {
     
         const {data}= await axios.get(`http://localhost:4000/order/seller/allorder`,config)
     
-        console.log("orderACTIONADMIN After data",data);
+        console.log("orderACTIONSELLER After data",data);
     
         dispatch(getSellerOrderSuccess(data))
         // console.log("order success");

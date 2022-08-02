@@ -73,32 +73,34 @@ function ASeller_OrderList() {
                                             <th>ORDER ID</th>
 
                                             <th>USER ID</th>
-                                            <th>USER NAME</th>
+                                            {/* <th>USER NAME</th> */}
 
                                           
-                                            <th>TOTAL</th>
-                                            <th>PAID</th>   
-                                             <th>D</th>
+                                            <th>PRICE</th>
+                                            <th>PAID</th>  
+                                            <th>DELIVERED</th>    
+                                             <th>DETAILS</th>
                                         </tr>
                                         {/* {console.log("ALLUSERS",users.Allusers)} */}
 
                                         {SellergetOrderItems.Allorders.map((item) => (
-                    
+
                     
                                                 <tr key={item._id}>
-
+                                                   {/* {console.log("SELLER ORDER LIST",item)} */}
                                                     <td>{count}</td>
-                                                    <td>{item._id}</td>
+                                                    <td>{item.pid}</td>
 
-                                                    {/* <td>{item.user._id}</td> */}
+                                                    <td>{item.sellerId}</td>
                                                     {/* <td>{item.user.Name}</td> */}
                                                     <td>{item.price}</td>
-                                                  
-                                                    {/* <td>{item.isPaid?<h3>✔️</h3>:<h3>❌</h3>}</td> */}
-                                                    {/* <td>{item.isDelivered?<h3>✔️</h3>:<h3>❌</h3>}</td> */}
+                                                    {/* <td>{item.orderId.isPaid}</td> */}
+
+                                                    <td>{item.orderId.isPaid?<h3>✔️</h3>:<h3>❌</h3>}</td>
+                                                    <td>{item.orderId.isDelivered?<h3>✔️</h3>:<h3>❌</h3>}</td>
                                                     
                                                     <td>
-                                                        <button onClick={()=>prodDetail(item._id)}>Details</button>
+                                                        <button onClick={()=>prodDetail(item.orderId._id)}>Details</button>
 
                                                     </td>
 

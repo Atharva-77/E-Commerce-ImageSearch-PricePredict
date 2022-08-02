@@ -6,6 +6,8 @@ import {PayPalButton} from 'react-paypal-button-v2'
 import { useDispatch,useSelector } from 'react-redux';
 import CheckoutProduct from './CheckoutProduct';
 
+import { orderReset_action} from './Reducers/actions/orderActions';
+
 import {  useHistory } from 'react-router'; 
 import { getorderListAction_details,payorderAction_details} from './Reducers/actions/orderActions';
  
@@ -33,7 +35,10 @@ function OrderScreen() {
 
 
     
-  
+      useEffect(()=>
+      {
+        dispatch(orderReset_action())
+      },[])
 
     useEffect(() => {
         console.log("O.S",getOrderItems);
@@ -201,6 +206,7 @@ function OrderScreen() {
                       {getorderList.getOrderItems.orderItems.map((item) => (
                         <div>
                           <img src={item.imageURL} className="placeOrder_img_class"/>  
+                          {/* {console.log("IMG URL",itemURL)} */}
                           <Link to={`/product/${item.idname}`}>
                               {item.name}
                           </Link>  
@@ -231,14 +237,25 @@ function OrderScreen() {
                        </div>
                   } */}
 
-                  {getorderList.getOrderItems.isPaid ?<strong>Paid on {getorderList.getOrderItems.paidAt}</strong>:
-                    <div>  <PayPalButton amount={getorderList.getOrderItems.totalPrice} onSuccess={successHandler} /></div>}
-                 
-                 {userInfo.isAdmin && getorderList.getOrderItems.isPaid && !(getorderList.getOrderItems.isDelivered)?
+                  {!userInfo.isSeller ?
+                      <>
+                        {getorderList.getOrderItems.isPaid ?<strong>Paid on {getorderList.getOrderItems.paidAt}</strong>:
+                          <div>  <PayPalButton amount={getorderList.getOrderItems.totalPrice} onSuccess={successHandler} /></div>}
+                      </>
+                      :
+                       null
+                }
+                 {/* {userInfo.isAdmin && getorderList.getOrderItems.isPaid && !(getorderList.getOrderItems.isDelivered)?
                     <button onClick={()=>deliverOrder()}>DELIVERED</button>
-                    :<div>ORDER PLACED</div>}
+                    :<div>ORDER PLACED</div>} */}
                  
-                 
+                 {userInfo.isAdmin ?
+                                  getorderList.getOrderItems.isPaid && !(getorderList.getOrderItems.isDelivered)?
+                                  <button onClick={()=>deliverOrder()}>DELIVERED</button>
+                                  :<div>ORDER PLACED</div>
+                                :null
+                  }
+
                   {/* <PayPalButton amount={getorderList.getOrderItems.totalPrice} onSuccess={successHandler} /> */}
                     {/* Not loading  */}
                 </div>}
