@@ -31,7 +31,7 @@ const protect = async(req, res, next)=> {
     }
     else
     {
-        res.status(401).send("Fail")
+        res.status(401).send("Fail.NOt auth")
         // throw new Error("NOt auth re baba")
         // console.log("Not found");
     }
@@ -39,4 +39,17 @@ const protect = async(req, res, next)=> {
     // next()
 }
 
-module.exports =protect;
+
+const adminMiddleware =async(req, res, next)=> {
+
+    if(req.user1 && req.user1.isAdmin)
+    {
+        console.log(req.user1);
+        next()
+    }
+   
+    else
+    res.status(401).send("NOT ADMIN")
+}
+
+module.exports ={protect, adminMiddleware };

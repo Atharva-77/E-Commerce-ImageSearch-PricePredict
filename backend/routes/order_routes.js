@@ -1,7 +1,7 @@
 const exp= require('express')
 const router= exp.Router()
 // const generateToken= require('../generateToken')
-const protect = require('../middleware/authMiddleware.js')
+const {protect} = require('../middleware/authMiddleware.js')
 
 let orderDb=require('../schema_model/order_schema')
 
@@ -60,39 +60,7 @@ router.post("/add",protect,async(req,res)=>
 })
 
 
-//get order
-router.get('/:id',protect,async(req,res)=>
-{
-    const id=req.user1._id;
-    //user1 is in protect i.e. authMIddleware file, when token is decoded
-    console.log("PUT/ORDER",id);
-    
-    try{
-        const orderData=await orderDb.findById(req.params.id).populate('user','Name email')
-        //user:- its defined in order schema....that name used not Db's name
-        
-        if(orderData){
-            // console.log("order_route");
 
-            res.send(orderData)
-          
-        }
-    
-        else{
-            res.status(401).send("NO order found")
-        }
-    }
-    
-    catch(error) {
-        res.status(200).send("Invalid details")
-    }
-    
-
-  
-    // res.send("success profile")
-
-
-});
 
 
 
@@ -143,6 +111,69 @@ router.put('/:id/pay',protect,async(req,res)=>
 });
 
 
+//get orders on profile page
+router.get('/myorder',protect,async(req,res)=>
+{
+    const id=req.user1._id;
+    //user1 is in protect i.e. authMIddleware file, when token is decoded
+    console.log("Get/MYORDER",id);
+    
+    try{
+        const orderData=await orderDb.find({user:id})
+        //user:- its defined in order schema....that name used not Db's name
+        
+        if(orderData){
+            // console.log("order_route");
 
+            res.send(orderData)
+          
+        }
+    
+        else{
+            res.status(401).send("NO order found")
+        }
+    }
+    
+    catch(error) {
+        console.log("ERROR IS",error);
+        res.status(200).send("Invalid details",)
+    }
+    
+
+});
+
+//get order
+router.get('/:id',protect,async(req,res)=>
+{
+    const id=req.user1._id;
+    //user1 is in protect i.e. authMIddleware file, when token is decoded
+    console.log("GET/ORDER",id);
+    
+    try{
+        const orderData=await orderDb.findById(req.params.id).populate('user','Name email')
+        //user:- its defined in order schema....that name used not Db's name
+        
+        if(orderData){
+            // console.log("order_route");
+
+            res.send(orderData)
+          
+        }
+    
+        else{
+            res.status(401).send("NO order found")
+        }
+    }
+    
+    catch(error) {
+        res.status(200).send("Invalid details")
+    }
+    
+
+  
+    // res.send("success profile")
+
+
+});
 
 module.exports=router;

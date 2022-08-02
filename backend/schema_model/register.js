@@ -31,6 +31,12 @@ const RegisterSchema= new mongoose.Schema({
     {
         type: Boolean,
         default:false
+    },
+
+    isSeller:
+    {
+        type: Boolean,
+        default:false
     }
     
 },
