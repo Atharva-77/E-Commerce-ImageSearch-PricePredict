@@ -4,12 +4,24 @@ import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { Link } from 'react-router-dom';
-import {useStateValue} from './StateProvider';
+// import {useStateValue} from './StateProvider';
+
+import { useDispatch,useSelector } from 'react-redux';
 
 
 function Header() {
 
-    const [{basket},dispatch]= useStateValue();
+    // const [{basket},dispatch]= useStateValue();
+    const dispatch=useDispatch()
+    const cartList = useSelector(state => state.cartList)
+    const {basketItems}=cartList
+
+    let total_item=0
+    {basketItems.map((item) => (
+
+         total_item+=item.qty
+        
+    ))}
 
     return (
 
@@ -47,7 +59,11 @@ function Header() {
                 <Link to="/checkout">
                     <div className="shopping_cart">
                         <ShoppingCartIcon className="shoppingIcon"/>
-                        <span className="lineTwo basketCount">{basket.length}</span>
+                        <span className="lineTwo basketCount">
+                            {total_item}
+                            {/* {basketItems.length} */}
+
+                        </span>
 
                     </div>
                 </Link>    
