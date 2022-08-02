@@ -35,7 +35,13 @@ app.use('/order',require('./routes/order_routes'))
 app.use('/uploadImg',require('./routes/uploadRoutes'))
 
 //converting uploads to static & importing it here  
-app.use('/uploads',exp.static(path.join(__dirname,'/uploads')))
+// app.use('/uploads',exp.static(path.join(__dirname,'/uploads')))
+
+app.use('/upload',exp.static(path.join(__dirname, '../UploadImg/')))
+
+console.log("DIR",path.join(__dirname, '../UploadImg/'));
+
+
 app.get('/config/paypal',(req,res)=>
     {
         // res.send("config paypal")

@@ -11,6 +11,7 @@ import './ASeller_CreateProduct.css' ;
 
 function ASeller_CreateProduct() {
     let history = useHistory()
+    var fileTypes = [".jpg", ".png", ".jpeg"];
 
     const [Name, setName] = useState('')
     const [category, setCategory] = useState('');
@@ -23,6 +24,11 @@ function ASeller_CreateProduct() {
     const [Originalprice, setOriginalPrice] = useState();
     const [countInStock, setCountInStock] = useState(0);
     const [message, setMessage] = useState(false)
+
+
+    const [file, setfile] = useState('')
+    const [id_Img, setid_Img] = useState(0)
+    const [Imgpath, setImgpath] = useState('')
 
     const dispatch = useDispatch()
 
@@ -83,42 +89,13 @@ function ASeller_CreateProduct() {
 
 
     const uploadFileHandler=async(e)=>
-    {
-        const file=e.target.files[0]//1st file only uploaded,,ability to upload multiple files
-        console.log("FILE IS ADMIN Create",file.type);
-
-        const formData = new FormData()
-         
-        formData.append('image', file)
-        
-        console.log("FILE IS ADMIN Create",formData,formData.append('image', file));
-         axios.post("https://httpbin.org/anything",formData)
-        //  axios.post("https://localhost:4000//uploadImg",formData)
-         .then(res=>
-                {
-                    console.log(res.data)
-                   
-
-                })
-            .catch(err=>console.log(err))
-
-         try {
-            const config = {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
-      
-            const { data } = await axios.post('http://localhost:4000/uploadImg', formData,config)
-            console.log("DATA IS ADMIN Create",data);
-            setImage(data)
-            // setUploading(false)
-          } 
-          catch (error) {
-            console.error(error)
-            // setUploading(false)
-          }
+    { 
+               const file=e.target.files[0]
+               setfile(file)
+               console.log(file);
+       
     }
+    
     
     
     const price_predict=()=>
@@ -131,6 +108,7 @@ function ASeller_CreateProduct() {
             "product_condition":document.getElementById('condition').value,
             "product_cost":Originalprice
         }
+
         console.log("PP",predictPrice);
 
         const config={
@@ -153,9 +131,9 @@ function ASeller_CreateProduct() {
 
 
     
-    const submit_form=()=>
+    const submit_form=(e)=>
     {
-    
+        e.preventDefault();
         const ProductData={
             "name":Name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
             "category":category,
@@ -175,12 +153,39 @@ function ASeller_CreateProduct() {
          }
 
         axios.post(`http://localhost:4000/products/seller/products/add`,ProductData,config)
-        .then(res => console.log("UPDTED PROD ADMIN",res.data))
+        .then(res => 
+            {
+                console.log("UPDaTED PROD SELLER",res.data._id)
+                setid_Img(res.data._id)
+            })
 
         console.log("PROD IN SUBMIT",ProductData);
+            
 
+
+
+         if(id_Img!=0)   
+         {       
+                const Data = new FormData()
+                Data.append('id_Img', id_Img)
+                Data.append('file',file)
+
+      
+            //  axios.post("https://httpbin.org/anything",Data)
+            axios.post("http://localhost:4000/uploadImg/add",Data)
+             .then(
+                    res=>
+                    {
+                        console.log("dATA IS",res.data)
+                        setImgpath(res.data)
+                    }
+                 )
+            //  .catch(err=>console.log(err))
+            setMessage(true)
+        }
+            //  console.log(Data);
         // history.push(`/admin/product`)
-        setMessage(true)
+        // setMessage(true)
 
 
          
@@ -269,10 +274,13 @@ function ASeller_CreateProduct() {
                 <h2>Image</h2>
                 <input value={image} onChange={onImage} placeholder="Enter Image URL"/>
                 <h4>OR</h4>
-                <strong>Upload image</strong><input type="file" id="myFile" name={image} onChange={uploadFileHandler}/> 
+                
+                <strong>Upload image</strong>
+                <input type="file" id="file" accept={fileTypes} onChange={uploadFileHandler}/>
+                {/* <input type="file" id="myFile" name={image} onChange={uploadFileHandler}/>  */}
                  {/* <input type="submit" /> */}
 
-                <button className="create_acc" onClick={submit_form} >Create Product</button>
+                <button className="create_acc" onClick={(e)=>{submit_form(e)}} >Create Product</button>
                 {message && <h2>Product created</h2>} 
                 {message && <div><button onClick={()=>{history.push(`/seller/product`)}}> See Product</button></div>}
                 

@@ -432,7 +432,7 @@ router.post('/seller/products/add',protect,sellerMiddleware,async(req,res)=>
 
 
         newSellerProduct.save()
-        .then(()=>res.json('Seller Product saved Successfully'))
+        .then(()=>res.json(newSellerProduct))
         .catch(err=>res.status(200).json("Product Error is "+err)) 
         
         console.log(newSellerProduct)
