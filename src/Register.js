@@ -1,17 +1,35 @@
 import React,{useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch,useSelector } from 'react-redux';
+
+import {  useHistory } from 'react-router'; 
+import { userAction_details } from './Reducers/actions/userActions';
 
 import './Register.css' ;
 // import { set } from 'mongoose';
 
 function Register() {
+    let history = useHistory()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setconfirmPassword] = useState('');
 
+    const dispatch = useDispatch()
+
+    const userLogin = useSelector(state => state.userLogin)
+    const {loading,userInfo,error} =userLogin
+
+    const redirect=`/`
+    console.log("USERINFO:-",(userInfo.length));
+    useEffect(() => {
+        if(userInfo.length!=0)
+        {
+            history.push(redirect)
+        }
+    }, [history,userInfo,redirect])
 
     const onName=(e)=> 
     { 
@@ -32,6 +50,8 @@ function Register() {
     
     const submit_form=()=>
     {
+        dispatch(userAction_details(email,password))
+
         const userData={
             "Name":name, //Lhs as mentioned in postman api tezting or in routes-->exercise_route.js . Name as mentioned as in router.post function
             "email":email,
@@ -39,7 +59,7 @@ function Register() {
             "confirmPassword":confirmPassword
         }
 
-        axios.post(`http://localhost:4000/registered/add`,userData)
+        axios.post(`http://localhost:4000/register_brad/add`,userData)
          .then(res => console.log(res.data))
 
          setName('')
@@ -61,6 +81,8 @@ function Register() {
                 {/* <form> */}
                 <h1 className="heading">Register</h1>
                 
+                {error}
+                {loading && <h2>Loading</h2>}
                 <h2>Your Name</h2>
                 <input value={name} onChange={onName} placeholder="Enter Full Name"/>
                 
