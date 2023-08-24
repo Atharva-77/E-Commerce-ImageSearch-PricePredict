@@ -1,1 +1,4 @@
 "Firebase folder hidden" 
+node_modules
+config.env
+
