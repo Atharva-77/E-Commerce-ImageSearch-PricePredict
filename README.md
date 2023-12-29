@@ -55,7 +55,7 @@ Step2**
 4. Do ```npm run install```. Frontend gets started.
 5. In ```backend/config_folder``` create ```config.env```
 6. In ```config.env``` file, put:-   
-                                a. PORT &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;(Port number where server is to be run)   
-                                b. MONGO_URI        &ensp; &ensp; &ensp;&ensp; &ensp; &ensp;&ensp;&ensp;  (MongoDb url of database to connect)   
-                                c. JWT_SECRET_TOKEN &ensp; &ensp; &ensp;  (Can put any string as the token)   
-                                d. PAYPAL_CLIENTID  &ensp;&ensp;&ensp; &ensp; &ensp;  (Paypal client id)
+&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;   a. PORT &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;(Port number where server is to be run)   
+&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;   b. MONGO_URI        &ensp; &ensp; &ensp;&ensp; &ensp; &ensp;&ensp;&ensp;  (MongoDb url of database to connect)   
+&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;   c. JWT_SECRET_TOKEN &ensp; &ensp; &ensp;  (Can put any string as the token)   
+&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;   d. PAYPAL_CLIENTID  &ensp;&ensp;&ensp; &ensp; &ensp;  (Paypal client id)
