@@ -1,9 +1,11 @@
+import { BASE_API_LINK } from "../../Data/data";
 import {
-    CART_ADD_BASKET, 
-    CART_REMOVE_BASKET, 
-    CART_SAVE_SHIPPING_ADDRESS ,
-    CART_PAYMENT_METHOD} from '../constants/cartConstants'
-import axios from 'axios'
+  CART_ADD_BASKET,
+  CART_REMOVE_BASKET,
+  CART_SAVE_SHIPPING_ADDRESS,
+  CART_PAYMENT_METHOD,
+} from "../constants/cartConstants";
+import axios from "axios";
 
 // const addTocart = () =>
 // {
@@ -11,86 +13,70 @@ import axios from 'axios'
 //         type: CART_ADD_BASKET
 //     }
 // }
-                                            // with getState u cn access any
-export const cartListDetails = (id,qty) => async(dispatch,getState)=> {
+// with getState u cn access any
+export const cartListDetails = (id, qty) => async (dispatch, getState) => {
+  const { data } = await axios.get(`${BASE_API_LINK}/products/${id}`);
+  console.log("CARTACtions.js", { data });
+  console.log("CARTACtions.js id:- ", data.imageFile);
 
-    const { data } = await axios.get(`http://localhost:4000/products/${id}`)
-console.log("CARTACtions.js",{data});
-console.log("CARTACtions.js id:- ",data.imageFile);
-
-if(typeof(data.imageFile)=="undefined")
-{
+  if (typeof data.imageFile == "undefined") {
     dispatch({
-        type: CART_ADD_BASKET,
-        payload:{
-            idname:data._id,
-            name:data.name,
-            imageURL:data.imageURL,
-            // imageFile:data.imageFile,
-            price:data.price,
-            countInStock:data.countInStock,
-            avgrating: data.Avgrating,
-            user:data.user,
-            qty
-
-
-        }
-    })
-}
-
-else
-{
+      type: CART_ADD_BASKET,
+      payload: {
+        idname: data._id,
+        name: data.name,
+        imageURL: data.imageURL,
+        // imageFile:data.imageFile,
+        price: data.price,
+        countInStock: data.countInStock,
+        avgrating: data.Avgrating,
+        user: data.user,
+        qty,
+      },
+    });
+  } else {
     dispatch({
-        type: CART_ADD_BASKET,
-        payload:{
-            idname:data._id,
-            name:data.name,
-            imageURL:data.imageURL,
-            imageFile:data.imageFile,
-            price:data.price,
-            countInStock:data.countInStock,
-            avgrating: data.Avgrating,
-            user:data.user,
-            qty
+      type: CART_ADD_BASKET,
+      payload: {
+        idname: data._id,
+        name: data.name,
+        imageURL: data.imageURL,
+        imageFile: data.imageFile,
+        price: data.price,
+        countInStock: data.countInStock,
+        avgrating: data.Avgrating,
+        user: data.user,
+        qty,
+      },
+    });
+  }
 
+  localStorage.setItem(
+    "cartItemsss",
+    JSON.stringify(getState().cartList.cartItemsss)
+  );
+  // console.log("CART ACTIONS",(localStorage.getItem('cartItemr',JSON.stringify(getState().cartList.cartItemr))));
+};
 
-        }
-    })
-}
+export const removeCartAction = (id) => async (dispatch) => {
+  dispatch({
+    type: CART_REMOVE_BASKET,
+    payload: {
+      idname: id,
+    },
+  });
+};
 
-    
-    localStorage.setItem('cartItemsss',JSON.stringify(getState().cartList.cartItemsss))
-    // console.log("CART ACTIONS",(localStorage.getItem('cartItemr',JSON.stringify(getState().cartList.cartItemr))));
-}
+export const saveShippingAddressAction = (data) => async (dispatch) => {
+  dispatch({
+    type: CART_SAVE_SHIPPING_ADDRESS,
+    payload: data,
+  });
+};
 
-export const removeCartAction =(id) => async(dispatch) =>{
-
-    dispatch({
-        type:CART_REMOVE_BASKET,
-        payload:{
-            idname:id
-        }
-    })
-
-}
-
-
-
-export const saveShippingAddressAction =(data) => async(dispatch) =>{
-
-    dispatch({
-        type:CART_SAVE_SHIPPING_ADDRESS,
-        payload:data
-    })
-
-}
-
-
-export const paymentMethodAction =(data) => async(dispatch) =>{
-
-    dispatch({
-        type:CART_PAYMENT_METHOD,
-        payload:data
-    })
-
-}
+export const paymentMethodAction = (data) => async (dispatch) => {
+  dispatch({
+    type: CART_PAYMENT_METHOD,
+    payload: data,
+  });
+};
