@@ -1,5 +1,5 @@
-# [E-Commerce Website With ImageSearch & PricePredict](https://buytes.herokuapp.com/)
-This is website in **MERN(MongoDB, Express, Reactjs, Nodejs)**:- https://buytes.herokuapp.com/ .   
+# [E-Commerce Website With ImageSearch & PricePredict](https://e-commerce-stores.vercel.app/)
+This is website in **MERN(MongoDB, Express, Reactjs, Nodejs)**:- https://e-commerce-stores.vercel.app/ .   
 **Flask framework** used for image search, price prediction.   
 (See last line for image search, price prediction)
 
