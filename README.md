@@ -45,3 +45,17 @@ At the header(search bar), click on the downarrow besides the camera logo(as sho
 **Upload the picture as shown below.   
 Step2**   
 ![Upload picture](https://user-images.githubusercontent.com/41574777/182393237-17726f35-8d3b-4050-afdc-aa43c2a80e9a.png)
+
+
+
+## How to run project locally?:- 
+1. Go to ```backend``` directory
+2. Do ```npm run install```. Server gets started.
+3. Come out of ```backend``` directory. i.e. come in same level where src folder is.
+4. Do ```npm run install```. Frontend gets started.
+5. In ```backend/config_folder``` create ```config.env```
+6. In ```config.env``` file, put:-   
+                                a. PORT &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;(Port number where server is to be run)   
+                                b. MONGO_URI        &ensp; &ensp; &ensp;&ensp; &ensp; &ensp;&ensp;&ensp;  (MongoDb url of database to connect)   
+                                c. JWT_SECRET_TOKEN &ensp; &ensp; &ensp;  (Can put any string as the token)   
+                                d. PAYPAL_CLIENTID  &ensp;&ensp;&ensp; &ensp; &ensp;  (Paypal client id)
